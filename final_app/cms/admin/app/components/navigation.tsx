@@ -4,10 +4,14 @@ import { dict } from '~/lib/dict'
 import { Avatar, AvatarFallback } from '~/lib/ui/avatar'
 import { AnchorButton, Button } from '~/lib/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '~/lib/ui/dropdown'
+import { Menu, MenuItem } from '~/lib/ui/menu'
 import { SidebarMenuButton } from '~/lib/ui/sidebar'
 import { useIsMobile } from '~/lib/utils/use-mobile'
 
-export const Navigation = () => (<div>Navigation</div>)
+export const Navigation = () => (
+<Menu>
+	<MenuItem label="Jazyky" to="locale" />
+</Menu>)
 
 export const UserNavigation = () => {
 	const isMobile = useIsMobile()

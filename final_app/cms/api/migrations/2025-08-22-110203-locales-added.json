@@ -1,0 +1,22 @@
+{
+	"formatVersion": 6,
+	"modifications": [
+		{
+			"modification": "updateSettings",
+			"op": "set",
+			"key": "tenant",
+			"value": {
+				"inviteExpirationMinutes": 10080
+			}
+		},
+		{
+			"modification": "updateSettings",
+			"op": "set",
+			"key": "content",
+			"value": {
+				"useExistsInHasManyFilter": true,
+				"shortDateResponse": true
+			}
+		}
+	]
+}

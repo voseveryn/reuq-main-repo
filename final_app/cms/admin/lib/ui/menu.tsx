@@ -9,7 +9,6 @@ import { createContext } from '@contember/react-utils'
 import { VariantProps } from 'class-variance-authority'
 import { ChevronRight } from 'lucide-react'
 import { Children, isValidElement, ReactNode, useMemo } from 'react'
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './collapsible'
 import { SidebarMenu, SidebarMenuButton, sidebarMenuButtonVariants, SidebarMenuItem, SidebarMenuSub } from './sidebar'
 
 export type MenuItemProps = {
@@ -104,9 +103,9 @@ export const MenuItem = ({ icon, label, to, children, role, expandedByDefault, .
 	}
 
 	return (
-		<Collapsible defaultOpen={expandedByDefault || hasActiveChild} className="[&[data-state=open]>li>button>.menu-icon]:rotate-90">
+		<>
 			<SidebarMenuItem>
-				<CollapsibleTrigger asChild>
+				<>
 					<SidebarMenuButton isActive={isActive} tooltip={label} {...menuButtonProps}>
 						{icon}
 						<span>{label}</span>
@@ -114,17 +113,17 @@ export const MenuItem = ({ icon, label, to, children, role, expandedByDefault, .
 							<ChevronRight className="ml-auto transition-transform duration-200" />
 						)}
 					</SidebarMenuButton>
-				</CollapsibleTrigger>
+				</>
 				{hasChildren && (
-					<CollapsibleContent className="collapsible-animate">
+					<div className="collapsible-animate">
 						<SidebarMenuSub>
 							<MenuContext.Provider value={{ level: level + 1 }}>
 								{children}
 							</MenuContext.Provider>
 						</SidebarMenuSub>
-					</CollapsibleContent>
+					</div>
 				)}
 			</SidebarMenuItem>
-		</Collapsible>
+		</>
 	)
 }
