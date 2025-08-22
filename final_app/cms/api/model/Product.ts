@@ -3,11 +3,11 @@ import { Image, ImageList } from './Image'
 import { Seo } from './Seo'
 import { Url } from './Url'
 import { Locale } from './Locale'
-import { BlockList } from './Block'
+import { BlockList, BlockProduct } from './Block'
 
 export class Product {
 	createdAt = c.dateTimeColumn().notNull().default('now')
-
+    blockProducts = c.oneHasMany(BlockProduct, 'product')
 
 	image = c.oneHasOne(Image)
 	imageList = c.oneHasOne(ImageList)

@@ -1,0 +1,178 @@
+{
+	"formatVersion": 6,
+	"modifications": [
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "BlockProduct",
+				"primary": "id",
+				"primaryColumn": "id",
+				"tableName": "block_product",
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"columnType": "uuid",
+						"nullable": false,
+						"type": "Uuid"
+					}
+				},
+				"unique": [],
+				"indexes": [],
+				"eventLog": {
+					"enabled": true
+				}
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "BlockProductList",
+				"primary": "id",
+				"primaryColumn": "id",
+				"tableName": "block_product_list",
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"columnType": "uuid",
+						"nullable": false,
+						"type": "Uuid"
+					}
+				},
+				"unique": [],
+				"indexes": [],
+				"eventLog": {
+					"enabled": true
+				}
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "BlockProduct",
+			"field": {
+				"name": "createdAt",
+				"columnName": "created_at",
+				"columnType": "timestamptz",
+				"nullable": false,
+				"type": "DateTime",
+				"default": "now"
+			},
+			"fillValue": "now",
+			"valueMigrationStrategy": "using"
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "BlockProduct",
+			"field": {
+				"name": "order",
+				"columnName": "order",
+				"columnType": "integer",
+				"nullable": false,
+				"type": "Integer",
+				"default": 0
+			},
+			"fillValue": 0,
+			"valueMigrationStrategy": "using"
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "BlockProduct",
+			"field": {
+				"name": "subtitle",
+				"columnName": "subtitle",
+				"columnType": "text",
+				"nullable": true,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "BlockProductList",
+			"field": {
+				"name": "createdAt",
+				"columnName": "created_at",
+				"columnType": "timestamptz",
+				"nullable": false,
+				"type": "DateTime",
+				"default": "now"
+			},
+			"fillValue": "now",
+			"valueMigrationStrategy": "using"
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "Block",
+			"owningSide": {
+				"type": "OneHasOne",
+				"name": "productList",
+				"target": "BlockProductList",
+				"joiningColumn": {
+					"columnName": "product_list_id",
+					"onDelete": "restrict"
+				},
+				"nullable": true,
+				"inversedBy": "block"
+			},
+			"inverseSide": {
+				"type": "OneHasOne",
+				"name": "block",
+				"target": "Block",
+				"ownedBy": "productList",
+				"nullable": true
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "BlockProduct",
+			"owningSide": {
+				"type": "ManyHasOne",
+				"name": "list",
+				"target": "BlockProductList",
+				"joiningColumn": {
+					"columnName": "list_id",
+					"onDelete": "restrict"
+				},
+				"nullable": true,
+				"inversedBy": "products"
+			},
+			"inverseSide": {
+				"type": "OneHasMany",
+				"name": "products",
+				"target": "BlockProduct",
+				"ownedBy": "list"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "BlockProduct",
+			"owningSide": {
+				"type": "ManyHasOne",
+				"name": "product",
+				"target": "Product",
+				"joiningColumn": {
+					"columnName": "product_id",
+					"onDelete": "set null"
+				},
+				"nullable": true,
+				"inversedBy": "blockProducts"
+			},
+			"inverseSide": {
+				"type": "OneHasMany",
+				"name": "blockProducts",
+				"target": "BlockProduct",
+				"ownedBy": "product"
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/public/entities/Block/operations/read/productList",
+					"value": true
+				}
+			]
+		}
+	]
+}

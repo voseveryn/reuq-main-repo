@@ -7,7 +7,7 @@ import { Link } from './Link'
 import { Image, ImageList } from './Image';
 import { CardList } from './Card'
 import { TextList } from './TextList'
-import { ProductLocale } from './Product'
+import { Product, ProductLocale } from './Product'
 import { Video } from './Video'
 
 
@@ -32,6 +32,7 @@ export class Block {
 	heroContent = c.oneHasOne(BlockHeroContent, 'block')
 	textList = c.oneHasOne(TextList, 'block')
 	imageList = c.manyHasOne(ImageList, 'block')
+	productList = c.oneHasOne(BlockProductList, 'block')
 } 
 
 export class BlockHeroContent {
@@ -46,6 +47,20 @@ export class BlockHeroContentItem {
 	label = c.stringColumn()
 	list = c.manyHasOne(BlockHeroContent, 'items')
 	order = c.intColumn().notNull().default(0)
+}
+export class BlockProductList {
+	createdAt = c.dateTimeColumn().notNull().default('now')
+	products = c.oneHasMany(BlockProduct, 'list')
+	block = c.oneHasOneInverse(Block, 'productList')
+}
+
+export class BlockProduct {
+	createdAt = c.dateTimeColumn().notNull().default('now')
+	order = c.intColumn().notNull().default(0)
+
+	list = c.manyHasOne(BlockProductList, 'products')
+	subtitle = c.stringColumn()
+	product = c.manyHasOne(Product, 'blockProducts').setNullOnDelete()
 }
 
 @c.Allow(publicRole, {
