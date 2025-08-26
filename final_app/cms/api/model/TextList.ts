@@ -15,9 +15,6 @@ export class TextList {
     contentReferenceTextList = c.oneHasMany(ContentReference, 'textList')
     items = c.oneHasMany(TextListItem, 'list')
 }
-
-
-
 export class TextListItem {
     createdAt = c.dateTimeColumn().notNull().default('now')
     list = c.manyHasOne(TextList, 'items')

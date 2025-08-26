@@ -4,13 +4,8 @@ import { Binding, PersistButton } from "~/lib/binding";
 import { InputField } from "~/lib/form";
 import { Slots } from "~/lib/layout";
 import { DefaultRepeater } from "~/lib/repeater";
+import { LocaleForm } from "../components/forms/locale-form";
 
-export const LocaleForm = Component(() => (
-  <>
-    <InputField field="label" label="Jazyk" />
-    <InputField field="code" label="Code" />
-  </>
-));
 
 export default () => {
   return (

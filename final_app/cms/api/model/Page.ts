@@ -3,7 +3,6 @@ import { publicRole } from './acl'
 import { pageType } from './enums'
 import { Locale } from './Locale'
 import { Seo } from './Seo'
-import { Image } from './Image'
 import { Url } from './Url'
 import { BlockList } from './Block'
 
@@ -19,7 +18,6 @@ export class Page {
 	locales = c.oneHasMany(PageLocale, 'root')
 	pageType = c.enumColumn(pageType)
 	seo = c.oneHasOne(Seo, 'pageSeo')
-	bgImage = c.oneHasOne(Image)
 }
 @c.Unique('root', 'locale')
 export class PageLocale {

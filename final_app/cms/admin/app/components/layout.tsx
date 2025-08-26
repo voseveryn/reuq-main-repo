@@ -1,9 +1,10 @@
 import { memo, PropsWithChildren } from 'react'
 import { Navigation, UserNavigation } from './navigation'
-import { Link } from '@contember/interface'
+import { Field, Link } from '@contember/interface'
 import { Logo } from './logo'
-import { IdentityLoader } from '~/lib/binding'
+import { Binding, IdentityLoader } from '~/lib/binding'
 import { LayoutComponent, Slots } from '~/lib/layout'
+import { DimensionsSwitcher } from '~/lib/dimensions'
 
 export const Layout = memo(({ children }: PropsWithChildren) => {
 	return (
@@ -18,6 +19,13 @@ export const Layout = memo(({ children }: PropsWithChildren) => {
 
 				<Slots.Navigation>
 					<Navigation />
+					<Binding>
+					<div className="mb-4 mt-2">
+						<DimensionsSwitcher options="Locale" slugField="code" dimension="locale" isMulti={true}>
+							<Field field="label" />
+						</DimensionsSwitcher>
+					</div>
+				</Binding>
 				</Slots.Navigation>
 
 				<Slots.UserNavigation>

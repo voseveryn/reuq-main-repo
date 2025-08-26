@@ -10,6 +10,7 @@ import { useIsMobile } from '~/lib/utils/use-mobile'
 
 export const Navigation = () => (
 <Menu>
+	<MenuItem label="Stránky" to="page" />
 	<MenuItem label="Jazyky" to="locale" />
 </Menu>)
 

@@ -2,8 +2,36 @@
 	"formatVersion": 6,
 	"modifications": [
 		{
+			"modification": "updateEnum",
+			"enumName": "blockType",
+			"values": [
+				"text",
+				"hero",
+				"card",
+				"information",
+				"partners",
+				"team",
+				"solution",
+				"newsletter",
+				"contact",
+				"history"
+			]
+		},
+		{
+			"modification": "updateEnum",
+			"enumName": "pageType",
+			"values": [
+				"homePage",
+				"solutionPage",
+				"genericPage"
+			]
+		},
+		{
 			"modification": "createEntity",
 			"entity": {
+				"eventLog": {
+					"enabled": true
+				},
 				"name": "BlockProduct",
 				"primary": "id",
 				"primaryColumn": "id",
@@ -18,15 +46,15 @@
 					}
 				},
 				"unique": [],
-				"indexes": [],
-				"eventLog": {
-					"enabled": true
-				}
+				"indexes": []
 			}
 		},
 		{
 			"modification": "createEntity",
 			"entity": {
+				"eventLog": {
+					"enabled": true
+				},
 				"name": "BlockProductList",
 				"primary": "id",
 				"primaryColumn": "id",
@@ -41,10 +69,7 @@
 					}
 				},
 				"unique": [],
-				"indexes": [],
-				"eventLog": {
-					"enabled": true
-				}
+				"indexes": []
 			}
 		},
 		{
