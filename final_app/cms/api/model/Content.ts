@@ -6,6 +6,7 @@ import { Image, ImageList } from './Image';
 import { Link } from './Link';
 import { FooterItem, FooterLocale } from './Footer';
 import { TextList } from './TextList';
+import { ContactLocale } from './Contact';
 
 
 
@@ -18,6 +19,7 @@ export class Content {
 	blockContent = c.oneHasOneInverse(Block, 'content')
 	footerContent = c.oneHasOneInverse(FooterItem, 'content')
 	footerLinks = c.oneHasOneInverse(FooterLocale, 'links')
+	
 }
 
 @c.Allow(publicRole, {
