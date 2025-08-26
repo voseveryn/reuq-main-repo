@@ -16,69 +16,88 @@ import {
   RepeaterRemoveItemButton,
 } from "~/lib/repeater";
 import { RichText } from "../atoms/rich-text";
+import { LocalizedSlugField } from "../atoms/SlugField";
 
 const HomePage = Component(() => (
-  <BlockRepeater field="blocks">
-    <Block name="hero" label="Hero Sekce">
-      <InputField field="title" label="Nadpis" />
-      <InputField field="subtitle" label="Malý nadpis" />
-      <RichText field="text" label="Text v sekci" />
-      <ImageField baseField="image" urlField="url" label="Obrázek na pozádí" />
-    </Block>
-    <Block name="card" label="Karty">
-      <InputField field="title" label="Nadpis" />
-      <InputField field="subtitle" label="Malý nadpis" />
-      <TextareaField field="text" label="Text" />
-      <HasOne field="cardList">
-        <DefaultRepeater field="items" sortableBy="orderBy">
-          <InputField field="text" label="Nadpis" />
-          <ImageField baseField="image" urlField="url" label="Obrázek karty" />
+  <>
+    <BlockRepeater field="blocks">
+      <Block name="hero" label="Hero Sekce">
+        <InputField field="title" label="Nadpis" />
+        <InputField field="subtitle" label="Malý nadpis" />
+        <RichText field="text" label="Text v sekci" />
+        <ImageField
+          baseField="image"
+          urlField="url"
+          label="Obrázek na pozádí"
+        />
+      </Block>
+      <Block name="card" label="Karty">
+        <InputField field="title" label="Nadpis" />
+        <InputField field="subtitle" label="Malý nadpis" />
+        <TextareaField field="text" label="Text" />
+        <HasOne field="cardList">
+          <DefaultRepeater field="items" sortableBy="orderBy">
+            <InputField field="text" label="Nadpis" />
+            <ImageField
+              baseField="image"
+              urlField="url"
+              label="Obrázek karty"
+            />
+            <RepeaterItemActions>
+              <RepeaterRemoveItemButton />
+            </RepeaterItemActions>
+          </DefaultRepeater>
+        </HasOne>
+      </Block>
+      <Block name="information" label="Krátké info">
+        <InputField field="title" label="Nadpis" />
+        <RichText field="text" label="Text v sekci" />
+      </Block>
+      <Block name="partners" label="Partneří">
+        <InputField field="title" label="Nadpis" />
+        <DefaultRepeater field="imageList.items" sortableBy="order">
+          <ImageField
+            baseField="image"
+            urlField="url"
+            label="Položka v partnerech"
+          />
           <RepeaterItemActions>
             <RepeaterRemoveItemButton />
           </RepeaterItemActions>
         </DefaultRepeater>
-      </HasOne>
-    </Block>
-    <Block name="information" label="Krátké info">
-      <InputField field="title" label="Nadpis" />
-      <RichText field="text" label="Text v sekci" />
-    </Block>
-    <Block name="partners" label="Partneří">
-      <InputField field="title" label="Nadpis" />
-      <DefaultRepeater field="imageList.items" sortableBy="order">
-        <ImageField baseField="image" urlField="url" label="Položka v partnerech" />
-        <RepeaterItemActions>
-          <RepeaterRemoveItemButton />
-        </RepeaterItemActions>
-      </DefaultRepeater>
-    </Block>
-    <Block name="team" label="Tým">
+      </Block>
+      <Block name="team" label="Tým">
         <InputField field="title" label="Nadpis" />
         <InputField field="subtitle" label="PodNadpis" />
         <RichText field="text" label="Popis" />
         <HasOne field="cardList">
-        <DefaultRepeater field="items" sortableBy="orderBy">
-          <InputField field="title" label="Jméno" />
-          <InputField field="subtitle" label="Pozice" />
-          <ImageField baseField="image" urlField="url" label="Obrázek karty" />
-          <RepeaterItemActions>
-            <RepeaterRemoveItemButton />
-          </RepeaterItemActions>
-        </DefaultRepeater>
-      </HasOne>
-    </Block>
-    <Block name="history" label="Historie">
+          <DefaultRepeater field="items" sortableBy="orderBy">
+            <InputField field="title" label="Jméno" />
+            <InputField field="subtitle" label="Pozice" />
+            <ImageField
+              baseField="image"
+              urlField="url"
+              label="Obrázek karty"
+            />
+            <RepeaterItemActions>
+              <RepeaterRemoveItemButton />
+            </RepeaterItemActions>
+          </DefaultRepeater>
+        </HasOne>
+      </Block>
+      <Block name="history" label="Historie">
         <InputField field="title" label="Nadpis" />
         <HasOne field="textList">
-                        <DefaultRepeater field="items" sortableBy="order">
-                            <RichText field='text' label="Text" />
-                            <RepeaterItemActions>
-                                <RepeaterRemoveItemButton />
-                            </RepeaterItemActions>
-                        </DefaultRepeater>
-                    </HasOne>
-    </Block>
-  </BlockRepeater>
+          <DefaultRepeater field="items" sortableBy="order">
+            <RichText field="text" label="Text" />
+            <RepeaterItemActions>
+              <RepeaterRemoveItemButton />
+            </RepeaterItemActions>
+          </DefaultRepeater>
+        </HasOne>
+      </Block>
+    </BlockRepeater>
+  </>
 ));
 
 const SolutionPage = Component(() => (
@@ -104,17 +123,19 @@ export const PageForm = Component(() => (
       field="pageType"
       label="Typ Stránky"
       options={{
-        homepage: "Domací stránka",
+        homePage: "Domací stránka",
         solutionPage: "Řešení stránka",
         genericPage: "Generická stránka",
       }}
     />
-    <If condition="[pageType=homepage]">
+    <If condition="[pageType=homePage]">
       <SideDimensions
         dimension="locale"
         as="currentLocale"
         field="locales(locale.code=$currentLocale)"
       >
+        <InputField field="title" label="Název stránky" />
+        <LocalizedSlugField field={"url.url"} derivedFrom={["title"]} />
         <HomePage />
       </SideDimensions>
     </If>
@@ -124,6 +145,8 @@ export const PageForm = Component(() => (
         as="currentLocale"
         field="locales(locale.code=$currentLocale)"
       >
+        <InputField field="title" label="Název stránky" />
+        <LocalizedSlugField field={"url.url"} derivedFrom={["title"]} />
         <SolutionPage />
       </SideDimensions>
     </If>
@@ -133,6 +156,8 @@ export const PageForm = Component(() => (
         as="currentLocale"
         field="locales(locale.code=$currentLocale)"
       >
+        <InputField field="title" label="Název stránky" />
+        <LocalizedSlugField field={"url.url"} derivedFrom={["title"]} />
         <GenericPage />
       </SideDimensions>
     </If>
