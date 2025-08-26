@@ -3,6 +3,7 @@ import { BadgeCheckIcon, BellIcon, ChevronsUpDown, LogOutIcon } from 'lucide-rea
 import { dict } from '~/lib/dict'
 import { Avatar, AvatarFallback } from '~/lib/ui/avatar'
 import { AnchorButton, Button } from '~/lib/ui/button'
+import { Divider } from '~/lib/ui/divider'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '~/lib/ui/dropdown'
 import { Menu, MenuItem } from '~/lib/ui/menu'
 import { SidebarMenuButton } from '~/lib/ui/sidebar'
@@ -11,6 +12,10 @@ import { useIsMobile } from '~/lib/utils/use-mobile'
 export const Navigation = () => (
 <Menu>
 	<MenuItem label="Stránky" to="page" />
+	<Divider/>
+	<MenuItem label="Navigation" to="navigation" />
+	<MenuItem label="Footer" to="footer" />
+	<Divider/>
 	<MenuItem label="Jazyky" to="locale" />
 </Menu>)
 
