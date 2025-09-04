@@ -22,6 +22,7 @@ export const BlockFragment = queryBuilder.fragment('Block', (block) =>
 			),
 		)
         .$('image', ImageFragment)
+		.$('imageList', (it) => it.$$().$('items', {orderBy: [{order: 'asc'}]}, (it) => it.$$().$("image", ImageFragment)))
         .$('textList', (it) => it.$$().$('items', {orderBy: [{order: 'asc'}]}, (it) => it.$$().$('text')))
 )
 

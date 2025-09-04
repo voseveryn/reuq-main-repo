@@ -9,6 +9,10 @@ import { FooterFragment } from "../fragments/layout/FooterFragment"
 import { Navbar } from "../ui-components/layout/navigation"
 import { BlockListFragmentType } from "../fragments/content/BlockFragment";
 import '../globals.css'
+import HeroSection from "../ui-components/hero/hero-section"
+import CardSection from "../ui-components/cards/card-section"
+import InformationSection from "../ui-components/information/information-section"
+import PartnersSection from "../ui-components/partners/partners-section"
 
 type PageProps = {
     params: { page?: Array<string> }
@@ -27,11 +31,7 @@ const BlockRender: React.FC<BlockRenderProps> = ({ blocks }) => {
                 switch (block.type) {
                     case "hero":
                         return (
-                            <section key={idx}>
-                                <h1>{block.title}</h1>
-                                <p>{block.subtitle}</p>
-                                {/* Add more hero block rendering */}
-                            </section>
+                            <HeroSection key={idx} data={block} />
                         );
                     case "text":
                         return (
@@ -39,6 +39,18 @@ const BlockRender: React.FC<BlockRenderProps> = ({ blocks }) => {
                                 <p>{block.text}</p>
                             </div>
                         );
+                    case "card":
+                        return (
+                            <CardSection key={idx} data={block} />
+                        )
+                    case "information":
+                        return (
+                            <InformationSection key={idx} data={block} />
+                        )
+                    case "partners": 
+                        return (
+                            <PartnersSection key={block.id} data={block} />
+                        )
                     // Add more cases for other block types
                     default:
                         return null;
@@ -87,6 +99,8 @@ export default async function RootLayout(props: PageProps) {
             <body>
                 <Navbar data={navigation ?? undefined} />
                 <BlockRender blocks={blocks} />
+                <br />
+                <br />
             </body>
         </html>
     )
