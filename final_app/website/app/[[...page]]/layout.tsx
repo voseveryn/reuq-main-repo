@@ -13,6 +13,8 @@ import HeroSection from "../ui-components/hero/hero-section"
 import CardSection from "../ui-components/cards/card-section"
 import InformationSection from "../ui-components/information/information-section"
 import PartnersSection from "../ui-components/partners/partners-section"
+import TeamSection from "../ui-components/team/TeamSection"
+import HistorySection from "../ui-components/history/history-section"
 
 type PageProps = {
     params: { page?: Array<string> }
@@ -50,6 +52,14 @@ const BlockRender: React.FC<BlockRenderProps> = ({ blocks }) => {
                     case "partners": 
                         return (
                             <PartnersSection key={block.id} data={block} />
+                        )
+                    case "team": 
+                        return (
+                            <TeamSection key={block.id} data={block} />
+                        )
+                    case "history":
+                        return (
+                            <HistorySection key={block.id} data={block} />
                         )
                     // Add more cases for other block types
                     default:
