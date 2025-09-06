@@ -2,6 +2,7 @@ import { SlugField } from './extra-lib/field'
 import slugify from 'slugify'
 import { Component } from '@contember/interface'
 
+
 type LocalizedSlugFieldProps = {
 	field: string
 	derivedFrom: string[]
@@ -9,7 +10,7 @@ type LocalizedSlugFieldProps = {
 }
 
 export const LocalizedSlugField = Component<LocalizedSlugFieldProps>((props) => {
-	
+
 	return (
 		<SlugField
 			field={props.field}
@@ -17,11 +18,16 @@ export const LocalizedSlugField = Component<LocalizedSlugFieldProps>((props) => 
 			slugify={(value) => slugify(value, { lower: true })}
 			format={(accessors) => {
 				const parts = accessors.map(a => a.value).filter(Boolean)
-				return parts.join('-')
+				const slug = parts.join('-')
+				return props.prefix ? `${props.prefix}-${slug}` : slug
 			}}
 			persistedHardPrefix={(env) => {
 				const code = env.getVariableOrElse('currentLocaleCode', undefined)
-				return code ? `/${code}/${props.prefix == null ? '' : props.prefix + '/'}` : ''
+				if (!code) return ''
+				if (props.prefix) {
+					return `/${code}/${props.prefix}/`
+				}
+				return `/${code}/`
 			}}
 		/>
 	)

@@ -190,7 +190,7 @@ export const PageForm = Component(() => (
         field="locales(locale.code=$currentLocale)"
       >
         <InputField field="title" label="Název stránky" />
-        <LocalizedSlugField field={"url.url"} derivedFrom={["title"]} />
+        <LocalizedSlugField field={"url.url"} derivedFrom={["title"]} prefix="/solution/" />
         <SolutionPage />
       </SideDimensions>
     </If>
