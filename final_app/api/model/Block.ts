@@ -50,18 +50,12 @@ export class BlockHeroContentItem {
 }
 export class BlockProductList {
 	createdAt = c.dateTimeColumn().notNull().default('now')
-	products = c.oneHasMany(BlockProduct, 'list')
 	block = c.oneHasOneInverse(Block, 'productList')
-}
-
-export class BlockProduct {
-	createdAt = c.dateTimeColumn().notNull().default('now')
-	order = c.intColumn().notNull().default(0)
-
-	list = c.manyHasOne(BlockProductList, 'products')
 	subtitle = c.stringColumn()
-	product = c.manyHasOne(Product, 'blockProducts').setNullOnDelete()
+	order = c.intColumn().notNull().default(0)
+	product = c.oneHasMany(Product, 'blockProducts')
 }
+
 
 @c.Allow(publicRole, {
 	read: ['items'],

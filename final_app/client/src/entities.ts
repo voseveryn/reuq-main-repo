@@ -218,11 +218,13 @@ export type Contact <OverRelation extends string | never = never> = {
 	name: 'Contact'
 	unique:
 		| Omit<{ id: string}, OverRelation>
+		| Omit<{ unique: One}, OverRelation>
 		| Omit<{ mapImage: Image['unique']}, OverRelation>
 		| Omit<{ locales: ContactLocale['unique']}, OverRelation>
 	columns: {
 		id: string
 		createdAt: string
+		unique: One
 	}
 	hasOne: {
 		mapImage: Image
@@ -334,6 +336,27 @@ export type ContentReference <OverRelation extends string | never = never> = {
 		image: Image
 		link: Link
 		textList: TextList
+	}
+	hasMany: {
+	}
+	hasManyBy: {
+	}
+}
+export type Customer <OverRelation extends string | never = never> = {
+	name: 'Customer'
+	unique:
+		| Omit<{ id: string}, OverRelation>
+	columns: {
+		id: string
+		createdAt: string
+		name: string | null
+		lastName: string | null
+		phoneNumber: string | null
+		email: string | null
+		date: string | null
+		text: string | null
+	}
+	hasOne: {
 	}
 	hasMany: {
 	}
@@ -960,6 +983,7 @@ export type ContemberClientEntities = {
 	ContactLocale: ContactLocale
 	Content: Content
 	ContentReference: ContentReference
+	Customer: Customer
 	Footer: Footer
 	FooterItem: FooterItem
 	FooterItemList: FooterItemList

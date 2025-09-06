@@ -1,4 +1,4 @@
-import { Component, HasOne, If } from "@contember/interface";
+import { Component, Field, HasOne, If } from "@contember/interface";
 import { Block } from "@contember/react-block-repeater";
 import { BlockContent } from "@contember/react-slate-editor";
 import { SideDimensions } from "~/lib/dimensions";
@@ -6,6 +6,7 @@ import {
   FormLayout,
   ImageField,
   InputField,
+  MultiSelectField,
   RadioEnumField,
   TextareaField,
 } from "~/lib/form";
@@ -103,8 +104,51 @@ const HomePage = Component(() => (
 const SolutionPage = Component(() => (
   <BlockRepeater field="blocks">
     <Block name="hero" label="Hero Sekce">
-      t
+      <InputField field="title" label="Nadpis" />
+        <InputField field="subtitle" label="Malý nadpis" />
+        <RichText field="text" label="Text v sekci" />
+        <ImageField
+          baseField="image"
+          urlField="url"
+          label="Obrázek na pozádí"
+        />
     </Block>
+    <Block name="card" label="Karty">
+        <InputField field="title" label="Nadpis" />
+        <InputField field="subtitle" label="Malý nadpis" />
+        <TextareaField field="text" label="Text" />
+        <HasOne field="cardList">
+          <DefaultRepeater field="items" sortableBy="orderBy">
+            <InputField field="text" label="Nadpis" />
+            <ImageField
+              baseField="image"
+              urlField="url"
+              label="Obrázek karty"
+            />
+            <RepeaterItemActions>
+              <RepeaterRemoveItemButton />
+            </RepeaterItemActions>
+          </DefaultRepeater>
+        </HasOne>
+      </Block>
+      <Block name="products" label="Produkty">
+        <InputField field="title" label="Nadpis" />
+        <RichText field="text" label="Text v sekci" />
+        <HasOne field="productList">
+    <MultiSelectField
+      field="product"
+      label="Produkty"
+    >
+      <SideDimensions
+        dimension="locale"
+        as="currentLocale"
+        field="locales(locale.code=$currentLocale)"
+      >
+        <Field field="title"/>
+      </SideDimensions>
+    </MultiSelectField>
+  </HasOne>
+      </Block>
   </BlockRepeater>
 ));
 

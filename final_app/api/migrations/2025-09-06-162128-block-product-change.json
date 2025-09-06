@@ -1,0 +1,55 @@
+{
+	"formatVersion": 6,
+	"modifications": [
+		{
+			"modification": "removeEntity",
+			"entityName": "BlockProduct"
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "BlockProductList",
+			"field": {
+				"name": "subtitle",
+				"columnName": "subtitle",
+				"columnType": "text",
+				"nullable": true,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "BlockProductList",
+			"field": {
+				"name": "order",
+				"columnName": "order",
+				"columnType": "integer",
+				"nullable": false,
+				"type": "Integer",
+				"default": 0
+			},
+			"fillValue": 0,
+			"valueMigrationStrategy": "using"
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "Product",
+			"owningSide": {
+				"type": "ManyHasOne",
+				"name": "blockProducts",
+				"target": "BlockProductList",
+				"joiningColumn": {
+					"columnName": "block_products_id",
+					"onDelete": "restrict"
+				},
+				"nullable": true,
+				"inversedBy": "product"
+			},
+			"inverseSide": {
+				"type": "OneHasMany",
+				"name": "product",
+				"target": "Product",
+				"ownedBy": "blockProducts"
+			}
+		}
+	]
+}

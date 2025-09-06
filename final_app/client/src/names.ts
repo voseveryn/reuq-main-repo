@@ -328,11 +328,15 @@ export const ContemberClientNames: SchemaNames = {
         "locales": {
           "type": "many",
           "entity": "ContactLocale"
+        },
+        "unique": {
+          "type": "column"
         }
       },
       "scalars": [
         "id",
-        "createdAt"
+        "createdAt",
+        "unique"
       ]
     },
     "ContactItem": {
@@ -487,6 +491,45 @@ export const ContemberClientNames: SchemaNames = {
         "id",
         "createdAt",
         "type",
+        "text"
+      ]
+    },
+    "Customer": {
+      "name": "Customer",
+      "fields": {
+        "id": {
+          "type": "column"
+        },
+        "createdAt": {
+          "type": "column"
+        },
+        "name": {
+          "type": "column"
+        },
+        "lastName": {
+          "type": "column"
+        },
+        "phoneNumber": {
+          "type": "column"
+        },
+        "email": {
+          "type": "column"
+        },
+        "date": {
+          "type": "column"
+        },
+        "text": {
+          "type": "column"
+        }
+      },
+      "scalars": [
+        "id",
+        "createdAt",
+        "name",
+        "lastName",
+        "phoneNumber",
+        "email",
+        "date",
         "text"
       ]
     },
