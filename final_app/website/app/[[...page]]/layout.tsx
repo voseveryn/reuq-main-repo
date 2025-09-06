@@ -16,6 +16,9 @@ import PartnersSection from "../ui-components/partners/partners-section"
 import TeamSection from "../ui-components/team/TeamSection"
 import HistorySection from "../ui-components/history/history-section"
 import Footer from "../ui-components/layout/footer"
+import { ProductFragment } from "../fragments/content/ProductFragment"
+import Image from "next/image"
+import { renderRichText } from "../ui-components/atoms/RichTextRender"
 
 type PageProps = {
     params: { page?: Array<string> }
@@ -85,11 +88,12 @@ export default async function RootLayout(props: PageProps) {
         : `/${locale}`
 
     // Fetch page and specific navigation from CMS
-    const { page, navigation, footer } = await client.query({
-        page: queryBuilder.get('Page', byLocaleUrl(urlToMatch), PageFragment(locale)),
-        navigation: queryBuilder.get('Navigation', byUniqueOne, NavigationFragment(locale)),
-        footer: queryBuilder.get('Footer', byUniqueOne, FooterFragment(locale))
-    })
+    const { page, navigation, footer, products } = await client.query({
+    page: queryBuilder.get('Page', byLocaleUrl(urlToMatch), PageFragment(locale)),
+    navigation: queryBuilder.get('Navigation', byUniqueOne, NavigationFragment(locale)),
+    footer: queryBuilder.get('Footer', byUniqueOne, FooterFragment(locale)),
+    products: queryBuilder.list('Product', {}, ProductFragment(locale)),
+})
 
     // ...existing code...
 
@@ -113,6 +117,23 @@ export default async function RootLayout(props: PageProps) {
                 <br />
                 <br />
                 <Footer data={footer ?? undefined}/>
+                {products.map(product => (
+                    <div key={product.id}>
+                        <h2>{product.localesByLocale?.title}</h2>
+                        <h3>{product.localesByLocale?.infoLabel}</h3>
+                        <h3>{product.localesByLocale?.shortLabel}</h3>
+                        <p>{product.localesByLocale?.description}</p>
+                        {product.localesByLocale?.blocks.items.map((block, idx) => (
+                    <li key={block.id || idx}>
+                        {block.title}
+                        {block.subtitle}
+                        {renderRichText(block.text || "")}
+                        {/* You can add more block details here */}
+                    </li>
+                ))}
+                        <Image src={product.image?.url || '/placeholder.png'} alt={product.localesByLocale?.title || 'Product Image'} width={200} height={200} />
+                    </div>
+                ))}
             </body>
         </html>
     )
