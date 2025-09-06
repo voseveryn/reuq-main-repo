@@ -14,7 +14,7 @@ const HistorySection = ({ data }: Props) => {
   return <section>
     {data.title && (<h2>{data.title}</h2>)}
     {data.textList?.items.map((list)=> (
-        <div>{renderRichText(list.text || "")}</div>
+        <div key={list.id}>{renderRichText(list.text || "")}</div>
     ))}
   </section>;
 };

@@ -15,6 +15,7 @@ import InformationSection from "../ui-components/information/information-section
 import PartnersSection from "../ui-components/partners/partners-section"
 import TeamSection from "../ui-components/team/TeamSection"
 import HistorySection from "../ui-components/history/history-section"
+import Footer from "../ui-components/layout/footer"
 
 type PageProps = {
     params: { page?: Array<string> }
@@ -84,7 +85,7 @@ export default async function RootLayout(props: PageProps) {
         : `/${locale}`
 
     // Fetch page and specific navigation from CMS
-    const { page, navigation } = await client.query({
+    const { page, navigation, footer } = await client.query({
         page: queryBuilder.get('Page', byLocaleUrl(urlToMatch), PageFragment(locale)),
         navigation: queryBuilder.get('Navigation', byUniqueOne, NavigationFragment(locale)),
         footer: queryBuilder.get('Footer', byUniqueOne, FooterFragment(locale))
@@ -111,6 +112,7 @@ export default async function RootLayout(props: PageProps) {
                 <BlockRender blocks={blocks} />
                 <br />
                 <br />
+                <Footer data={footer ?? undefined}/>
             </body>
         </html>
     )

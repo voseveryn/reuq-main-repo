@@ -1,13 +1,12 @@
 import { c } from '@contember/schema-definition'
 import { Image } from './Image'
 import { Locale } from './Locale'
-import { Content } from './Content'
-import { TextList } from './TextList'
-
+import { one } from './enums'
 export class Contact {
     createdAt = c.dateTimeColumn().notNull().default('now')
     mapImage = c.oneHasOne(Image)
     locales = c.oneHasMany(ContactLocale, 'root')
+    unique = c.enumColumn(one).notNull().unique()
 }
 
 @c.Unique('root', 'locale')

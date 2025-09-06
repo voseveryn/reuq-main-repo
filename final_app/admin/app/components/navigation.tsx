@@ -8,15 +8,20 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import { Menu, MenuItem } from '~/lib/ui/menu'
 import { SidebarMenuButton } from '~/lib/ui/sidebar'
 import { useIsMobile } from '~/lib/utils/use-mobile'
+import { BookUserIcon, StickyNoteIcon, MapIcon, FootprintsIcon, ContactIcon, LanguagesIcon, AppleIcon } from 'lucide-react'
 
 export const Navigation = () => (
 <Menu>
-	<MenuItem label="Stránky" to="page" />
+	<MenuItem label="Zákazníci" icon={<BookUserIcon />} to="customer"  />
+	<MenuItem label="Produkty" icon={<AppleIcon />} to="products"  />
+	<Divider />
+	<MenuItem label="Stránky" icon={<StickyNoteIcon />} to="page" />
 	<Divider/>
-	<MenuItem label="Navigation" to="navigation" />
-	<MenuItem label="Footer" to="footer" />
+	<MenuItem label="Navigation" icon={<MapIcon />} to="navigation" />
+	<MenuItem label="Footer" icon={<FootprintsIcon />} to="footer" />
+	<MenuItem label="Kontakt" icon={<ContactIcon />} to="contact" />
 	<Divider/>
-	<MenuItem label="Jazyky" to="locale" />
+	<MenuItem label="Jazyky" icon={<LanguagesIcon />} to="locale" />
 </Menu>)
 
 export const UserNavigation = () => {

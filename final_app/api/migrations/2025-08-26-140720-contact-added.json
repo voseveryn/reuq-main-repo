@@ -9,6 +9,9 @@
 		{
 			"modification": "createEntity",
 			"entity": {
+				"eventLog": {
+					"enabled": true
+				},
 				"name": "Contact",
 				"primary": "id",
 				"primaryColumn": "id",
@@ -23,15 +26,15 @@
 					}
 				},
 				"unique": [],
-				"indexes": [],
-				"eventLog": {
-					"enabled": true
-				}
+				"indexes": []
 			}
 		},
 		{
 			"modification": "createEntity",
 			"entity": {
+				"eventLog": {
+					"enabled": true
+				},
 				"name": "ContactItem",
 				"primary": "id",
 				"primaryColumn": "id",
@@ -46,15 +49,15 @@
 					}
 				},
 				"unique": [],
-				"indexes": [],
-				"eventLog": {
-					"enabled": true
-				}
+				"indexes": []
 			}
 		},
 		{
 			"modification": "createEntity",
 			"entity": {
+				"eventLog": {
+					"enabled": true
+				},
 				"name": "ContactItemList",
 				"primary": "id",
 				"primaryColumn": "id",
@@ -69,15 +72,15 @@
 					}
 				},
 				"unique": [],
-				"indexes": [],
-				"eventLog": {
-					"enabled": true
-				}
+				"indexes": []
 			}
 		},
 		{
 			"modification": "createEntity",
 			"entity": {
+				"eventLog": {
+					"enabled": true
+				},
 				"name": "ContactLocale",
 				"primary": "id",
 				"primaryColumn": "id",
@@ -92,10 +95,7 @@
 					}
 				},
 				"unique": [],
-				"indexes": [],
-				"eventLog": {
-					"enabled": true
-				}
+				"indexes": []
 			}
 		},
 		{
@@ -111,6 +111,17 @@
 			},
 			"fillValue": "now",
 			"valueMigrationStrategy": "using"
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Contact",
+			"field": {
+				"name": "unique",
+				"columnName": "unique",
+				"columnType": "one",
+				"nullable": false,
+				"type": "Enum"
+			}
 		},
 		{
 			"modification": "createColumn",
@@ -281,6 +292,15 @@
 				"target": "ContactLocale",
 				"ownedBy": "itemList",
 				"nullable": true
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "Contact",
+			"unique": {
+				"fields": [
+					"unique"
+				]
 			}
 		},
 		{
