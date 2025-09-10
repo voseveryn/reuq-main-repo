@@ -11,11 +11,18 @@ type Props = {
 const InformationSection = ({ data }: Props) => {
     if (!data) return null;
 
-
   return (
-    <section>
-        {data.title && (<h2>{data.title}</h2>)}
-        {data.text && (<p>{renderRichText(data.text)}</p>)}
+    <section className="w-full h-auto bg-black text-white flex flex-col md:flex-row items-center justify-center p-6 text-center md:text-left">
+        {data.title && (
+          <h2 className="text-2xl font-bold mb-4 md:mb-0 md:mr-6">
+            {data.title}
+          </h2>
+        )}
+        {data.text && (
+          <p className="text-base md:text-lg">
+            {renderRichText(data.text)}
+          </p>
+        )}
     </section>
   )
 }

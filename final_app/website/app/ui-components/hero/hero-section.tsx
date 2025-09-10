@@ -15,28 +15,37 @@ const HeroSection = ({ data }: Props) => {
 
   return (
     <section
-      className="relative flex items-center justify-center min-h-[500px] rounded-2xl overflow-hidden mx-6 my-4"
+      className="relative grid grid-cols-1 md:grid-cols-2 items-center justify-center min-h-[500px] rounded-2xl overflow-hidden mx-6 my-4 gap-6"
     >
-      {/* Background Image */}
-      {data.image?.url && (
-        <Image
-          src={data.image.url}
-          alt="logo"
-          fill
-          className="object-cover z-0"
-          priority
-        />
-      )}
-      {/* Overlay for better text readability */}
+      {/* Left side (Text) */}
+      <div className="relative z-20 w-full flex flex-col justify-center items-center md:items-start text-center md:text-left text-white px-6 order-1">
+        <h3 className="text-lg font-medium mb-2">{data.subtitle}</h3>
+        <h2 className="text-4xl font-bold mb-4">{data.title}</h2>
+        <div className="hidden md:block text-base">{renderRichText(data.text || "")}</div>
+        <button className="hidden md:inline-block bg-white px-4 py-2 text-black mt-6 rounded-md cursor-pointer">
+          Click
+        </button>
+      </div>
+
+      {/* Right side (Image) */}
+      <div className="relative w-full h-[300px] md:h-full order-2 md:order-2">
+        {data.image?.url && (
+          <Image
+            src={data.image.url}
+            alt="logo"
+            fill
+            className="object-cover z-0 rounded-2xl"
+            priority
+          />
+        )}
         <div className="absolute inset-0 bg-black/40 z-10 rounded-2xl pointer-events-none" />
-      {/* Centered Content */}
-      <div className="relative z-20 w-full flex justify-center">
-        <div className="text-center text-white max-w-2xl w-full">
-          <h3 className="text-lg font-medium mb-2">{data.subtitle}</h3>
-          <h2 className="text-4xl font-bold mb-4">{data.title}</h2>
-          <div className="text-base">{renderRichText(data.text || "")}</div>
-          <button className="bg-white px-4 py-2 text-black mt-2 rounded-md cursor-pointer">Click</button>
-        </div>
+      </div>
+
+      {/* Mobile Button under image */}
+      <div className="w-full flex justify-center order-3 md:hidden">
+        <button className="bg-white px-4 py-2 text-black rounded-md cursor-pointer">
+          Click
+        </button>
       </div>
     </section>
   );

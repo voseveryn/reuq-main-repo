@@ -11,12 +11,28 @@ type Props = {
 const PartnersSection = ({ data }: Props) => {
   if (!data) return null;
 
-  return <section>
-    {data.title && <h2>{data.title}</h2>}
-    {data.imageList?.items.map((partner)=> <div key={partner.id}>
-        <Image src={partner.image?.url || ""} fill alt="" />
-    </div>)}
-  </section>;
+  return (
+    <section className="flex flex-col items-center justify-center text-center px-4 py-8">
+      {data.title && (
+        <h2 className="text-2xl md:text-3xl font-semibold mb-6">{data.title}</h2>
+      )}
+      <div className="flex flex-wrap justify-center gap-6 w-full max-w-6xl">
+        {data.imageList?.items.map((partner) => (
+          <div
+            key={partner.id}
+            className="relative w-32 h-20 md:w-40 md:h-24 flex-shrink-0"
+          >
+            <Image
+              src={partner.image?.url || ""}
+              fill
+              alt=""
+              className="object-contain"
+            />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 };
 
 export default PartnersSection;
