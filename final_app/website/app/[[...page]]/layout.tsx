@@ -117,23 +117,7 @@ export default async function RootLayout(props: PageProps) {
                 <br />
                 <br />
                 <Footer data={footer ?? undefined}/>
-                {products.map(product => (
-                    <div key={product.id}>
-                        <h2>{product.localesByLocale?.title}</h2>
-                        <h3>{product.localesByLocale?.infoLabel}</h3>
-                        <h3>{product.localesByLocale?.shortLabel}</h3>
-                        <p>{product.localesByLocale?.description}</p>
-                        {product.localesByLocale?.blocks.items.map((block, idx) => (
-                    <li key={block.id || idx}>
-                        {block.title}
-                        {block.subtitle}
-                        {renderRichText(block.text || "")}
-                        {/* You can add more block details here */}
-                    </li>
-                ))}
-                        <Image src={product.image?.url || '/placeholder.png'} alt={product.localesByLocale?.title || 'Product Image'} width={200} height={200} />
-                    </div>
-                ))}
+             
             </body>
         </html>
     )
