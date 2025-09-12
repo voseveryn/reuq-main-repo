@@ -9,6 +9,7 @@ export type BlockType =
 	 | "newsletter"
 	 | "contact"
 	 | "history"
+	 | "products"
 export type CardType = 
 	 | "timeline"
 	 | "quote"

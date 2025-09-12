@@ -157,37 +157,6 @@ export const ContemberClientNames: SchemaNames = {
         "createdAt"
       ]
     },
-    "BlockProduct": {
-      "name": "BlockProduct",
-      "fields": {
-        "id": {
-          "type": "column"
-        },
-        "createdAt": {
-          "type": "column"
-        },
-        "order": {
-          "type": "column"
-        },
-        "list": {
-          "type": "one",
-          "entity": "BlockProductList"
-        },
-        "subtitle": {
-          "type": "column"
-        },
-        "product": {
-          "type": "one",
-          "entity": "Product"
-        }
-      },
-      "scalars": [
-        "id",
-        "createdAt",
-        "order",
-        "subtitle"
-      ]
-    },
     "BlockProductList": {
       "name": "BlockProductList",
       "fields": {
@@ -197,18 +166,26 @@ export const ContemberClientNames: SchemaNames = {
         "createdAt": {
           "type": "column"
         },
-        "products": {
-          "type": "many",
-          "entity": "BlockProduct"
-        },
         "block": {
           "type": "one",
           "entity": "Block"
+        },
+        "subtitle": {
+          "type": "column"
+        },
+        "order": {
+          "type": "column"
+        },
+        "product": {
+          "type": "many",
+          "entity": "Product"
         }
       },
       "scalars": [
         "id",
-        "createdAt"
+        "createdAt",
+        "subtitle",
+        "order"
       ]
     },
     "Card": {
@@ -1111,8 +1088,8 @@ export const ContemberClientNames: SchemaNames = {
           "type": "column"
         },
         "blockProducts": {
-          "type": "many",
-          "entity": "BlockProduct"
+          "type": "one",
+          "entity": "BlockProductList"
         },
         "image": {
           "type": "one",
@@ -1402,7 +1379,8 @@ export const ContemberClientNames: SchemaNames = {
       "solution",
       "newsletter",
       "contact",
-      "history"
+      "history",
+      "products"
     ],
     "cardType": [
       "timeline",

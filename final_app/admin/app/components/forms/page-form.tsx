@@ -97,6 +97,21 @@ const HomePage = Component(() => (
           </DefaultRepeater>
         </HasOne>
       </Block>
+      <Block name="products" label="Produkty">
+      <InputField field="title" label="Nadpis" />
+      <RichText field="text" label="Text v sekci" />
+      <HasOne field="productList">
+        <MultiSelectField field="product" label="Produkty">
+          <SideDimensions
+            dimension="locale"
+            as="currentLocale"
+            field="locales(locale.code=$currentLocale)"
+          >
+            <Field field="title" />
+          </SideDimensions>
+        </MultiSelectField>
+      </HasOne>
+    </Block>
     </BlockRepeater>
   </>
 ));
@@ -105,50 +120,39 @@ const SolutionPage = Component(() => (
   <BlockRepeater field="blocks">
     <Block name="hero" label="Hero Sekce">
       <InputField field="title" label="Nadpis" />
-        <InputField field="subtitle" label="Malý nadpis" />
-        <RichText field="text" label="Text v sekci" />
-        <ImageField
-          baseField="image"
-          urlField="url"
-          label="Obrázek na pozádí"
-        />
+      <InputField field="subtitle" label="Malý nadpis" />
+      <RichText field="text" label="Text v sekci" />
+      <ImageField baseField="image" urlField="url" label="Obrázek na pozádí" />
     </Block>
     <Block name="card" label="Karty">
-        <InputField field="title" label="Nadpis" />
-        <InputField field="subtitle" label="Malý nadpis" />
-        <TextareaField field="text" label="Text" />
-        <HasOne field="cardList">
-          <DefaultRepeater field="items" sortableBy="orderBy">
-            <InputField field="text" label="Nadpis" />
-            <ImageField
-              baseField="image"
-              urlField="url"
-              label="Obrázek karty"
-            />
-            <RepeaterItemActions>
-              <RepeaterRemoveItemButton />
-            </RepeaterItemActions>
-          </DefaultRepeater>
-        </HasOne>
-      </Block>
-      <Block name="products" label="Produkty">
-        <InputField field="title" label="Nadpis" />
-        <RichText field="text" label="Text v sekci" />
-        <HasOne field="productList">
-    <MultiSelectField
-      field="product"
-      label="Produkty"
-    >
-      <SideDimensions
-        dimension="locale"
-        as="currentLocale"
-        field="locales(locale.code=$currentLocale)"
-      >
-        <Field field="title"/>
-      </SideDimensions>
-    </MultiSelectField>
-  </HasOne>
-      </Block>
+      <InputField field="title" label="Nadpis" />
+      <InputField field="subtitle" label="Malý nadpis" />
+      <TextareaField field="text" label="Text" />
+      <HasOne field="cardList">
+        <DefaultRepeater field="items" sortableBy="orderBy">
+          <InputField field="text" label="Nadpis" />
+          <ImageField baseField="image" urlField="url" label="Obrázek karty" />
+          <RepeaterItemActions>
+            <RepeaterRemoveItemButton />
+          </RepeaterItemActions>
+        </DefaultRepeater>
+      </HasOne>
+    </Block>
+    <Block name="products" label="Produkty">
+      <InputField field="title" label="Nadpis" />
+      <RichText field="text" label="Text v sekci" />
+      <HasOne field="productList">
+        <MultiSelectField field="product" label="Produkty">
+          <SideDimensions
+            dimension="locale"
+            as="currentLocale"
+            field="locales(locale.code=$currentLocale)"
+          >
+            <Field field="title" />
+          </SideDimensions>
+        </MultiSelectField>
+      </HasOne>
+    </Block>
   </BlockRepeater>
 ));
 
@@ -190,7 +194,11 @@ export const PageForm = Component(() => (
         field="locales(locale.code=$currentLocale)"
       >
         <InputField field="title" label="Název stránky" />
-        <LocalizedSlugField field={"url.url"} derivedFrom={["title"]} prefix="/solution/" />
+        <LocalizedSlugField
+          field={"url.url"}
+          derivedFrom={["title"]}
+          prefix="/solution/"
+        />
         <SolutionPage />
       </SideDimensions>
     </If>

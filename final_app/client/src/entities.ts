@@ -113,42 +113,31 @@ export type BlockList <OverRelation extends string | never = never> = {
 		itemsByProductList: { entity: Block; by: {productList: BlockProductList['unique']}  }
 	}
 }
-export type BlockProduct <OverRelation extends string | never = never> = {
-	name: 'BlockProduct'
-	unique:
-		| Omit<{ id: string}, OverRelation>
-	columns: {
-		id: string
-		createdAt: string
-		order: number
-		subtitle: string | null
-	}
-	hasOne: {
-		list: BlockProductList
-		product: Product
-	}
-	hasMany: {
-	}
-	hasManyBy: {
-	}
-}
 export type BlockProductList <OverRelation extends string | never = never> = {
 	name: 'BlockProductList'
 	unique:
 		| Omit<{ id: string}, OverRelation>
-		| Omit<{ products: BlockProduct['unique']}, OverRelation>
 		| Omit<{ block: Block['unique']}, OverRelation>
+		| Omit<{ product: Product['unique']}, OverRelation>
 	columns: {
 		id: string
 		createdAt: string
+		subtitle: string | null
+		order: number
 	}
 	hasOne: {
 		block: Block
 	}
 	hasMany: {
-		products: BlockProduct<'list'>
+		product: Product<'blockProducts'>
 	}
 	hasManyBy: {
+		productByImage: { entity: Product; by: {image: Image['unique']}  }
+		productByImageList: { entity: Product; by: {imageList: ImageList['unique']}  }
+		productByIcon: { entity: Product; by: {icon: Image['unique']}  }
+		productByMediaList: { entity: Product; by: {mediaList: ImageList['unique']}  }
+		productByLocales: { entity: Product; by: {locales: ProductLocale['unique']}  }
+		productBySeo: { entity: Product; by: {seo: Seo['unique']}  }
 	}
 }
 export type Card <OverRelation extends string | never = never> = {
@@ -783,7 +772,6 @@ export type Product <OverRelation extends string | never = never> = {
 	name: 'Product'
 	unique:
 		| Omit<{ id: string}, OverRelation>
-		| Omit<{ blockProducts: BlockProduct['unique']}, OverRelation>
 		| Omit<{ image: Image['unique']}, OverRelation>
 		| Omit<{ imageList: ImageList['unique']}, OverRelation>
 		| Omit<{ icon: Image['unique']}, OverRelation>
@@ -795,6 +783,7 @@ export type Product <OverRelation extends string | never = never> = {
 		createdAt: string
 	}
 	hasOne: {
+		blockProducts: BlockProductList
 		image: Image
 		imageList: ImageList
 		icon: Image
@@ -802,7 +791,6 @@ export type Product <OverRelation extends string | never = never> = {
 		seo: Seo
 	}
 	hasMany: {
-		blockProducts: BlockProduct<'product'>
 		locales: ProductLocale<'root'>
 	}
 	hasManyBy: {
@@ -972,7 +960,6 @@ export type ContemberClientEntities = {
 	BlockHeroContent: BlockHeroContent
 	BlockHeroContentItem: BlockHeroContentItem
 	BlockList: BlockList
-	BlockProduct: BlockProduct
 	BlockProductList: BlockProductList
 	Card: Card
 	CardList: CardList

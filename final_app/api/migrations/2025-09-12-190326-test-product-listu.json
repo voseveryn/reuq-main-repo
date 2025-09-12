@@ -1,0 +1,22 @@
+{
+	"formatVersion": 6,
+	"modifications": [
+		{
+			"modification": "updateEnum",
+			"enumName": "blockType",
+			"values": [
+				"text",
+				"hero",
+				"card",
+				"information",
+				"partners",
+				"team",
+				"solution",
+				"newsletter",
+				"contact",
+				"history",
+				"products"
+			]
+		}
+	]
+}

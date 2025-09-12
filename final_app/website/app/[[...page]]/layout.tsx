@@ -19,6 +19,8 @@ import Footer from "../ui-components/layout/footer"
 import { ProductFragment } from "../fragments/content/ProductFragment"
 import Image from "next/image"
 import { renderRichText } from "../ui-components/atoms/RichTextRender"
+import ProductList from "../ui-components/products/product-list"
+import ProductDetail from "../ui-components/products/product-detail"
 
 type PageProps = {
     params: { page?: Array<string> }
@@ -65,6 +67,10 @@ const BlockRender: React.FC<BlockRenderProps> = ({ blocks }) => {
                         return (
                             <HistorySection key={block.id} data={block} />
                         )
+                    case "products":
+                        return (
+                            <ProductList key={block.id} data={block} />
+                        )
                     // Add more cases for other block types
                     default:
                         return null;
@@ -88,18 +94,18 @@ export default async function RootLayout(props: PageProps) {
         : `/${locale}`
 
     // Fetch page and specific navigation from CMS
-    const { page, navigation, footer, products } = await client.query({
+    const { page, navigation, footer, product } = await client.query({
     page: queryBuilder.get('Page', byLocaleUrl(urlToMatch), PageFragment(locale)),
     navigation: queryBuilder.get('Navigation', byUniqueOne, NavigationFragment(locale)),
     footer: queryBuilder.get('Footer', byUniqueOne, FooterFragment(locale)),
-    products: queryBuilder.list('Product', {}, ProductFragment(locale)),
+    product: queryBuilder.get('Product', byLocaleUrl(urlToMatch), ProductFragment('cs') )
 })
 
     // ...existing code...
 
    
     if (!page) {
-        return notFound();
+        return "";
     }
 
     // Safely extract blocks, defaulting to empty array if missing
@@ -113,11 +119,8 @@ export default async function RootLayout(props: PageProps) {
         <html>
             <body>
                 <Navbar data={navigation ?? undefined} />
-                <BlockRender blocks={blocks} />
-                <br />
-                <br />
+                {product != null ? <ProductDetail data={product} /> : <BlockRender blocks={blocks} /> }
                 <Footer data={footer ?? undefined}/>
-             
             </body>
         </html>
     )

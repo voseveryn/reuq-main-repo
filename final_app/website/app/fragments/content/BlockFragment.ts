@@ -1,5 +1,6 @@
 import { type FragmentType, queryBuilder } from "../../../../client/src";
 import { ImageFragment } from "../atoms/ImageFragment";
+import { ProductFragment } from "./ProductFragment";
 
 export const BlockFragment = queryBuilder.fragment('Block', (block) =>
     block
@@ -20,11 +21,14 @@ export const BlockFragment = queryBuilder.fragment('Block', (block) =>
 				},
 				(it) => it.$$().$('points', { orderBy: [{ order: 'asc' }] }, (it) => it.$$()).$('image', ImageFragment),
 			),
-		)
+		) 
         .$('image', ImageFragment)
 		.$('imageList', (it) => it.$$().$('items', {orderBy: [{order: 'asc'}]}, (it) => it.$$().$("image", ImageFragment)))
         .$('textList', (it) => it.$$().$('items', {orderBy: [{order: 'asc'}]}, (it) => it.$$().$('text')))
+		.$('productList', (it) =>it.$$().$('subtitle').$('order').$('product', ProductFragment('cs'))
 )
+	)
+
 
 export const BlockListFragment = queryBuilder.fragment('BlockList', (it) =>
 	it.$$().$(
