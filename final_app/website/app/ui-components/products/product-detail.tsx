@@ -12,6 +12,7 @@ type Props = {
 
 const ProductDetail = ({ data }: Props) => {
   if (!data) return null;
+  debugger
 
   const locale = data.localesByLocale;
 
@@ -51,7 +52,7 @@ const ProductDetail = ({ data }: Props) => {
       {/* případné další pole */}
       <div className="mt-6">
         <Link href={locale?.url?.url || '/'}>
-          <a className="text-sm text-gray-600 hover:underline">Zpět</a>
+          Zpět
         </Link>
       </div>
     </section>

@@ -43,3 +43,16 @@ export const byLocaleUrl = (urlToMatch: string) => {
 		},
 	} as const
 }
+
+const normalizePath = (p: string) => (p.startsWith("/") ? p : `/${p}`)
+
+export const byProductUrl = (urlToMatch: string) =>
+  ({
+    by: {
+      locales: {
+          url: {
+          url: normalizePath(urlToMatch),
+        },
+      },
+    },
+  } as const)

@@ -30,7 +30,7 @@ const ProductList = ({ data }: Props) => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {data.productList?.product?.map((item) => (
-            <article className="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm hover:shadow-lg transition-shadow">
+            <article key={item.id} className="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm hover:shadow-lg transition-shadow">
               <Link href={item.localesByLocale?.url?.url || ""}>{item.localesByLocale?.url?.url}</Link>
               {item.image && (
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100">

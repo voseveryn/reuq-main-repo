@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import { ContemberClient } from "../contember"
 import { queryBuilder } from "../../../client/src"
-import { byLocale, byLocaleUrl } from "../fragments/utils/filters"
+import { byLocale, byLocaleUrl, byProductUrl } from "../fragments/utils/filters"
 import { PageFragment, PageFragmentType } from "../fragments/pages/PageFragment"
 import { NavigationFragment } from "../fragments/layout/NavigationFragment"
 import { byUniqueOne } from "../fragments/utils/filters"
@@ -21,6 +21,7 @@ import Image from "next/image"
 import { renderRichText } from "../ui-components/atoms/RichTextRender"
 import ProductList from "../ui-components/products/product-list"
 import ProductDetail from "../ui-components/products/product-detail"
+
 
 type PageProps = {
     params: { page?: Array<string> }
@@ -98,30 +99,28 @@ export default async function RootLayout(props: PageProps) {
     page: queryBuilder.get('Page', byLocaleUrl(urlToMatch), PageFragment(locale)),
     navigation: queryBuilder.get('Navigation', byUniqueOne, NavigationFragment(locale)),
     footer: queryBuilder.get('Footer', byUniqueOne, FooterFragment(locale)),
-    product: queryBuilder.get('Product', byLocaleUrl(urlToMatch), ProductFragment('cs') )
+    product: queryBuilder.get('Product', byLocaleUrl(urlToMatch), ProductFragment(locale))
 })
 
-    // ...existing code...
+    
 
    
-    if (!page) {
-        return "";
-    }
+    if (!page && !product) {
+  return notFound();
+}
 
-    // Safely extract blocks, defaulting to empty array if missing
-    const blocks =
-        page.localesByLocale?.blocks?.items ??
-        [];
 
-// ...existing code...
 
-    return (
-        <html>
-            <body>
-                <Navbar data={navigation ?? undefined} />
-                {product != null ? <ProductDetail data={product} /> : <BlockRender blocks={blocks} /> }
-                <Footer data={footer ?? undefined}/>
-            </body>
-        </html>
-    )
+const blocks = page?.localesByLocale?.blocks?.items ?? [];
+
+return (
+  <html>
+    <body>
+        <Navbar data={navigation ?? undefined} />
+        {product != null ? <ProductDetail data={product} />: <BlockRender blocks={blocks} />}
+        {product === null ? "pravda" : "lež"}
+        <Footer data={footer ?? undefined} />
+        </body>
+  </html>
+)
 }
