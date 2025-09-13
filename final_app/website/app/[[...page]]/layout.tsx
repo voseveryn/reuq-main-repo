@@ -116,7 +116,7 @@ const blocks = page?.localesByLocale?.blocks?.items ?? [];
 return (
   <html>
     <body>
-        <Navbar data={navigation ?? undefined} />
+        <Navbar data={navigation ?? undefined} locale={locale} />
         {product != null ? <ProductDetail data={product} />: <BlockRender blocks={blocks} />}
         {product === null ? "pravda" : "lež"}
         <Footer data={footer ?? undefined} />
