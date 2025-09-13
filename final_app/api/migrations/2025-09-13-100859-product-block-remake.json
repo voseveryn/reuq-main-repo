@@ -1,0 +1,238 @@
+{
+	"formatVersion": 6,
+	"modifications": [
+		{
+			"modification": "removeField",
+			"entityName": "BlockList",
+			"fieldName": "productBlocks"
+		},
+		{
+			"modification": "removeField",
+			"entityName": "ProductLocale",
+			"fieldName": "blocks"
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "ProductBlock",
+				"primary": "id",
+				"primaryColumn": "id",
+				"tableName": "product_block",
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"columnType": "uuid",
+						"nullable": false,
+						"type": "Uuid"
+					}
+				},
+				"unique": [],
+				"indexes": [],
+				"eventLog": {
+					"enabled": true
+				}
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"name": "ProductBlockList",
+				"primary": "id",
+				"primaryColumn": "id",
+				"tableName": "product_block_list",
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"columnType": "uuid",
+						"nullable": false,
+						"type": "Uuid"
+					}
+				},
+				"unique": [],
+				"indexes": [],
+				"eventLog": {
+					"enabled": true
+				}
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "ProductBlock",
+			"field": {
+				"name": "createdAt",
+				"columnName": "created_at",
+				"columnType": "timestamptz",
+				"nullable": false,
+				"type": "DateTime",
+				"default": "now"
+			},
+			"fillValue": "now",
+			"valueMigrationStrategy": "using"
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "ProductBlock",
+			"field": {
+				"name": "order",
+				"columnName": "order",
+				"columnType": "integer",
+				"nullable": false,
+				"type": "Integer"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "ProductBlock",
+			"field": {
+				"name": "type",
+				"columnName": "type",
+				"columnType": "blockType",
+				"nullable": true,
+				"type": "Enum"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "ProductBlock",
+			"field": {
+				"name": "title",
+				"columnName": "title",
+				"columnType": "text",
+				"nullable": true,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "ProductBlock",
+			"field": {
+				"name": "subtitle",
+				"columnName": "subtitle",
+				"columnType": "text",
+				"nullable": true,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "ProductBlock",
+			"field": {
+				"name": "text",
+				"columnName": "text",
+				"columnType": "text",
+				"nullable": true,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "ProductBlockList",
+			"field": {
+				"name": "createdAt",
+				"columnName": "created_at",
+				"columnType": "timestamptz",
+				"nullable": false,
+				"type": "DateTime",
+				"default": "now"
+			},
+			"fillValue": "now",
+			"valueMigrationStrategy": "using"
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "ProductBlock",
+			"owningSide": {
+				"type": "ManyHasOne",
+				"name": "list",
+				"target": "ProductBlockList",
+				"joiningColumn": {
+					"columnName": "list_id",
+					"onDelete": "cascade"
+				},
+				"nullable": false,
+				"inversedBy": "items"
+			},
+			"inverseSide": {
+				"type": "OneHasMany",
+				"name": "items",
+				"target": "ProductBlock",
+				"ownedBy": "list",
+				"orderBy": [
+					{
+						"path": [
+							"order"
+						],
+						"direction": "asc"
+					}
+				]
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "ProductBlock",
+			"owningSide": {
+				"type": "ManyHasOne",
+				"name": "imageList",
+				"target": "ImageList",
+				"joiningColumn": {
+					"columnName": "image_list_id",
+					"onDelete": "restrict"
+				},
+				"nullable": true,
+				"inversedBy": "productBlocks"
+			},
+			"inverseSide": {
+				"type": "OneHasMany",
+				"name": "productBlocks",
+				"target": "ProductBlock",
+				"ownedBy": "imageList"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "ProductBlock",
+			"owningSide": {
+				"type": "OneHasOne",
+				"name": "supportedProducts",
+				"target": "BlockProductList",
+				"joiningColumn": {
+					"columnName": "supported_products_id",
+					"onDelete": "restrict"
+				},
+				"nullable": true,
+				"inversedBy": "productBlock"
+			},
+			"inverseSide": {
+				"type": "OneHasOne",
+				"name": "productBlock",
+				"target": "ProductBlock",
+				"ownedBy": "supportedProducts",
+				"nullable": true
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "ProductLocale",
+			"owningSide": {
+				"type": "OneHasOne",
+				"name": "blocks",
+				"target": "ProductBlockList",
+				"joiningColumn": {
+					"columnName": "blocks_id",
+					"onDelete": "restrict"
+				},
+				"nullable": true,
+				"inversedBy": "productBlocks"
+			},
+			"inverseSide": {
+				"type": "OneHasOne",
+				"name": "productBlocks",
+				"target": "ProductLocale",
+				"ownedBy": "blocks",
+				"nullable": true
+			}
+		}
+	]
+}

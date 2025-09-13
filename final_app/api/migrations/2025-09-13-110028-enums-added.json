@@ -1,0 +1,209 @@
+{
+	"formatVersion": 6,
+	"modifications": [
+		{
+			"modification": "createEnum",
+			"enumName": "alignContent",
+			"values": [
+				"left",
+				"center",
+				"right"
+			]
+		},
+		{
+			"modification": "createEnum",
+			"enumName": "blockVariantion",
+			"values": [
+				"one",
+				"two",
+				"three",
+				"four",
+				"five"
+			]
+		},
+		{
+			"modification": "createEnum",
+			"enumName": "colorVariantion",
+			"values": [
+				"classic",
+				"reverse",
+				"grey"
+			]
+		},
+		{
+			"modification": "createEnum",
+			"enumName": "directionVariantion",
+			"values": [
+				"horizontal",
+				"vertical"
+			]
+		},
+		{
+			"modification": "updateEnum",
+			"enumName": "blockType",
+			"values": [
+				"text",
+				"hero",
+				"card",
+				"information",
+				"partners",
+				"team",
+				"solution",
+				"newsletter",
+				"contact",
+				"history",
+				"products",
+				"imageList"
+			]
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Block",
+			"field": {
+				"name": "align",
+				"columnName": "align",
+				"columnType": "alignContent",
+				"nullable": true,
+				"type": "Enum"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Block",
+			"field": {
+				"name": "blockVariation",
+				"columnName": "block_variation",
+				"columnType": "blockVariantion",
+				"nullable": true,
+				"type": "Enum"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Block",
+			"field": {
+				"name": "colorVariantion",
+				"columnName": "color_variantion",
+				"columnType": "colorVariantion",
+				"nullable": true,
+				"type": "Enum"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "Block",
+			"field": {
+				"name": "directionVariantion",
+				"columnName": "direction_variantion",
+				"columnType": "directionVariantion",
+				"nullable": true,
+				"type": "Enum"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "ProductBlock",
+			"field": {
+				"name": "align",
+				"columnName": "align",
+				"columnType": "alignContent",
+				"nullable": true,
+				"type": "Enum"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "ProductBlock",
+			"field": {
+				"name": "blockVariation",
+				"columnName": "block_variation",
+				"columnType": "blockVariantion",
+				"nullable": true,
+				"type": "Enum"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "ProductBlock",
+			"field": {
+				"name": "colorVariantion",
+				"columnName": "color_variantion",
+				"columnType": "colorVariantion",
+				"nullable": true,
+				"type": "Enum"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "ProductBlock",
+			"field": {
+				"name": "directionVariantion",
+				"columnName": "direction_variantion",
+				"columnType": "directionVariantion",
+				"nullable": true,
+				"type": "Enum"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "ProductBlock",
+			"owningSide": {
+				"type": "OneHasOne",
+				"name": "textList",
+				"target": "TextList",
+				"joiningColumn": {
+					"columnName": "text_list_id",
+					"onDelete": "restrict"
+				},
+				"nullable": true,
+				"inversedBy": "productBlock"
+			},
+			"inverseSide": {
+				"type": "OneHasOne",
+				"name": "productBlock",
+				"target": "ProductBlock",
+				"ownedBy": "textList",
+				"nullable": true
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "ProductBlock",
+			"owningSide": {
+				"type": "OneHasOne",
+				"name": "image",
+				"target": "Image",
+				"joiningColumn": {
+					"columnName": "image_id",
+					"onDelete": "restrict"
+				},
+				"nullable": true
+			}
+		},
+		{
+			"modification": "patchAclSchema",
+			"patch": [
+				{
+					"op": "add",
+					"path": "/roles/public/entities/Block/operations/read/align",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/Block/operations/read/blockVariation",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/Block/operations/read/colorVariantion",
+					"value": true
+				},
+				{
+					"op": "add",
+					"path": "/roles/public/entities/Block/operations/read/directionVariantion",
+					"value": true
+				}
+			]
+		}
+	]
+}

@@ -4,6 +4,8 @@ import { Seo } from './Seo'
 import { Url } from './Url'
 import { Locale } from './Locale'
 import { BlockList, BlockProductList } from './Block'
+import { alignContent, blockType, blockVariantion, colorVariantion, directionVariantion } from './enums'
+import { TextList } from './TextList'
 
 export class Product {
 	createdAt = c.dateTimeColumn().notNull().default('now')
@@ -33,5 +35,28 @@ export class ProductLocale {
 
 	root = c.manyHasOne(Product, 'locales').notNull().cascadeOnDelete()
 	locale = c.manyHasOne(Locale, 'product').notNull().cascadeOnDelete()
-	blocks = c.oneHasOne(BlockList, 'productBlocks')
+	blocks = c.oneHasOne(ProductBlockList, 'productBlocks')
+}
+export class ProductBlockList {
+	createdAt = c.dateTimeColumn().notNull().default('now')
+	items = c.oneHasMany(ProductBlock, 'list').orderBy(['order'])
+	productBlocks = c.oneHasOneInverse(ProductLocale, 'blocks')
+}
+
+export class ProductBlock {
+		createdAt = c.dateTimeColumn().notNull().default('now')
+		order = c.intColumn().notNull()
+		type = c.enumColumn(blockType)
+		align = c.enumColumn(alignContent)
+		blockVariation = c.enumColumn(blockVariantion)
+		colorVariantion = c.enumColumn(colorVariantion)
+		directionVariantion = c.enumColumn(directionVariantion)
+		list = c.manyHasOne(ProductBlockList, 'items').notNull().cascadeOnDelete()
+		title = c.stringColumn()
+		subtitle = c.stringColumn()
+		text = c.stringColumn()
+		image = c.oneHasOne(Image)
+		imageList = c.manyHasOne(ImageList, 'productBlocks')
+		supportedProducts = c.oneHasOne(BlockProductList, 'productBlock')
+		textList = c.oneHasOne(TextList, "productBlock");
 }

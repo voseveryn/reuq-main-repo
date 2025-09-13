@@ -4,6 +4,7 @@ import { Block } from './Block'
 import { ContentReference } from './Content'
 import { Image } from './Image'
 import { textListType } from './enums'
+import { ProductBlock } from './Product'
 
 
 export class TextList {
@@ -12,6 +13,7 @@ export class TextList {
     card = c.oneHasMany(Card, 'textList')
     type = c.enumColumn(textListType)
     block = c.oneHasOneInverse(Block, 'textList')
+    productBlock = c.oneHasOneInverse(ProductBlock, 'textList')
     contentReferenceTextList = c.oneHasMany(ContentReference, 'textList')
     items = c.oneHasMany(TextListItem, 'list')
 }

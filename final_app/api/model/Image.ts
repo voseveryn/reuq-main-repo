@@ -9,7 +9,7 @@ import { Footer } from './Footer'
 import { Locale } from './Locale';
 import { Card } from './Card';
 import { TextListItem } from './TextList';
-import { Page } from './Page';
+import { ProductBlock } from './Product';
 
 
 @c.Allow(publicRole, {
@@ -50,6 +50,7 @@ export class ImageList {
 	createdAt = c.dateTimeColumn().notNull().default('now')
 	contentReference = c.oneHasOneInverse(ContentReference, 'imageList')
 	block = c.oneHasMany(Block, 'imageList')
+	productBlocks = c.oneHasMany(ProductBlock, 'imageList' )
 	items = c.oneHasMany(ImageItem, 'imageItem')
 }
 
