@@ -24,6 +24,13 @@ import {
 import { BlockRepeater } from "~/lib/plugins";
 import { Block } from "@contember/react-block-repeater";
 import { LocalizedSlugField } from "../atoms/SlugField";
+import {
+  AppleIcon,
+  BookImageIcon,
+  FileType2Icon,
+  HistoryIcon,
+  NewspaperIcon,
+} from "lucide-react";
 
 export const ProductForm = Component(() => (
   <FormLayout>
@@ -39,39 +46,52 @@ export const ProductForm = Component(() => (
       <InputField field="infoLabel" label="Informační popis" />
       <TextareaField field="description" label="Popis" />
       <BlockRepeater field="blocks">
-        <Block name="text" label="Textová sekce">
-          <RadioEnumField
-            field="align"
-            label="Zarovnání"
-            defaultValue="left"
-            options={{
-              left: <>Vlevo</>,
-              center: <>Střed</>,
-              right: <>Vpravo</>,
-            }}
-            orientation="horizontal"
-          />
-		  <RadioEnumField
-            field="colorVariantion"
-            label="Barvy"
-            defaultValue="classic"
-            options={{
-              classic: <>Klasické barvy</>,
-              reverse: <>Obráceně</>,
-              grey: <>Lehce šedivé pozadí</>,
-            }}
-            orientation="vertical"
-          />
-          <RadioEnumField
-            field="blockVariation"
-            label="Typ Blocku"
-            defaultValue="one"
-            options={{
-              one: <>Text s obrázkem</>,
-              two: <>Pouze Text</>,
-            }}
-            orientation="horizontal"
-          />
+        <Block
+          name="text"
+          label={
+            <>
+              <FileType2Icon /> Textová sekce
+            </>
+          }
+        >
+          <div className="bg-rose-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
+			<RadioEnumField
+              field="blockVariation"
+              label="Typ Blocku"
+              defaultValue="one"
+              options={{
+                one: <>Text s obrázkem</>,
+                two: <>Pouze Text</>,
+              }}
+              orientation="horizontal"
+            />
+          </div>
+          <div className="bg-slate-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
+            <RadioEnumField
+              field="colorVariantion"
+              label="Barvy"
+              defaultValue="classic"
+              options={{
+                classic: <>Klasické barvy</>,
+                reverse: <>Obráceně</>,
+                grey: <>Lehce šedivé pozadí</>,
+              }}
+              orientation="vertical"
+            />
+          </div>
+          <div className="bg-neutral-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
+            <RadioEnumField
+              field="align"
+              label="Zarovnání"
+              defaultValue="left"
+              options={{
+                left: <>Vlevo</>,
+                center: <>Střed</>,
+                right: <>Vpravo</>,
+              }}
+              orientation="horizontal"
+            />
+          </div>
 
           <If condition="[blockVariation = one]">
             <InputField field="title" label="Nadpis" />
@@ -89,8 +109,16 @@ export const ProductForm = Component(() => (
             <RichText field="text" label="Text" />
           </If>
         </Block>
-        <Block name="imageList" label="Gallery">
-          <RadioEnumField
+        <Block
+          name="imageList"
+          label={
+            <>
+              <BookImageIcon /> Gallery
+            </>
+          }
+        >
+          <div className="bg-rose-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
+			<RadioEnumField
             field="blockVariation"
             label="Typ Blocku"
             defaultValue="one"
@@ -100,6 +128,20 @@ export const ProductForm = Component(() => (
             }}
             orientation="horizontal"
           />
+		  </div>
+		  <div className="bg-slate-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
+            <RadioEnumField
+              field="colorVariantion"
+              label="Barvy"
+              defaultValue="classic"
+              options={{
+                classic: <>Klasické barvy</>,
+                reverse: <>Obráceně</>,
+                grey: <>Lehce šedivé pozadí</>,
+              }}
+              orientation="vertical"
+            />
+          </div>
           <If condition="[blockVariation = one]">
             <InputField field="title" label="Nadpis" />
             <InputField field="subtitle" label="PodNadpis" />
@@ -127,28 +169,40 @@ export const ProductForm = Component(() => (
             </DefaultRepeater>
           </If>
         </Block>
-        <Block name="history" label="Timeline">
-          <RadioEnumField
-            field="blockVariation"
-            label="Typ Blocku"
-            defaultValue="one"
-            options={{
-              one: <>Text s Timeline</>,
-              two: <>Pouze TimeLine</>,
-            }}
-            orientation="horizontal"
-          />
-		  <RadioEnumField
-            field="colorVariantion"
-            label="Barvy"
-            defaultValue="classic"
-            options={{
-              classic: <>Klasické barvy</>,
-              reverse: <>Obráceně</>,
-              grey: <>Lehce šedivé pozadí</>,
-            }}
-            orientation="vertical"
-          />
+        <Block
+          name="history"
+          label={
+            <>
+              <HistoryIcon /> Timeline
+            </>
+          }
+        >
+          <div className="bg-rose-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
+            <RadioEnumField
+              field="blockVariation"
+              label="Typ Blocku"
+              defaultValue="one"
+              options={{
+                one: <>Text s Timeline</>,
+                two: <>Pouze TimeLine</>,
+              }}
+              orientation="horizontal"
+            />
+          </div>
+          <div className="bg-slate-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
+            <RadioEnumField
+              field="colorVariantion"
+              label="Barvy"
+              defaultValue="classic"
+              options={{
+                classic: <>Klasické barvy</>,
+                reverse: <>Obráceně</>,
+                grey: <>Lehce šedivé pozadí</>,
+              }}
+              orientation="vertical"
+            />
+          </div>
+
           <If condition="[blockVariation = one]">
             <InputField field="title" label="Nadpis" />
             <HasOne field="textList">
@@ -171,28 +225,40 @@ export const ProductForm = Component(() => (
             </HasOne>
           </If>
         </Block>
-        <Block name="products" label="Produkty">
-          <RadioEnumField
-            field="blockVariation"
-            label="Typ Blocku"
-            defaultValue="one"
-            options={{
-              one: <>Produkty s textem</>,
-              two: <>Pouze Produkty</>,
-            }}
-            orientation="horizontal"
-          />
-		  <RadioEnumField
-            field="colorVariantion"
-            label="Barvy"
-            defaultValue="classic"
-            options={{
-              classic: <>Klasické barvy</>,
-              reverse: <>Obráceně</>,
-              grey: <>Lehce šedivé pozadí</>,
-            }}
-            orientation="vertical"
-          />
+        <Block
+          name="products"
+          label={
+            <>
+              <AppleIcon /> Produkty
+            </>
+          }
+        >
+          <div className="bg-rose-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
+            <RadioEnumField
+              field="blockVariation"
+              label="Typ Blocku"
+              defaultValue="one"
+              options={{
+                one: <>Produkty s textem</>,
+                two: <>Pouze Produkty</>,
+              }}
+              orientation="horizontal"
+            />
+          </div>
+          <div className="bg-slate-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
+            <RadioEnumField
+              field="colorVariantion"
+              label="Barvy"
+              defaultValue="classic"
+              options={{
+                classic: <>Klasické barvy</>,
+                reverse: <>Obráceně</>,
+                grey: <>Lehce šedivé pozadí</>,
+              }}
+              orientation="vertical"
+            />
+          </div>
+
           <If condition="[blockVariation = one]">
             <InputField field="title" label="Nadpis" />
             <RichText field="text" label="Text v sekci" />
@@ -208,7 +274,7 @@ export const ProductForm = Component(() => (
               </MultiSelectField>
             </HasOne>
           </If>
-		  <If condition="[blockVariation = two]">
+          <If condition="[blockVariation = two]">
             <HasOne field="supportedProducts">
               <MultiSelectField field="product" label="Produkty">
                 <SideDimensions
@@ -221,6 +287,19 @@ export const ProductForm = Component(() => (
               </MultiSelectField>
             </HasOne>
           </If>
+        </Block>
+        <Block
+          name="newsletter"
+          label={
+            <>
+              <NewspaperIcon /> Newsletter
+            </>
+          }
+        >
+          <div className="bg-blue-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
+            Tento block nelze editovat, je to informace pro website že má přidat
+            newsletter na stránku.
+          </div>
         </Block>
       </BlockRepeater>
     </SideDimensions>
