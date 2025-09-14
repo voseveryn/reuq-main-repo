@@ -41,7 +41,11 @@ export const ProductForm = Component(() => (
       field="locales(locale.code=$currentLocale)"
     >
       <InputField field="title" label="Název" />
-      <LocalizedSlugField field={"url.url"} derivedFrom={["title"]} />
+      <LocalizedSlugField
+          field={"url.url"}
+          derivedFrom={["title"]}
+          prefix="/products/"
+        />
       <InputField field="shortLabel" label="Krátký popis" />
       <InputField field="infoLabel" label="Informační popis" />
       <TextareaField field="description" label="Popis" />

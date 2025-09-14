@@ -28,6 +28,7 @@ import {
   NewspaperIcon,
   UsersIcon,
 } from "lucide-react";
+import { SlugField } from "../atoms/extra-lib/url";
 
 const HomePage = Component(() => (
   <>
@@ -1094,7 +1095,7 @@ export const PageForm = Component(() => (
         field="locales(locale.code=$currentLocale)"
       >
         <InputField field="title" label="Název stránky" />
-        <LocalizedSlugField field={"url.url"} derivedFrom={["title"]} />
+        <SlugField derivedFrom={["title"]} field={"url.url"}  />
         <HomePage />
       </SideDimensions>
     </If>
@@ -1105,11 +1106,7 @@ export const PageForm = Component(() => (
         field="locales(locale.code=$currentLocale)"
       >
         <InputField field="title" label="Název stránky" />
-        <LocalizedSlugField
-          field={"url.url"}
-          derivedFrom={["title"]}
-          prefix="/solution/"
-        />
+        <SlugField derivedFrom={["title"]} field={"url.url"} persistedHardPrefix={"/solution/"} />
         <SolutionPage />
       </SideDimensions>
     </If>
@@ -1120,7 +1117,7 @@ export const PageForm = Component(() => (
         field="locales(locale.code=$currentLocale)"
       >
         <InputField field="title" label="Název stránky" />
-        <LocalizedSlugField field={"url.url"} derivedFrom={["title"]} />
+        <SlugField derivedFrom={["title"]} field={"url.url"} persistedHardPrefix={"/generic/"} />
         <GenericPage />
       </SideDimensions>
     </If>

@@ -1,4 +1,4 @@
-import { SlugField } from './extra-lib/field'
+import { SlugField } from './extra-lib/url'
 import slugify from 'slugify'
 import { Component } from '@contember/interface'
 
@@ -29,6 +29,7 @@ export const LocalizedSlugField = Component<LocalizedSlugFieldProps>((props) => 
 				}
 				return `/${code}/`
 			}}
+			label="Url"
 		/>
 	)
 })
