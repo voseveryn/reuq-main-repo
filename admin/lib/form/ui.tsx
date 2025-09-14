@@ -33,6 +33,6 @@ export const FormLabelUI = uic(Label, {
 	} as any,
 })
 export const FormContainerUI = uic('div', {
-	baseClass: 'flex flex-col gap-2 w-full',
+	baseClass: 'flex flex-col gap-2 w-full my-2.5',
 	displayName: 'FormContainer',
 })

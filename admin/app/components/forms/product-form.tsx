@@ -55,7 +55,7 @@ export const ProductForm = Component(() => (
           }
         >
           <div className="bg-rose-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
-			<RadioEnumField
+            <RadioEnumField
               field="blockVariation"
               label="Typ Blocku"
               defaultValue="one"
@@ -118,18 +118,18 @@ export const ProductForm = Component(() => (
           }
         >
           <div className="bg-rose-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
-			<RadioEnumField
-            field="blockVariation"
-            label="Typ Blocku"
-            defaultValue="one"
-            options={{
-              one: <>Text s obrázkem</>,
-              two: <>Pouze Obrázky</>,
-            }}
-            orientation="horizontal"
-          />
-		  </div>
-		  <div className="bg-slate-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
+            <RadioEnumField
+              field="blockVariation"
+              label="Typ Blocku"
+              defaultValue="one"
+              options={{
+                one: <>Text s obrázkem</>,
+                two: <>Pouze Obrázky</>,
+              }}
+              orientation="horizontal"
+            />
+          </div>
+          <div className="bg-slate-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
             <RadioEnumField
               field="colorVariantion"
               label="Barvy"
