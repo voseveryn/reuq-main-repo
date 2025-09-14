@@ -16,6 +16,18 @@ export const ContemberClientNames: SchemaNames = {
         "type": {
           "type": "column"
         },
+        "align": {
+          "type": "column"
+        },
+        "blockVariation": {
+          "type": "column"
+        },
+        "colorVariantion": {
+          "type": "column"
+        },
+        "directionVariantion": {
+          "type": "column"
+        },
         "list": {
           "type": "one",
           "entity": "BlockList"
@@ -71,6 +83,10 @@ export const ContemberClientNames: SchemaNames = {
         "createdAt",
         "order",
         "type",
+        "align",
+        "blockVariation",
+        "colorVariantion",
+        "directionVariantion",
         "title",
         "subtitle",
         "text"
@@ -146,10 +162,6 @@ export const ContemberClientNames: SchemaNames = {
         "pageBlocks": {
           "type": "one",
           "entity": "PageLocale"
-        },
-        "productBlocks": {
-          "type": "one",
-          "entity": "ProductLocale"
         }
       },
       "scalars": [
@@ -169,6 +181,10 @@ export const ContemberClientNames: SchemaNames = {
         "block": {
           "type": "one",
           "entity": "Block"
+        },
+        "productBlock": {
+          "type": "one",
+          "entity": "ProductBlock"
         },
         "subtitle": {
           "type": "column"
@@ -761,6 +777,10 @@ export const ContemberClientNames: SchemaNames = {
           "type": "many",
           "entity": "Block"
         },
+        "productBlocks": {
+          "type": "many",
+          "entity": "ProductBlock"
+        },
         "items": {
           "type": "many",
           "entity": "ImageItem"
@@ -1121,6 +1141,100 @@ export const ContemberClientNames: SchemaNames = {
         "createdAt"
       ]
     },
+    "ProductBlock": {
+      "name": "ProductBlock",
+      "fields": {
+        "id": {
+          "type": "column"
+        },
+        "createdAt": {
+          "type": "column"
+        },
+        "order": {
+          "type": "column"
+        },
+        "type": {
+          "type": "column"
+        },
+        "align": {
+          "type": "column"
+        },
+        "blockVariation": {
+          "type": "column"
+        },
+        "colorVariantion": {
+          "type": "column"
+        },
+        "directionVariantion": {
+          "type": "column"
+        },
+        "list": {
+          "type": "one",
+          "entity": "ProductBlockList"
+        },
+        "title": {
+          "type": "column"
+        },
+        "subtitle": {
+          "type": "column"
+        },
+        "text": {
+          "type": "column"
+        },
+        "image": {
+          "type": "one",
+          "entity": "Image"
+        },
+        "imageList": {
+          "type": "one",
+          "entity": "ImageList"
+        },
+        "supportedProducts": {
+          "type": "one",
+          "entity": "BlockProductList"
+        },
+        "textList": {
+          "type": "one",
+          "entity": "TextList"
+        }
+      },
+      "scalars": [
+        "id",
+        "createdAt",
+        "order",
+        "type",
+        "align",
+        "blockVariation",
+        "colorVariantion",
+        "directionVariantion",
+        "title",
+        "subtitle",
+        "text"
+      ]
+    },
+    "ProductBlockList": {
+      "name": "ProductBlockList",
+      "fields": {
+        "id": {
+          "type": "column"
+        },
+        "createdAt": {
+          "type": "column"
+        },
+        "items": {
+          "type": "many",
+          "entity": "ProductBlock"
+        },
+        "productBlocks": {
+          "type": "one",
+          "entity": "ProductLocale"
+        }
+      },
+      "scalars": [
+        "id",
+        "createdAt"
+      ]
+    },
     "ProductLocale": {
       "name": "ProductLocale",
       "fields": {
@@ -1159,7 +1273,7 @@ export const ContemberClientNames: SchemaNames = {
         },
         "blocks": {
           "type": "one",
-          "entity": "BlockList"
+          "entity": "ProductBlockList"
         }
       },
       "scalars": [
@@ -1233,6 +1347,10 @@ export const ContemberClientNames: SchemaNames = {
         "block": {
           "type": "one",
           "entity": "Block"
+        },
+        "productBlock": {
+          "type": "one",
+          "entity": "ProductBlock"
         },
         "contentReferenceTextList": {
           "type": "many",
@@ -1369,6 +1487,11 @@ export const ContemberClientNames: SchemaNames = {
     }
   },
   "enums": {
+    "alignContent": [
+      "left",
+      "center",
+      "right"
+    ],
     "blockType": [
       "text",
       "hero",
@@ -1380,12 +1503,25 @@ export const ContemberClientNames: SchemaNames = {
       "newsletter",
       "contact",
       "history",
-      "products"
+      "products",
+      "imageList"
+    ],
+    "blockVariantion": [
+      "one",
+      "two",
+      "three",
+      "four",
+      "five"
     ],
     "cardType": [
       "timeline",
       "quote",
       "desc"
+    ],
+    "colorVariantion": [
+      "classic",
+      "reverse",
+      "grey"
     ],
     "contentReferenceTypeEnum": [
       "image",
@@ -1393,6 +1529,10 @@ export const ContemberClientNames: SchemaNames = {
       "quote",
       "text",
       "link"
+    ],
+    "directionVariantion": [
+      "horizontal",
+      "vertical"
     ],
     "linkType": [
       "internal",

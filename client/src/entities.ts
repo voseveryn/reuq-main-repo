@@ -1,6 +1,10 @@
+import type { AlignContent } from './enums'
 import type { BlockType } from './enums'
+import type { BlockVariantion } from './enums'
 import type { CardType } from './enums'
+import type { ColorVariantion } from './enums'
 import type { ContentReferenceTypeEnum } from './enums'
+import type { DirectionVariantion } from './enums'
 import type { LinkType } from './enums'
 import type { One } from './enums'
 import type { PageType } from './enums'
@@ -26,6 +30,10 @@ export type Block <OverRelation extends string | never = never> = {
 		createdAt: string
 		order: number
 		type: BlockType | null
+		align: AlignContent | null
+		blockVariation: BlockVariantion | null
+		colorVariantion: ColorVariantion | null
+		directionVariantion: DirectionVariantion | null
 		title: string | null
 		subtitle: string | null
 		text: string | null
@@ -93,14 +101,12 @@ export type BlockList <OverRelation extends string | never = never> = {
 		| Omit<{ id: string}, OverRelation>
 		| Omit<{ items: Block['unique']}, OverRelation>
 		| Omit<{ pageBlocks: PageLocale['unique']}, OverRelation>
-		| Omit<{ productBlocks: ProductLocale['unique']}, OverRelation>
 	columns: {
 		id: string
 		createdAt: string
 	}
 	hasOne: {
 		pageBlocks: PageLocale
-		productBlocks: ProductLocale
 	}
 	hasMany: {
 		items: Block<'list'>
@@ -118,6 +124,7 @@ export type BlockProductList <OverRelation extends string | never = never> = {
 	unique:
 		| Omit<{ id: string}, OverRelation>
 		| Omit<{ block: Block['unique']}, OverRelation>
+		| Omit<{ productBlock: ProductBlock['unique']}, OverRelation>
 		| Omit<{ product: Product['unique']}, OverRelation>
 	columns: {
 		id: string
@@ -127,6 +134,7 @@ export type BlockProductList <OverRelation extends string | never = never> = {
 	}
 	hasOne: {
 		block: Block
+		productBlock: ProductBlock
 	}
 	hasMany: {
 		product: Product<'blockProducts'>
@@ -522,6 +530,7 @@ export type ImageList <OverRelation extends string | never = never> = {
 		| Omit<{ id: string}, OverRelation>
 		| Omit<{ contentReference: ContentReference['unique']}, OverRelation>
 		| Omit<{ block: Block['unique']}, OverRelation>
+		| Omit<{ productBlocks: ProductBlock['unique']}, OverRelation>
 		| Omit<{ items: ImageItem['unique']}, OverRelation>
 	columns: {
 		id: string
@@ -532,6 +541,7 @@ export type ImageList <OverRelation extends string | never = never> = {
 	}
 	hasMany: {
 		block: Block<'imageList'>
+		productBlocks: ProductBlock<'imageList'>
 		items: ImageItem<'imageItem'>
 	}
 	hasManyBy: {
@@ -540,6 +550,9 @@ export type ImageList <OverRelation extends string | never = never> = {
 		blockByHeroContent: { entity: Block; by: {heroContent: BlockHeroContent['unique']}  }
 		blockByTextList: { entity: Block; by: {textList: TextList['unique']}  }
 		blockByProductList: { entity: Block; by: {productList: BlockProductList['unique']}  }
+		productBlocksByImage: { entity: ProductBlock; by: {image: Image['unique']}  }
+		productBlocksBySupportedProducts: { entity: ProductBlock; by: {supportedProducts: BlockProductList['unique']}  }
+		productBlocksByTextList: { entity: ProductBlock; by: {textList: TextList['unique']}  }
 	}
 }
 export type ImageLocale <OverRelation extends string | never = never> = {
@@ -626,7 +639,7 @@ export type Locale <OverRelation extends string | never = never> = {
 	hasManyBy: {
 		productByRoot: { entity: ProductLocale; by: {root: Product['unique']}  }
 		productByUrl: { entity: ProductLocale; by: {url: Url['unique']}  }
-		productByBlocks: { entity: ProductLocale; by: {blocks: BlockList['unique']}  }
+		productByBlocks: { entity: ProductLocale; by: {blocks: ProductBlockList['unique']}  }
 		footersByRoot: { entity: FooterLocale; by: {root: Footer['unique']}  }
 		footersByLinks: { entity: FooterLocale; by: {links: Content['unique']}  }
 		footersByItemList: { entity: FooterLocale; by: {itemList: FooterItemList['unique']}  }
@@ -796,7 +809,61 @@ export type Product <OverRelation extends string | never = never> = {
 	hasManyBy: {
 		localesByLocale: { entity: ProductLocale; by: {locale: Locale['unique']}  }
 		localesByUrl: { entity: ProductLocale; by: {url: Url['unique']}  }
-		localesByBlocks: { entity: ProductLocale; by: {blocks: BlockList['unique']}  }
+		localesByBlocks: { entity: ProductLocale; by: {blocks: ProductBlockList['unique']}  }
+	}
+}
+export type ProductBlock <OverRelation extends string | never = never> = {
+	name: 'ProductBlock'
+	unique:
+		| Omit<{ id: string}, OverRelation>
+		| Omit<{ image: Image['unique']}, OverRelation>
+		| Omit<{ supportedProducts: BlockProductList['unique']}, OverRelation>
+		| Omit<{ textList: TextList['unique']}, OverRelation>
+	columns: {
+		id: string
+		createdAt: string
+		order: number
+		type: BlockType | null
+		align: AlignContent | null
+		blockVariation: BlockVariantion | null
+		colorVariantion: ColorVariantion | null
+		directionVariantion: DirectionVariantion | null
+		title: string | null
+		subtitle: string | null
+		text: string | null
+	}
+	hasOne: {
+		list: ProductBlockList
+		image: Image
+		imageList: ImageList
+		supportedProducts: BlockProductList
+		textList: TextList
+	}
+	hasMany: {
+	}
+	hasManyBy: {
+	}
+}
+export type ProductBlockList <OverRelation extends string | never = never> = {
+	name: 'ProductBlockList'
+	unique:
+		| Omit<{ id: string}, OverRelation>
+		| Omit<{ items: ProductBlock['unique']}, OverRelation>
+		| Omit<{ productBlocks: ProductLocale['unique']}, OverRelation>
+	columns: {
+		id: string
+		createdAt: string
+	}
+	hasOne: {
+		productBlocks: ProductLocale
+	}
+	hasMany: {
+		items: ProductBlock<'list'>
+	}
+	hasManyBy: {
+		itemsByImage: { entity: ProductBlock; by: {image: Image['unique']}  }
+		itemsBySupportedProducts: { entity: ProductBlock; by: {supportedProducts: BlockProductList['unique']}  }
+		itemsByTextList: { entity: ProductBlock; by: {textList: TextList['unique']}  }
 	}
 }
 export type ProductLocale <OverRelation extends string | never = never> = {
@@ -805,7 +872,7 @@ export type ProductLocale <OverRelation extends string | never = never> = {
 		| Omit<{ id: string}, OverRelation>
 		| Omit<{ root: Product['unique'], locale: Locale['unique']}, OverRelation>
 		| Omit<{ url: Url['unique']}, OverRelation>
-		| Omit<{ blocks: BlockList['unique']}, OverRelation>
+		| Omit<{ blocks: ProductBlockList['unique']}, OverRelation>
 	columns: {
 		id: string
 		createdAt: string
@@ -819,7 +886,7 @@ export type ProductLocale <OverRelation extends string | never = never> = {
 		url: Url
 		root: Product
 		locale: Locale
-		blocks: BlockList
+		blocks: ProductBlockList
 	}
 	hasMany: {
 	}
@@ -855,6 +922,7 @@ export type TextList <OverRelation extends string | never = never> = {
 		| Omit<{ id: string}, OverRelation>
 		| Omit<{ card: Card['unique']}, OverRelation>
 		| Omit<{ block: Block['unique']}, OverRelation>
+		| Omit<{ productBlock: ProductBlock['unique']}, OverRelation>
 		| Omit<{ contentReferenceTextList: ContentReference['unique']}, OverRelation>
 		| Omit<{ items: TextListItem['unique']}, OverRelation>
 	columns: {
@@ -865,6 +933,7 @@ export type TextList <OverRelation extends string | never = never> = {
 	}
 	hasOne: {
 		block: Block
+		productBlock: ProductBlock
 	}
 	hasMany: {
 		card: Card<'textList'>
@@ -988,6 +1057,8 @@ export type ContemberClientEntities = {
 	Page: Page
 	PageLocale: PageLocale
 	Product: Product
+	ProductBlock: ProductBlock
+	ProductBlockList: ProductBlockList
 	ProductLocale: ProductLocale
 	Seo: Seo
 	TextList: TextList
