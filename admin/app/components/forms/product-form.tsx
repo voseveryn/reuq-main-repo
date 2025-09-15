@@ -14,6 +14,7 @@ import {
   HasOne,
   If,
   StaticRender,
+  Variable,
 } from "@contember/interface";
 import { RichText } from "../atoms/rich-text";
 import {
@@ -32,6 +33,8 @@ import {
   NewspaperIcon,
 } from "lucide-react";
 
+
+
 export const ProductForm = Component(() => (
   <FormLayout>
     <ImageField baseField="image" urlField="url" label="Obrázek" />
@@ -42,10 +45,11 @@ export const ProductForm = Component(() => (
     >
       <InputField field="title" label="Název" />
       <LocalizedSlugField
-          field={"url.url"}
-          derivedFrom={["title"]}
-          prefix="/products/"
-        />
+        field={"url.url"}
+        derivedFrom={["title"]}
+        prefix={`/products/`}
+      />
+      <Variable name="currentLocale" />
       <InputField field="shortLabel" label="Krátký popis" />
       <InputField field="infoLabel" label="Informační popis" />
       <TextareaField field="description" label="Popis" />
@@ -304,6 +308,125 @@ export const ProductForm = Component(() => (
             Tento block nelze editovat, je to informace pro website že má přidat
             newsletter na stránku.
           </div>
+        </Block>
+        <Block
+          name="listWithIcons"
+          label={
+            <>
+              <NewspaperIcon /> List s Ikony
+            </>
+          }
+        >
+          <div className="bg-rose-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
+            <RadioEnumField
+              field="blockVariation"
+              label="Typ Blocku"
+              defaultValue="one"
+              options={{
+                one: <>List s textem</>,
+                two: <>List s Nadpisem a Obrázkem</>,
+                three: <>List s Nadpisem</>,
+                four: <>Pouze list</>,
+              }}
+              orientation="horizontal"
+            />
+          </div>
+          <div className="bg-slate-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
+            <RadioEnumField
+              field="colorVariantion"
+              label="Barvy"
+              defaultValue="classic"
+              options={{
+                classic: <>Klasické barvy</>,
+                reverse: <>Obráceně</>,
+                grey: <>Lehce šedivé pozadí</>,
+              }}
+              orientation="vertical"
+            />
+          </div>
+          <div className="bg-neutral-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
+            <RadioEnumField
+              field="align"
+              label="Zarovnání"
+              defaultValue="left"
+              options={{
+                left: <>Vlevo</>,
+                center: <>Střed</>,
+                right: <>Vpravo</>,
+              }}
+              orientation="horizontal"
+            />
+          </div>
+          <If condition={"[blockVariation = one]"}>
+            <InputField field="title" label="Nadpis" />
+            <InputField field="subtitle" label="PodNadpis" />
+            <RichText field="text" label="Textové pole" />
+            <HasOne field="cardList">
+              <DefaultRepeater field="items" sortableBy="orderBy">
+                <InputField field="text" label="Nadpis" />
+                <ImageField
+                  baseField="image"
+                  urlField="url"
+                  label="Obrázek karty"
+                />
+                <RepeaterItemActions>
+                  <RepeaterRemoveItemButton />
+                </RepeaterItemActions>
+              </DefaultRepeater>
+            </HasOne>
+          </If>
+          <If condition={"[blockVariation = two]"}>
+            <InputField field="title" label="Nadpis" />
+            <ImageField
+              baseField="image"
+              urlField="url"
+              label="Obrázek na pozádí"
+            />
+            <HasOne field="cardList">
+              <DefaultRepeater field="items" sortableBy="orderBy">
+                <InputField field="text" label="Nadpis" />
+                <ImageField
+                  baseField="image"
+                  urlField="url"
+                  label="Obrázek karty"
+                />
+                <RepeaterItemActions>
+                  <RepeaterRemoveItemButton />
+                </RepeaterItemActions>
+              </DefaultRepeater>
+            </HasOne>
+          </If>
+          <If condition={"[blockVariation = three]"}>
+            <InputField field="title" label="Nadpis" />
+            <HasOne field="cardList">
+              <DefaultRepeater field="items" sortableBy="orderBy">
+                <InputField field="text" label="Nadpis" />
+                <ImageField
+                  baseField="image"
+                  urlField="url"
+                  label="Obrázek karty"
+                />
+                <RepeaterItemActions>
+                  <RepeaterRemoveItemButton />
+                </RepeaterItemActions>
+              </DefaultRepeater>
+            </HasOne>
+          </If>
+          <If condition={"[blockVariation = four]"}>
+            <HasOne field="cardList">
+              <DefaultRepeater field="items" sortableBy="orderBy">
+                <InputField field="text" label="Nadpis" />
+                <ImageField
+                  baseField="image"
+                  urlField="url"
+                  label="Obrázek karty"
+                />
+                <RepeaterItemActions>
+                  <RepeaterRemoveItemButton />
+                </RepeaterItemActions>
+              </DefaultRepeater>
+            </HasOne>
+          </If>
         </Block>
       </BlockRepeater>
     </SideDimensions>

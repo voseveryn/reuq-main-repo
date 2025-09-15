@@ -1504,7 +1504,8 @@ export const ContemberClientNames: SchemaNames = {
       "contact",
       "history",
       "products",
-      "imageList"
+      "imageList",
+      "listWithIcons"
     ],
     "blockVariantion": [
       "one",

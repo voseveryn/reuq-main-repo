@@ -15,6 +15,7 @@ export type BlockType =
 	 | "history"
 	 | "products"
 	 | "imageList"
+	 | "listWithIcons"
 export type BlockVariantion = 
 	 | "one"
 	 | "two"

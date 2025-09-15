@@ -1106,7 +1106,7 @@ export const PageForm = Component(() => (
         field="locales(locale.code=$currentLocale)"
       >
         <InputField field="title" label="Název stránky" />
-        <SlugField derivedFrom={["title"]} field={"url.url"} persistedHardPrefix={"/solution/"} />
+        <SlugField derivedFrom={["title"]} field={"url.url"} persistedHardPrefix={"/cs/solution/"} />
         <SolutionPage />
       </SideDimensions>
     </If>

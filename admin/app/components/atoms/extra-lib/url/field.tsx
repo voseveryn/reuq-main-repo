@@ -16,7 +16,21 @@ export type SlugFieldProps = Omit<FormInputProps, 'children'> &
 		slugify?: (value: string) => string
 		children?: ReactNode
 		baseField?: SugaredRelativeSingleField['field']
+		/**
+		 * Tvůj logický prefix (např. "products" nebo "blog").
+		 * Lomeníky neřeš – o ty se postará komponenta.
+		 */
 		prefix?: string
+		/**
+		 * Když zapneš, doplní se před prefix i aktivní locale z Environmentu.
+		 * Locale bere z proměnné prostředí (viz `localeEnvKey`).
+		 */
+		withLocalePrefix?: boolean
+		/**
+		 * Název proměnné v Environmentu, kde je uložen kód jazyka.
+		 * V praxi u SideDimensions bývá "currentLocale". Nechávám i fallbacky.
+		 */
+		localeEnvKey?: string
 	}
 
 type SlugFieldPropsWithChildren = SlugFieldProps & {
@@ -30,12 +44,35 @@ const hasChildrenButNoBaseField = (props: SlugFieldProps): props is SlugFieldPro
 
 const defaultSlugRegex = /[*+~.()`'"!:@?#%&=^|\\\/[\]{}<>,;]/g
 
+const trimSlashes = (s?: string) => (s ? s.replace(/^\/+|\/+$/g, '') : '')
+
 export const SlugField = Component((props: SlugFieldProps | SlugFieldPropsWithChildren) => {
-	const { baseField, field, label, description, inputProps, required, slugify, children, prefix, ...restProps } = props
+	const { baseField, field, label, description, inputProps, required, slugify, children, prefix, withLocalePrefix, localeEnvKey, ...restProps } = props
 
 	if (hasChildrenButNoBaseField(props)) {
 		throw new Error('baseField is required when children are provided')
 	}
+
+	// ✅ Sestavíme persistedHardPrefix – buď čistý string (jen prefix),
+	// nebo funkci závislou na Environmentu (locale + prefix).
+	const persistedHardPrefix =
+		withLocalePrefix
+			? ((env: any) => {
+					// Zkusíme několik klíčů, podle toho, co ve tvém projektu používáš
+					const key = localeEnvKey ?? 'currentLocale'
+					const code =
+						(env.getVariableOrElse?.(key, undefined)) ??
+						(env.getVariableOrElse?.('currentLocaleCode', undefined)) ??
+						(env.getVariable?.(key)) ??
+						''
+
+					const p = trimSlashes(prefix)
+					// /cs/products/  nebo /cs/
+					if (code) return p ? `/${code}/${p}/` : `/${code}/`
+					// fallback bez locale, ať UI úplně nespadne:
+					return p ? `/${p}/` : ''
+			  })
+			: (prefix ? `/${trimSlashes(prefix)}/` : '') // původní chování bez locale
 
 	return (
 		<>
@@ -45,7 +82,8 @@ export const SlugField = Component((props: SlugFieldProps | SlugFieldPropsWithCh
 						baseField={baseField}
 						field={field}
 						slugify={value => slugify?.(value) ?? defaultSlugify(value, { remove: defaultSlugRegex })}
-						persistedHardPrefix={prefix}
+						// 🔑 klíčové: přepošleme náš computed prefix
+						persistedHardPrefix={persistedHardPrefix}
 						{...restProps}
 					>
 						<SlugInput required={required} {...(inputProps ?? {})} className={cn(inputProps?.className)} />

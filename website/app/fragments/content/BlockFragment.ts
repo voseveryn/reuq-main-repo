@@ -9,6 +9,9 @@ export const BlockFragment = queryBuilder.fragment('Block', (block) =>
         .$('title')
         .$('subtitle')
         .$('text')
+		.$('blockVariation')
+		.$('align')
+		.$('colorVariantion')
         .$('cardList', (it)=>
             it.$$().$(
 				'items',

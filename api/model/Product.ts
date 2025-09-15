@@ -6,6 +6,7 @@ import { Locale } from './Locale'
 import { BlockList, BlockProductList } from './Block'
 import { alignContent, blockType, blockVariantion, colorVariantion, directionVariantion } from './enums'
 import { TextList } from './TextList'
+import { CardList } from './Card'
 
 export class Product {
 	createdAt = c.dateTimeColumn().notNull().default('now')
@@ -59,4 +60,5 @@ export class ProductBlock {
 		imageList = c.manyHasOne(ImageList, 'productBlocks')
 		supportedProducts = c.oneHasOne(BlockProductList, 'productBlock')
 		textList = c.oneHasOne(TextList, "productBlock");
+		cardList = c.oneHasOne(CardList, "productBlock")
 }

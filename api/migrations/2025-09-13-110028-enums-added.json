@@ -53,7 +53,8 @@
 				"contact",
 				"history",
 				"products",
-				"imageList"
+				"imageList",
+				"listWithIcons"
 			]
 		},
 		{
@@ -177,6 +178,28 @@
 					"columnName": "image_id",
 					"onDelete": "restrict"
 				},
+				"nullable": true
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "ProductBlock",
+			"owningSide": {
+				"type": "OneHasOne",
+				"name": "cardList",
+				"target": "CardList",
+				"joiningColumn": {
+					"columnName": "card_list_id",
+					"onDelete": "restrict"
+				},
+				"nullable": true,
+				"inversedBy": "productBlock"
+			},
+			"inverseSide": {
+				"type": "OneHasOne",
+				"name": "productBlock",
+				"target": "ProductBlock",
+				"ownedBy": "cardList",
 				"nullable": true
 			}
 		},

@@ -4,6 +4,7 @@ import { TextList } from './TextList'
 import { Image } from './Image';
 import { cardType } from './enums'
 import { CardPoint } from './CardPoint';
+import { ProductBlock } from './Product';
 
 export class Card {
     createdAt = c.dateTimeColumn().notNull().default('now')
@@ -22,4 +23,5 @@ export class CardList {
     createdAt = c.dateTimeColumn().notNull().default('now')
     items = c.oneHasMany(Card, 'list')
     block = c.oneHasOneInverse(Block, 'cardList')
+    productBlock = c.oneHasOneInverse(ProductBlock, 'cardList')
 }
