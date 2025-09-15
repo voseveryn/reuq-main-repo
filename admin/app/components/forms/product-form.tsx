@@ -30,6 +30,7 @@ import {
   BookImageIcon,
   FileType2Icon,
   HistoryIcon,
+  ListTodoIcon,
   NewspaperIcon,
 } from "lucide-react";
 
@@ -312,7 +313,7 @@ export const ProductForm = Component(() => (
           name="listWithIcons"
           label={
             <>
-              <NewspaperIcon /> List s Ikony
+              <ListTodoIcon /> List s Ikony
             </>
           }
         >

@@ -271,6 +271,10 @@ export const ContemberClientNames: SchemaNames = {
         "block": {
           "type": "one",
           "entity": "Block"
+        },
+        "productBlock": {
+          "type": "one",
+          "entity": "ProductBlock"
         }
       },
       "scalars": [
@@ -1196,6 +1200,10 @@ export const ContemberClientNames: SchemaNames = {
         "textList": {
           "type": "one",
           "entity": "TextList"
+        },
+        "cardList": {
+          "type": "one",
+          "entity": "CardList"
         }
       },
       "scalars": [

@@ -117,8 +117,9 @@ return (
   <html>
     <body>
         <Navbar data={navigation ?? undefined} locale={locale} />
+        <main className="relative top-32">
         {product != null ? <ProductDetail data={product} />: <BlockRender blocks={blocks} />}
-        {product === null ? "pravda" : "lež"}
+        </main>
         <Footer data={footer ?? undefined} />
         </body>
   </html>

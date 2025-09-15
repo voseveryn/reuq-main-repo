@@ -179,12 +179,14 @@ export type CardList <OverRelation extends string | never = never> = {
 		| Omit<{ id: string}, OverRelation>
 		| Omit<{ items: Card['unique']}, OverRelation>
 		| Omit<{ block: Block['unique']}, OverRelation>
+		| Omit<{ productBlock: ProductBlock['unique']}, OverRelation>
 	columns: {
 		id: string
 		createdAt: string
 	}
 	hasOne: {
 		block: Block
+		productBlock: ProductBlock
 	}
 	hasMany: {
 		items: Card<'list'>
@@ -553,6 +555,7 @@ export type ImageList <OverRelation extends string | never = never> = {
 		productBlocksByImage: { entity: ProductBlock; by: {image: Image['unique']}  }
 		productBlocksBySupportedProducts: { entity: ProductBlock; by: {supportedProducts: BlockProductList['unique']}  }
 		productBlocksByTextList: { entity: ProductBlock; by: {textList: TextList['unique']}  }
+		productBlocksByCardList: { entity: ProductBlock; by: {cardList: CardList['unique']}  }
 	}
 }
 export type ImageLocale <OverRelation extends string | never = never> = {
@@ -819,6 +822,7 @@ export type ProductBlock <OverRelation extends string | never = never> = {
 		| Omit<{ image: Image['unique']}, OverRelation>
 		| Omit<{ supportedProducts: BlockProductList['unique']}, OverRelation>
 		| Omit<{ textList: TextList['unique']}, OverRelation>
+		| Omit<{ cardList: CardList['unique']}, OverRelation>
 	columns: {
 		id: string
 		createdAt: string
@@ -838,6 +842,7 @@ export type ProductBlock <OverRelation extends string | never = never> = {
 		imageList: ImageList
 		supportedProducts: BlockProductList
 		textList: TextList
+		cardList: CardList
 	}
 	hasMany: {
 	}
@@ -864,6 +869,7 @@ export type ProductBlockList <OverRelation extends string | never = never> = {
 		itemsByImage: { entity: ProductBlock; by: {image: Image['unique']}  }
 		itemsBySupportedProducts: { entity: ProductBlock; by: {supportedProducts: BlockProductList['unique']}  }
 		itemsByTextList: { entity: ProductBlock; by: {textList: TextList['unique']}  }
+		itemsByCardList: { entity: ProductBlock; by: {cardList: CardList['unique']}  }
 	}
 }
 export type ProductLocale <OverRelation extends string | never = never> = {

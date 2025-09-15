@@ -59,13 +59,7 @@ export const Navbar = ({ data, locale }: Props) => {
                                 className="h-8 w-auto"
                             />
                         )}
-                        <span
-                            className={`hidden sm:inline-block text-lg font-semibold tracking-tight ${
-                                scrolled ? "text-white" : "text-gray-900"
-                            }`}
-                        >
-                            Ai.Wallet
-                        </span>
+
                     </div>
 
                     <ul className="hidden md:flex items-center gap-8">
