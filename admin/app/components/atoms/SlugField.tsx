@@ -10,6 +10,6 @@ type LocalizedSlugFieldProps = {
 }
 
 export const LocalizedSlugField = Component<{ field: string; derivedFrom: string[]; prefix?: string }>((p) => (
-  <SlugField field={p.field} derivedFrom={p.derivedFrom} prefix={(p.prefix)} withLocalePrefix />
+  <SlugField field={p.field} derivedFrom={p.derivedFrom} prefix={(p.prefix)} withLocalePrefix label="Url"/>
 ))
 

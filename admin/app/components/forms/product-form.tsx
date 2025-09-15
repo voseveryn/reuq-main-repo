@@ -49,7 +49,6 @@ export const ProductForm = Component(() => (
         derivedFrom={["title"]}
         prefix={`/products/`}
       />
-      <Variable name="currentLocale" />
       <InputField field="shortLabel" label="Krátký popis" />
       <InputField field="infoLabel" label="Informační popis" />
       <TextareaField field="description" label="Popis" />

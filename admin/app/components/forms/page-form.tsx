@@ -1095,7 +1095,11 @@ export const PageForm = Component(() => (
         field="locales(locale.code=$currentLocale)"
       >
         <InputField field="title" label="Název stránky" />
-        <SlugField derivedFrom={["title"]} field={"url.url"}  />
+        <LocalizedSlugField
+        field={"url.url"}
+        derivedFrom={["title"]}
+        prefix={`/`}
+      />
         <HomePage />
       </SideDimensions>
     </If>
@@ -1106,7 +1110,11 @@ export const PageForm = Component(() => (
         field="locales(locale.code=$currentLocale)"
       >
         <InputField field="title" label="Název stránky" />
-        <SlugField derivedFrom={["title"]} field={"url.url"} persistedHardPrefix={"/cs/solution/"} />
+        <LocalizedSlugField
+        field={"url.url"}
+        derivedFrom={["title"]}
+        prefix={`/solution/`}
+      />
         <SolutionPage />
       </SideDimensions>
     </If>
@@ -1117,7 +1125,11 @@ export const PageForm = Component(() => (
         field="locales(locale.code=$currentLocale)"
       >
         <InputField field="title" label="Název stránky" />
-        <SlugField derivedFrom={["title"]} field={"url.url"} persistedHardPrefix={"/generic/"} />
+        <LocalizedSlugField
+        field={"url.url"}
+        derivedFrom={["title"]}
+        prefix={`/generic/`}
+      />
         <GenericPage />
       </SideDimensions>
     </If>
