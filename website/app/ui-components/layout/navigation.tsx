@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { NavigationFragmentType } from "@/app/fragments/layout/NavigationFragment";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 type Props = {
     data?: NavigationFragmentType;
@@ -10,14 +11,15 @@ type Props = {
 };
 
 export const Navbar = ({ data, locale }: Props) => {
+    const router = useRouter();
     const logo = data?.logo;
 
     const products = data?.localesByLocale?.navigationList?.items.filter((item) =>
-        item.link?.internalTarget?.url?.startsWith("/products/")
+        item.link?.internalTarget?.url?.startsWith(`/${locale}/products/`)
     ) || [];
 
     const solutions = data?.localesByLocale?.navigationList?.items.filter((item) =>
-        item.link?.internalTarget?.url?.startsWith("/solution/")
+        item.link?.internalTarget?.url?.startsWith(`${locale}/solution/`)
     ) || [];
     const generic = data?.localesByLocale?.navigationList?.items.filter((item) =>
         !products.includes(item) && !solutions.includes(item)
@@ -39,6 +41,12 @@ export const Navbar = ({ data, locale }: Props) => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    const handleNavigation = (url: string) => {
+        if (url) {
+            router.push(url);
+        }
+    };
+
     return (
         <header
             className={`fixed top-0 w-full z-50 transition-colors duration-500 ${
@@ -59,7 +67,6 @@ export const Navbar = ({ data, locale }: Props) => {
                                 className="h-8 w-auto"
                             />
                         )}
-
                     </div>
 
                     <ul className="hidden md:flex items-center gap-8">
@@ -68,7 +75,10 @@ export const Navbar = ({ data, locale }: Props) => {
                             <div className="group relative">
                                 <select
                                     value={selectedProduct}
-                                    onChange={(e) => setSelectedProduct(e.target.value)}
+                                    onChange={(e) => {
+                                        setSelectedProduct(e.target.value);
+                                        handleNavigation(e.target.value);
+                                    }}
                                     className={`appearance-none bg-transparent ${
                                         scrolled ? "text-white hover:text-emerald-300" : "text-gray-700 hover:text-emerald-600"
                                     } transition-colors duration-300 ease-in-out font-medium pr-7 focus:outline-none`}
@@ -106,7 +116,10 @@ export const Navbar = ({ data, locale }: Props) => {
                             <div className="group relative">
                                 <select
                                     value={selectedSolution}
-                                    onChange={(e) => setSelectedSolution(e.target.value)}
+                                    onChange={(e) => {
+                                        setSelectedSolution(e.target.value);
+                                        handleNavigation(e.target.value);
+                                    }}
                                     className={`appearance-none bg-transparent ${
                                         scrolled ? "text-white hover:text-emerald-300" : "text-gray-700 hover:text-emerald-600"
                                     } transition-colors duration-300 ease-in-out font-medium pr-7 focus:outline-none`}

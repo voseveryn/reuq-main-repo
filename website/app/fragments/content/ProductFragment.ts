@@ -52,7 +52,8 @@ export const ProductBlockFragment = queryBuilder.fragment("ProductBlock", (it) =
 					.$("items", { orderBy: [{ order: "asc" }] }, (it) =>
 						it.$$().$("text"),
 					),
-		),
+		)
+		
 )
 
 export type ProductBlockFragmentType = FragmentType<typeof ProductBlockFragment>

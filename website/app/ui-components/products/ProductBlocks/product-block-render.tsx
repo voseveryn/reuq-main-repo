@@ -1,6 +1,7 @@
 import { ProductBlockFragmentType, ProductBlockListFragmentType } from "@/app/fragments/content/ProductFragment";
 import ProductBlockText from "./product-block-text";
 import ProductBlockGallery from "./product-block-gallery";
+import ProductBlockHistory from "./product-block-history";
 
 type ProductBlocksRenderProps = {
   products: ProductBlockListFragmentType["items"];
@@ -18,12 +19,12 @@ export const ProductBlockRender: React.FC<ProductBlocksRenderProps> = ({ product
           case "imageList":
             return <ProductBlockGallery key={index} data={block} />
           case "history":
-            return <></>
+            return <ProductBlockHistory key={index} data={block} />
           case "products":
             return <></>
           case "newsletter":
             return <></>
-          case "listWithIcons":
+          case "listWithIcons": 
             return <></>
           default:
             return null;
