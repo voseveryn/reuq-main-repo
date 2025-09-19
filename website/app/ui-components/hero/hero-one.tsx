@@ -10,7 +10,7 @@ type Props = {
   data: HeroBlockType;
 };
 
-const HeroSection = ({ data }: Props) => {
+const HeroOne = ({ data }: Props) => {
   if (!data) return null;
 
   return (
@@ -51,4 +51,4 @@ const HeroSection = ({ data }: Props) => {
   );
 };
 
-export default HeroSection;
+export default HeroOne;

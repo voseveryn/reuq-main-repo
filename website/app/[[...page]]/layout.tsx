@@ -9,7 +9,7 @@ import { FooterFragment } from "../fragments/layout/FooterFragment"
 import { Navbar } from "../ui-components/layout/navigation"
 import { BlockListFragmentType } from "../fragments/content/BlockFragment";
 import '../globals.css'
-import HeroSection from "../ui-components/hero/hero-section"
+import HeroSection from "../ui-components/hero/hero-one"
 import CardSection from "../ui-components/cards/card-section"
 import InformationSection from "../ui-components/information/information-section"
 import PartnersSection from "../ui-components/partners/partners-section"
@@ -21,6 +21,7 @@ import Image from "next/image"
 import { renderRichText } from "../ui-components/atoms/RichTextRender"
 import ProductList from "../ui-components/products/product-list"
 import ProductDetail from "../ui-components/products/product-detail"
+import { HeroRender } from "../ui-components/hero/hero-render"
 
 
 type PageProps = {
@@ -40,7 +41,7 @@ const BlockRender: React.FC<BlockRenderProps> = ({ blocks }) => {
                 switch (block.type) {
                     case "hero":
                         return (
-                            <HeroSection key={idx} data={block} />
+                            <HeroRender key={idx} data={[block]} />
                         );
                     case "text":
                         return (

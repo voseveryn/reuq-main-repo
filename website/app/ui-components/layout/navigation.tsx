@@ -124,7 +124,7 @@ export const Navbar = ({ data, locale }: Props) => {
                                         scrolled ? "text-white hover:text-emerald-300" : "text-gray-700 hover:text-emerald-600"
                                     } transition-colors duration-300 ease-in-out font-medium pr-7 focus:outline-none`}
                                 >
-                                    <option value="">Solutions</option>
+                                    <option value="">Solution</option>
                                     {solutions.map((solution) => (
                                         <option key={solution.id} value={solution.link?.internalTarget?.url || ""}>
                                             {solution.link?.title ?? "Untitled"}

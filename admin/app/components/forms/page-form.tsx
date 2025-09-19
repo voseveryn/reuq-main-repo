@@ -47,8 +47,9 @@ const HomePage = Component(() => (
             label="Typ Blocku"
             defaultValue="one"
             options={{
-              one: <>Full-width pozadí</>,
-              two: <>Box-width pozadí</>,
+              one: <>Obrázek na straně</>,
+              two: <>Full-width pozadí</>,
+              three: <>Banner-width pozadí</>
             }}
             orientation="horizontal"
           />
@@ -512,8 +513,9 @@ const SolutionPage = Component(() => (
           label="Typ Blocku"
           defaultValue="one"
           options={{
-            one: <>Full-width pozadí</>,
-            two: <>Box-width pozadí</>,
+            one: <>Obrázek na straně</>,
+              two: <>Full-width pozadí</>,
+              three: <>Banner-width pozadí</>
           }}
           orientation="horizontal"
         />
@@ -802,8 +804,9 @@ const GenericPage = Component(() => (
           label="Typ Blocku"
           defaultValue="one"
           options={{
-            one: <>Full-width pozadí</>,
-            two: <>Box-width pozadí</>,
+            one: <>Obrázek na straně</>,
+            two: <>Full-width pozadí</>,
+            three: <>Banner-width pozadí</>
           }}
           orientation="horizontal"
         />
