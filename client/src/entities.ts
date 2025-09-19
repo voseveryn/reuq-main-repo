@@ -735,6 +735,22 @@ export type NavigationLocale <OverRelation extends string | never = never> = {
 	hasManyBy: {
 	}
 }
+export type Newsletter <OverRelation extends string | never = never> = {
+	name: 'Newsletter'
+	unique:
+		| Omit<{ id: string}, OverRelation>
+	columns: {
+		id: string
+		createdAt: string
+		mail: string | null
+	}
+	hasOne: {
+	}
+	hasMany: {
+	}
+	hasManyBy: {
+	}
+}
 export type Page <OverRelation extends string | never = never> = {
 	name: 'Page'
 	unique:
@@ -1060,6 +1076,7 @@ export type ContemberClientEntities = {
 	NavigationItem: NavigationItem
 	NavigationList: NavigationList
 	NavigationLocale: NavigationLocale
+	Newsletter: Newsletter
 	Page: Page
 	PageLocale: PageLocale
 	Product: Product

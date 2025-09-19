@@ -1028,6 +1028,25 @@ export const ContemberClientNames: SchemaNames = {
         "createdAt"
       ]
     },
+    "Newsletter": {
+      "name": "Newsletter",
+      "fields": {
+        "id": {
+          "type": "column"
+        },
+        "createdAt": {
+          "type": "column"
+        },
+        "mail": {
+          "type": "column"
+        }
+      },
+      "scalars": [
+        "id",
+        "createdAt",
+        "mail"
+      ]
+    },
     "Page": {
       "name": "Page",
       "fields": {

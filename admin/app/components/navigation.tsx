@@ -1,5 +1,5 @@
 import { Link, LogoutTrigger, useIdentity } from '@contember/interface'
-import { BadgeCheckIcon, BellIcon, ChevronsUpDown, LogOutIcon } from 'lucide-react'
+import { BadgeCheckIcon, BellIcon, ChevronsUpDown, LogOutIcon, NewspaperIcon } from 'lucide-react'
 import { dict } from '~/lib/dict'
 import { Avatar, AvatarFallback } from '~/lib/ui/avatar'
 import { AnchorButton, Button } from '~/lib/ui/button'
@@ -13,6 +13,7 @@ import { BookUserIcon, StickyNoteIcon, MapIcon, FootprintsIcon, ContactIcon, Lan
 export const Navigation = () => (
 <Menu>
 	<MenuItem label="Zákazníci" icon={<BookUserIcon />} to="customer"  />
+	<MenuItem label="Newsletter" icon={<NewspaperIcon />} to="newsletter"  />
 	<MenuItem label="Produkty" icon={<AppleIcon />} to="products"  />
 	<Divider />
 	<MenuItem label="Stránky" icon={<StickyNoteIcon />} to="page" />

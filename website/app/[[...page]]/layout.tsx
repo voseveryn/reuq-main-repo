@@ -26,6 +26,7 @@ import { CardRender } from "../ui-components/cards/card-render"
 import { InformationRender } from "../ui-components/information/information-render"
 import { ProductRender } from "../ui-components/products/product-render"
 import { TextRender } from "../ui-components/text/text-render"
+import Newsletter from "../ui-components/newsletter/newsletter"
 
 
 type PageProps = {
@@ -74,6 +75,10 @@ const BlockRender: React.FC<BlockRenderProps> = ({ blocks }) => {
                     case "products":
                         return (
                             <ProductRender key={block.id} data={[block]} />
+                        )
+                    case "newsletter":
+                        return (
+                            <Newsletter key={block.id} />
                         )
                     // Add more cases for other block types
                     default:
