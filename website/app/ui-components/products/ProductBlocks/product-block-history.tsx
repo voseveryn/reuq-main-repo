@@ -19,7 +19,8 @@ const ProductBlockHistory = ({ data }: Props) => {
         data.colorVariantion || "classic"
       )} w-full py-12 px-4 md:px-8`}
     >
-      {data.title && (
+      {data.blockVariation === "one" &&
+     
         <h2
           className={`${alignmentClass(
             data.align || "left"
@@ -27,7 +28,7 @@ const ProductBlockHistory = ({ data }: Props) => {
         >
           {data.title}
         </h2>
-      )}
+      }
       <div className="relative max-w-6xl mx-auto">
         <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-px bg-black/10 dark:bg-white/10 pointer-events-none"></div>
 

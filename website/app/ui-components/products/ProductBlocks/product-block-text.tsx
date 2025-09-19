@@ -1,4 +1,4 @@
-import { ProductBlockFragmentType, ProductBlockListFragmentType } from '@/app/fragments/content/ProductFragment'
+import { ProductBlockListFragmentType } from '@/app/fragments/content/ProductFragment'
 import React from 'react'
 import { renderRichText } from '../../atoms/RichTextRender'
 import Image from 'next/image'

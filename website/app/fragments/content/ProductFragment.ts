@@ -3,107 +3,93 @@ import { ImageFragment } from "../atoms/ImageFragment"
 import { UrlFragment } from "../atoms/UrlFragment"
 import { byLocale } from "../utils/filters"
 
-// ───────────────────────────────────────────────────────────
-// 1) Product bloky definujeme zde (místo importu z BlockFragment)
-//    => rozbijeme kruhovou závislost BlockFragment ↔ ProductFragment
-// ───────────────────────────────────────────────────────────
-export const ProductBlockFragment = queryBuilder.fragment("ProductBlock", (it) =>
-	it
-		.$$()
-		.$("type")
-		.$("title")
-		.$("subtitle")
-		.$("text")
-		.$("blockVariation")
-		.$("align")
-		.$("colorVariantion")
-		.$("directionVariantion")
-		.$("image", ImageFragment)
-		.$(
-			"imageList",
-			(it) =>
-				it
-					.$$()
-					.$(
-						"items",
-						{ orderBy: [{ order: "asc" }] },
-						(it) => it.$$().$("image", ImageFragment),
-					),
-		)
-		// pokud používáš v ProductBlocku i cardList/textList, nechám zde bezpečné "light" pole
-		.$('cardList', (it)=>
-            it.$$().$(
-				'items',
-				{
-					orderBy: [
-						{
-							orderBy: 'asc',
-						},
-					],
-				},
-				(it) => it.$$().$('points', { orderBy: [{ order: 'asc' }] }, (it) => it.$$()).$('image', ImageFragment),
-			),
-		) 
-		.$(
-			"textList",
-			(it) =>
-				it
-					.$$()
-					.$("items", { orderBy: [{ order: "asc" }] }, (it) =>
-						it.$$().$("text"),
-					),
-		)
-		
-)
-
-export type ProductBlockFragmentType = FragmentType<typeof ProductBlockFragment>
-
-export const ProductBlockListFragment = queryBuilder.fragment(
-	"ProductBlockList",
-	(it) =>
-		it
+/** ───────────────────────────────────────────────────────────
+ *  Pomocný subset produktu pro supportedProducts
+ *  ─────────────────────────────────────────────────────────── */
+const SupportedProductSubset = (locale: string) =>
+	queryBuilder.fragment("Product", p =>
+		p
 			.$$()
-			.$(
-				"items",
-				{ orderBy: [{ order: "asc" }] },
-				ProductBlockFragment,
-			),
-)
-
-export type ProductBlockListFragmentType = FragmentType<
-	typeof ProductBlockListFragment
->
-
-// ───────────────────────────────────────────────────────────
-// 2) Product fragment s lokalizací a blocks přes ProductBlockListFragment
-//    (stejná logika jako u Page -> BlockListFragment)
-// ───────────────────────────────────────────────────────────
-export const ProductFragment = (locale: string) =>
-	queryBuilder.fragment("Product", (it) =>
-		it
-			.$$()
+			.$("id")
 			.$("image", ImageFragment)
-			.$(
-				"imageList",
-				(it) =>
-					it
-						.$$()
-						.$(
-							"items",
-							{ orderBy: [{ order: "asc" }] },
-							(it) => it.$$().$("image", ImageFragment),
-						),
+			.$("localesByLocale", byLocale(locale), loc =>
+				loc.$$().$("title").$("shortLabel").$("url", UrlFragment),
+			),
+	)
+
+/** ───────────────────────────────────────────────────────────
+ *  BlockProductList – používá se u ProductBlock.supportedProducts
+ *  ─────────────────────────────────────────────────────────── */
+const BlockProductListFragment = (locale: string) =>
+	queryBuilder.fragment("BlockProductList", it =>
+		it
+			.$$()
+			.$("subtitle")
+			.$("order")
+			// POZOR: podle schématu je to 'product' (hasMany na Product)
+			.$("product",  SupportedProductSubset(locale)),
+	)
+
+/** ───────────────────────────────────────────────────────────
+ *  ProductBlock – vlastní bloky produktu
+ *  ─────────────────────────────────────────────────────────── */
+export const ProductBlockFragment = (locale: string) =>
+	queryBuilder.fragment("ProductBlock", it =>
+		it
+			.$$()
+			.$("type")
+			.$("title")
+			.$("subtitle")
+			.$("text")
+			.$("blockVariation")
+			.$("align")
+			.$("colorVariantion")
+			.$("directionVariantion")
+			.$("image", ImageFragment)
+			// ImageList NENÍ 'images', ale 'items'
+			.$('imageList', (it) => it.$$().$('items', {orderBy: [{order: 'asc'}]}, (it) => it.$$().$("image", ImageFragment)))
+			.$("textList", list => list.$$().$("items", item => item.$$().$("text")))
+			.$("cardList", list =>
+				list
+					.$$()
+					.$("items", card =>
+						card.$$().$("title").$("text").$("image", ImageFragment),
+					),
 			)
-			.$("localesByLocale", byLocale(locale), (it) =>
-				it
+			// TADY je oprava: oneHasOne(BlockProductList) → uvnitř hasMany 'product'
+			.$("supportedProducts", BlockProductListFragment(locale)),
+	)
+
+/** ───────────────────────────────────────────────────────────
+ *  Seznam bloků produktu
+ *  ─────────────────────────────────────────────────────────── */
+export const ProductBlockListFragment = (locale: string) =>
+	queryBuilder.fragment("ProductBlockList", it =>
+		it.$$().$("items", ProductBlockFragment(locale)),
+	)
+export type ProductBlockListFragmentType = FragmentType<ReturnType<typeof ProductBlockListFragment>>
+
+
+/** ───────────────────────────────────────────────────────────
+ *  Hlavní Product fragment
+ *  ─────────────────────────────────────────────────────────── */
+export const ProductFragment = (locale: string) =>
+	queryBuilder.fragment("Product", it =>
+		it
+			.$$()
+			.$("id")
+			.$("createdAt")
+			.$("image", ImageFragment)
+			.$('imageList', (it) => it.$$().$('items', {orderBy: [{order: 'asc'}]}, (it) => it.$$().$("image", ImageFragment)))
+			.$("localesByLocale", byLocale(locale), loc =>
+				loc
 					.$$()
 					.$("title")
 					.$("shortLabel")
 					.$("infoLabel")
 					.$("description")
 					.$("url", UrlFragment)
-					// ← tady to kouzlo: stejně jako u Page blocků
-					.$("blocks", ProductBlockListFragment),
+					.$("blocks", ProductBlockListFragment(locale)),
 			),
 	)
 

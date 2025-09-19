@@ -1,7 +1,10 @@
-import { ProductBlockFragmentType, ProductBlockListFragmentType } from "@/app/fragments/content/ProductFragment";
+import { ProductBlockListFragmentType } from "@/app/fragments/content/ProductFragment";
 import ProductBlockText from "./product-block-text";
 import ProductBlockGallery from "./product-block-gallery";
 import ProductBlockHistory from "./product-block-history";
+import ProductBlockListWithIcons from "./product-block-list-with-icons";
+import Newsletter from "../../newsletter/newsletter";
+import ProductBlockProducts from "./product-block-products";
 
 type ProductBlocksRenderProps = {
   products: ProductBlockListFragmentType["items"];
@@ -12,20 +15,20 @@ export const ProductBlockRender: React.FC<ProductBlocksRenderProps> = ({ product
 
   return (
     <>
-      {products.map((block, index) => {
+      {products.map((block) => {
         switch (block.type) {
           case "text":
-            return <ProductBlockText key={index} data={block} />;
+            return <ProductBlockText key={block.id} data={block} />;
           case "imageList":
-            return <ProductBlockGallery key={index} data={block} />
+            return <ProductBlockGallery key={block.id} data={block} />
           case "history":
-            return <ProductBlockHistory key={index} data={block} />
+            return <ProductBlockHistory key={block.id} data={block} />
           case "products":
-            return <></>
+            return <ProductBlockProducts key={block.id} data={block} />
           case "newsletter":
-            return <></>
+            return <Newsletter key={block.id} />
           case "listWithIcons": 
-            return <></>
+            return <ProductBlockListWithIcons key={block.id} data={block} />
           default:
             return null;
         }
