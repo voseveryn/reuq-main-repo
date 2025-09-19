@@ -19,11 +19,13 @@ import Footer from "../ui-components/layout/footer"
 import { ProductFragment } from "../fragments/content/ProductFragment"
 import Image from "next/image"
 import { renderRichText } from "../ui-components/atoms/RichTextRender"
-import ProductList from "../ui-components/products/product-list"
+import ProductList from "../ui-components/products/product-one"
 import ProductDetail from "../ui-components/products/product-detail"
 import { HeroRender } from "../ui-components/hero/hero-render"
 import { CardRender } from "../ui-components/cards/card-render"
 import { InformationRender } from "../ui-components/information/information-render"
+import { ProductRender } from "../ui-components/products/product-render"
+import { TextRender } from "../ui-components/text/text-render"
 
 
 type PageProps = {
@@ -39,25 +41,23 @@ const BlockRender: React.FC<BlockRenderProps> = ({ blocks }) => {
 
     return (
         <>
-            {blocks.map((block, idx) => {
+            {blocks.map((block) => {
                 switch (block.type) {
                     case "hero":
                         return (
-                            <HeroRender key={idx} data={[block]} />
+                            <HeroRender key={block.id} data={[block]} />
                         );
                     case "text":
                         return (
-                            <div key={idx}>
-                                <p>{block.text}</p>
-                            </div>
+                            <TextRender key={block.id} data={[block]} />
                         );
                     case "card":
                         return (
-                            <CardRender key={idx} data={[block]} />
+                            <CardRender key={block.id} data={[block]} />
                         )
                     case "information":
                         return (
-                            <InformationRender key={idx} data={[block]} />
+                            <InformationRender key={block.id} data={[block]} />
                         )
                     case "partners": 
                         return (
@@ -73,7 +73,7 @@ const BlockRender: React.FC<BlockRenderProps> = ({ blocks }) => {
                         )
                     case "products":
                         return (
-                            <ProductList key={block.id} data={block} />
+                            <ProductRender key={block.id} data={[block]} />
                         )
                     // Add more cases for other block types
                     default:

@@ -10,7 +10,7 @@ type Props = {
   data: ProductBlockType;
 };
 
-const ProductList = ({ data }: Props) => {
+const ProductOne = ({ data }: Props) => {
   if (!data) return null;
 
   return (
@@ -83,4 +83,4 @@ const ProductList = ({ data }: Props) => {
   );
 };
 
-export default ProductList;
+export default ProductOne
