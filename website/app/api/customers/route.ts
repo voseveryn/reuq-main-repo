@@ -13,6 +13,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, message: 'Neplatný e-mail.' }, { status: 400 });
     }
 
+    if (typeof phoneNumber !== 'string' || phoneNumber.trim() === '') {
+      return NextResponse.json({ ok: false, message: 'Telefonní číslo je povinné.' }, { status: 400 });
+    }
+
     // Vytvoření zákazníka
     await contember.mutate(
       createCustomerMutation({

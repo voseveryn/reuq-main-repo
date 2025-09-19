@@ -20,7 +20,7 @@ import HeroSection from "../ui-components/hero/hero-one";
 import CardSection from "../ui-components/cards/card-one";
 import InformationSection from "../ui-components/information/information-one";
 import PartnersSection from "../ui-components/partners/partners-section";
-import TeamSection from "../ui-components/team/TeamSection";
+import TeamSection from "../ui-components/team/team-one";
 import HistorySection from "../ui-components/history/history-section";
 import Footer from "../ui-components/layout/footer";
 import { ProductFragment } from "../fragments/content/ProductFragment";
@@ -36,6 +36,7 @@ import { TextRender } from "../ui-components/text/text-render";
 import Newsletter from "../ui-components/newsletter/newsletter";
 import { ContactFragment } from "../fragments/content/ContactFragment";
 import Contact from "../ui-components/contact/contact";
+import { TeamRender } from "../ui-components/team/team-render";
 
 type PageProps = {
   params: { page?: Array<string> };
@@ -63,7 +64,7 @@ const BlockRender: React.FC<BlockRenderProps> = ({ blocks }) => {
           case "partners":
             return <PartnersSection key={block.id} data={block} />;
           case "team":
-            return <TeamSection key={block.id} data={block} />;
+            return <TeamRender key={block.id} data={[block]} />
           case "history":
             return <HistorySection key={block.id} data={block} />;
           case "products":

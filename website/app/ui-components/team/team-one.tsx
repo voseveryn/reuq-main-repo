@@ -8,7 +8,7 @@ type Props = {
   data: TeamBlockType;
 };
 
-const TeamSection = ({ data }: Props) => {
+const TeamOne = ({ data }: Props) => {
   if (!data) return null;
 
   return (
@@ -56,4 +56,4 @@ const TeamSection = ({ data }: Props) => {
   )
 }
 
-export default TeamSection
+export default TeamOne

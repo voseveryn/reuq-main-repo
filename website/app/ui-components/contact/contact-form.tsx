@@ -7,8 +7,8 @@ const ContactForm = () => {
   const [name, setName] = useState('')
   const [lastname, setLastName] = useState('')
   const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [message, setMessage] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [text, setText] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [status, setStatus] = useState<null | { ok: boolean; msg: string }>(null)
 
@@ -21,7 +21,7 @@ const ContactForm = () => {
       const res = await fetch('/api/customers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({ name, lastname, phoneNumber, email, text }),
       })
 
       const data = await res.json().catch(() => ({}))
@@ -31,7 +31,7 @@ const ContactForm = () => {
         setStatus({ ok: true, msg: 'Zpráva byla úspěšně odeslána. Ozveme se co nejdříve.' })
         setName('')
         setEmail('')
-        setMessage('')
+        setText('')
       }
     } catch (err) {
       setStatus({ ok: false, msg: 'Došlo k chybě při odesílání. Zkuste to prosím znovu.' })
@@ -68,8 +68,8 @@ const ContactForm = () => {
         <input
           type="text"
           className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
-          value={phone}
-          onChange={e => setPhone(e.target.value)}
+          value={phoneNumber}
+          onChange={e => setPhoneNumber(e.target.value)}
           placeholder="Vaše jméno"
         />
       </div>
@@ -88,8 +88,8 @@ const ContactForm = () => {
         <label className="block text-sm font-medium mb-1">Zpráva</label>
         <textarea
           className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-black/10 min-h-[120px]"
-          value={message}
-          onChange={e => setMessage(e.target.value)}
+          value={text}
+          onChange={e => setText(e.target.value)}
           placeholder="S čím potřebujete pomoct?"
         />
       </div>
