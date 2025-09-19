@@ -10,7 +10,7 @@ import { Navbar } from "../ui-components/layout/navigation"
 import { BlockListFragmentType } from "../fragments/content/BlockFragment";
 import '../globals.css'
 import HeroSection from "../ui-components/hero/hero-one"
-import CardSection from "../ui-components/cards/card-section"
+import CardSection from "../ui-components/cards/card-one"
 import InformationSection from "../ui-components/information/information-section"
 import PartnersSection from "../ui-components/partners/partners-section"
 import TeamSection from "../ui-components/team/TeamSection"
@@ -22,6 +22,7 @@ import { renderRichText } from "../ui-components/atoms/RichTextRender"
 import ProductList from "../ui-components/products/product-list"
 import ProductDetail from "../ui-components/products/product-detail"
 import { HeroRender } from "../ui-components/hero/hero-render"
+import { CardRender } from "../ui-components/cards/card-render"
 
 
 type PageProps = {
@@ -51,7 +52,7 @@ const BlockRender: React.FC<BlockRenderProps> = ({ blocks }) => {
                         );
                     case "card":
                         return (
-                            <CardSection key={idx} data={block} />
+                            <CardRender key={idx} data={[block]} />
                         )
                     case "information":
                         return (
