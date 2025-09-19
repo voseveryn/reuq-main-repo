@@ -14,37 +14,44 @@ export const Navbar = ({ data, locale }: Props) => {
     const router = useRouter();
     const logo = data?.logo;
 
-    const products = data?.localesByLocale?.navigationList?.items.filter((item) =>
-        item.link?.internalTarget?.url?.startsWith(`/${locale}/products/`)
-    ) || [];
+    const allItems = data?.localesByLocale?.navigationList?.items ?? [];
+    const loc = locale ?? "";
 
-    const solutions = data?.localesByLocale?.navigationList?.items.filter((item) =>
-        item.link?.internalTarget?.url?.startsWith(`${locale}/solution/`)
-    ) || [];
-    const generic = data?.localesByLocale?.navigationList?.items.filter((item) =>
-        !products.includes(item) && !solutions.includes(item)
-    ) || [];
+    const getUrl = (it: (typeof allItems)[number]) => it.link?.internalTarget?.url ?? "";
+    const startsWithAny = (url: string, prefixes: string[]) => prefixes.some(p => url.startsWith(p));
+
+    // Products (např. /cs/products/…)
+    const products = allItems.filter(item =>
+        startsWithAny(getUrl(item), [`/${loc}/products/`])
+    );
+
+    // Apps (např. /cs/app/…), budou na konci v dropdownu Products
+    const apps = allItems.filter(item =>
+        startsWithAny(getUrl(item), [`/${loc}/app/`])
+    );
+
+    // Solutions (opraveno na `/${locale}/solution/` + tolerantně i `/${locale}/solutions/`)
+    const solutions = allItems.filter(item =>
+        startsWithAny(getUrl(item), [`/${loc}/solution/`, `/${loc}/solutions/`])
+    );
+
+    // Ostatní generické položky (vyřadíme vše, co už je v předchozích skupinách)
+    const generic = allItems.filter(item =>
+        !products.includes(item) && !solutions.includes(item) && !apps.includes(item)
+    );
 
     const [selectedProduct, setSelectedProduct] = useState("");
     const [selectedSolution, setSelectedSolution] = useState("");
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 50) {
-                setScrolled(true);
-            } else {
-                setScrolled(false);
-            }
-        };
+        const handleScroll = () => setScrolled(window.scrollY > 50);
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     const handleNavigation = (url: string) => {
-        if (url) {
-            router.push(url);
-        }
+        if (url) router.push(url);
     };
 
     return (
@@ -70,7 +77,7 @@ export const Navbar = ({ data, locale }: Props) => {
                     </div>
 
                     <ul className="hidden md:flex items-center gap-8">
-                        {/* Dropdown: Products */}
+                        {/* Dropdown: Products (+ Apps na konci) */}
                         <li className="relative">
                             <div className="group relative">
                                 <select
@@ -84,12 +91,24 @@ export const Navbar = ({ data, locale }: Props) => {
                                     } transition-colors duration-300 ease-in-out font-medium pr-7 focus:outline-none`}
                                 >
                                     <option value="">Products</option>
-                                    {products.map((product) => (
-                                        <option key={product.id} value={product.link?.internalTarget?.url || ""}>
-                                            {product.link?.title ?? "Untitled"}
+
+                                    {products.map((item) => (
+                                        <option key={item.id} value={getUrl(item)}>
+                                            {item.link?.title ?? "Untitled"}
                                         </option>
                                     ))}
+
+                                    {apps.length > 0 && (
+                                        <optgroup label="Apps">
+                                            {apps.map((item) => (
+                                                <option key={item.id} value={getUrl(item)}>
+                                                    {item.link?.title ?? "Untitled"}
+                                                </option>
+                                            ))}
+                                        </optgroup>
+                                    )}
                                 </select>
+
                                 <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2">
                                     <svg
                                         className={`h-4 w-4 ${
@@ -111,7 +130,7 @@ export const Navbar = ({ data, locale }: Props) => {
                             </div>
                         </li>
 
-                        {/* Dropdown: Solutions */}
+                        {/* Dropdown: Solutions (opravený prefix) */}
                         <li className="relative">
                             <div className="group relative">
                                 <select
@@ -126,11 +145,12 @@ export const Navbar = ({ data, locale }: Props) => {
                                 >
                                     <option value="">Solution</option>
                                     {solutions.map((solution) => (
-                                        <option key={solution.id} value={solution.link?.internalTarget?.url || ""}>
+                                        <option key={solution.id} value={getUrl(solution)}>
                                             {solution.link?.title ?? "Untitled"}
                                         </option>
                                     ))}
                                 </select>
+
                                 <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2">
                                     <svg
                                         className={`h-4 w-4 ${
@@ -152,11 +172,11 @@ export const Navbar = ({ data, locale }: Props) => {
                             </div>
                         </li>
 
-                        {/* Other items */}
+                        {/* Ostatní položky */}
                         {generic.map((item) => (
                             <li key={item.id} className="group">
                                 <Link
-                                    href={item.link?.internalTarget?.url ?? "#"}
+                                    href={getUrl(item) || "#"}
                                     className={`font-medium transition-colors duration-300 ease-in-out ${
                                         scrolled
                                             ? "text-white hover:text-emerald-300"
