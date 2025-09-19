@@ -16,6 +16,56 @@ export type JSONValue = JSONPrimitive | JSONObject | JSONArray
 export type JSONObject = { readonly [K in string]?: JSONValue }
 export type JSONArray = readonly JSONValue[]
 
+export type App <OverRelation extends string | never = never> = {
+	name: 'App'
+	unique:
+		| Omit<{ id: string}, OverRelation>
+		| Omit<{ unique: One}, OverRelation>
+		| Omit<{ image: Image['unique']}, OverRelation>
+		| Omit<{ locales: AppLocale['unique']}, OverRelation>
+	columns: {
+		id: string
+		createdAt: string
+		unique: One
+	}
+	hasOne: {
+		image: Image
+	}
+	hasMany: {
+		locales: AppLocale<'root'>
+	}
+	hasManyBy: {
+		localesByLocale: { entity: AppLocale; by: {locale: Locale['unique']}  }
+		localesByUrl: { entity: AppLocale; by: {url: Url['unique']}  }
+		localesByBlocks: { entity: AppLocale; by: {blocks: BlockList['unique']}  }
+	}
+}
+export type AppLocale <OverRelation extends string | never = never> = {
+	name: 'AppLocale'
+	unique:
+		| Omit<{ id: string}, OverRelation>
+		| Omit<{ root: App['unique'], locale: Locale['unique']}, OverRelation>
+		| Omit<{ url: Url['unique']}, OverRelation>
+		| Omit<{ blocks: BlockList['unique']}, OverRelation>
+	columns: {
+		id: string
+		createdAt: string
+		name: string
+		title: string | null
+		subtitle: string | null
+		description: string | null
+	}
+	hasOne: {
+		root: App
+		locale: Locale
+		url: Url
+		blocks: BlockList
+	}
+	hasMany: {
+	}
+	hasManyBy: {
+	}
+}
 export type Block <OverRelation extends string | never = never> = {
 	name: 'Block'
 	unique:
@@ -101,12 +151,14 @@ export type BlockList <OverRelation extends string | never = never> = {
 		| Omit<{ id: string}, OverRelation>
 		| Omit<{ items: Block['unique']}, OverRelation>
 		| Omit<{ pageBlocks: PageLocale['unique']}, OverRelation>
+		| Omit<{ appBlocks: AppLocale['unique']}, OverRelation>
 	columns: {
 		id: string
 		createdAt: string
 	}
 	hasOne: {
 		pageBlocks: PageLocale
+		appBlocks: AppLocale
 	}
 	hasMany: {
 		items: Block<'list'>
@@ -622,6 +674,7 @@ export type Locale <OverRelation extends string | never = never> = {
 		| Omit<{ pages: PageLocale['unique']}, OverRelation>
 		| Omit<{ image: ImageLocale['unique']}, OverRelation>
 		| Omit<{ contacts: ContactLocale['unique']}, OverRelation>
+		| Omit<{ apps: AppLocale['unique']}, OverRelation>
 	columns: {
 		id: string
 		createdAt: string
@@ -638,6 +691,7 @@ export type Locale <OverRelation extends string | never = never> = {
 		pages: PageLocale<'locale'>
 		image: ImageLocale<'locale'>
 		contacts: ContactLocale<'locale'>
+		apps: AppLocale<'locale'>
 	}
 	hasManyBy: {
 		productByRoot: { entity: ProductLocale; by: {root: Product['unique']}  }
@@ -654,6 +708,9 @@ export type Locale <OverRelation extends string | never = never> = {
 		imageByRoot: { entity: ImageLocale; by: {root: Image['unique']}  }
 		contactsByRoot: { entity: ContactLocale; by: {root: Contact['unique']}  }
 		contactsByItemList: { entity: ContactLocale; by: {itemList: ContactItemList['unique']}  }
+		appsByRoot: { entity: AppLocale; by: {root: App['unique']}  }
+		appsByUrl: { entity: AppLocale; by: {url: Url['unique']}  }
+		appsByBlocks: { entity: AppLocale; by: {blocks: BlockList['unique']}  }
 	}
 }
 export type Navigation <OverRelation extends string | never = never> = {
@@ -996,6 +1053,7 @@ export type Url <OverRelation extends string | never = never> = {
 		| Omit<{ links: Link['unique']}, OverRelation>
 		| Omit<{ pageUrl: PageLocale['unique']}, OverRelation>
 		| Omit<{ product: ProductLocale['unique']}, OverRelation>
+		| Omit<{ appUrl: AppLocale['unique']}, OverRelation>
 	columns: {
 		id: string
 		createdAt: string
@@ -1005,6 +1063,7 @@ export type Url <OverRelation extends string | never = never> = {
 		target: Link
 		pageUrl: PageLocale
 		product: ProductLocale
+		appUrl: AppLocale
 	}
 	hasMany: {
 		links: Link<'internalTarget'>
@@ -1047,6 +1106,8 @@ export type Video <OverRelation extends string | never = never> = {
 }
 
 export type ContemberClientEntities = {
+	App: App
+	AppLocale: AppLocale
 	Block: Block
 	BlockHeroContent: BlockHeroContent
 	BlockHeroContentItem: BlockHeroContentItem

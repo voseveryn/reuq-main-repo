@@ -1,5 +1,5 @@
 import { ProductFragmentType } from "@/app/fragments/content/ProductFragment";
-import { ProductBlockRender } from "./ProductBlocks/product-block-render";
+import { ProductBlockRender } from "../renders/product-block-render";
 
 type Props = {
   data: ProductFragmentType;

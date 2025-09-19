@@ -1,10 +1,10 @@
 import { ProductBlockListFragmentType } from "@/app/fragments/content/ProductFragment";
-import ProductBlockText from "./product-block-text";
-import ProductBlockGallery from "./product-block-gallery";
-import ProductBlockHistory from "./product-block-history";
-import ProductBlockListWithIcons from "./product-block-list-with-icons";
-import Newsletter from "../../newsletter/newsletter";
-import ProductBlockProducts from "./product-block-products";
+import ProductBlockText from "../products/ProductBlocks/product-block-text";
+import ProductBlockGallery from "../products/ProductBlocks/product-block-gallery";
+import ProductBlockHistory from "../products/ProductBlocks/product-block-history";
+import ProductBlockListWithIcons from "../products/ProductBlocks/product-block-list-with-icons";
+import Newsletter from "../newsletter/newsletter";
+import ProductBlockProducts from "../products/ProductBlocks/product-block-products";
 
 type ProductBlocksRenderProps = {
   products: ProductBlockListFragmentType["items"];

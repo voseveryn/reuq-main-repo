@@ -1,6 +1,6 @@
 import { BlockListFragmentType } from "@/app/fragments/content/BlockFragment";
-import ProductTwo from "./product-two";
-import ProductOne from "./product-one";
+import ProductTwo from "../products/product-two";
+import ProductOne from "../products/product-one";
 
 
 type ProductRenderProps = {

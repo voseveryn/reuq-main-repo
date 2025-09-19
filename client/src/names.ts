@@ -1,6 +1,80 @@
 import { SchemaNames } from '@contember/client-content'
 export const ContemberClientNames: SchemaNames = {
   "entities": {
+    "App": {
+      "name": "App",
+      "fields": {
+        "id": {
+          "type": "column"
+        },
+        "createdAt": {
+          "type": "column"
+        },
+        "image": {
+          "type": "one",
+          "entity": "Image"
+        },
+        "locales": {
+          "type": "many",
+          "entity": "AppLocale"
+        },
+        "unique": {
+          "type": "column"
+        }
+      },
+      "scalars": [
+        "id",
+        "createdAt",
+        "unique"
+      ]
+    },
+    "AppLocale": {
+      "name": "AppLocale",
+      "fields": {
+        "id": {
+          "type": "column"
+        },
+        "createdAt": {
+          "type": "column"
+        },
+        "root": {
+          "type": "one",
+          "entity": "App"
+        },
+        "locale": {
+          "type": "one",
+          "entity": "Locale"
+        },
+        "name": {
+          "type": "column"
+        },
+        "title": {
+          "type": "column"
+        },
+        "subtitle": {
+          "type": "column"
+        },
+        "description": {
+          "type": "column"
+        },
+        "url": {
+          "type": "one",
+          "entity": "Url"
+        },
+        "blocks": {
+          "type": "one",
+          "entity": "BlockList"
+        }
+      },
+      "scalars": [
+        "id",
+        "createdAt",
+        "name",
+        "title",
+        "subtitle",
+        "description"
+      ]
+    },
     "Block": {
       "name": "Block",
       "fields": {
@@ -162,6 +236,10 @@ export const ContemberClientNames: SchemaNames = {
         "pageBlocks": {
           "type": "one",
           "entity": "PageLocale"
+        },
+        "appBlocks": {
+          "type": "one",
+          "entity": "AppLocale"
         }
       },
       "scalars": [
@@ -914,6 +992,10 @@ export const ContemberClientNames: SchemaNames = {
         "contacts": {
           "type": "many",
           "entity": "ContactLocale"
+        },
+        "apps": {
+          "type": "many",
+          "entity": "AppLocale"
         }
       },
       "scalars": [
@@ -1457,6 +1539,10 @@ export const ContemberClientNames: SchemaNames = {
         "product": {
           "type": "one",
           "entity": "ProductLocale"
+        },
+        "appUrl": {
+          "type": "one",
+          "entity": "AppLocale"
         }
       },
       "scalars": [
