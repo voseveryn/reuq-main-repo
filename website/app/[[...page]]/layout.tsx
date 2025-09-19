@@ -11,7 +11,7 @@ import { BlockListFragmentType } from "../fragments/content/BlockFragment";
 import '../globals.css'
 import HeroSection from "../ui-components/hero/hero-one"
 import CardSection from "../ui-components/cards/card-one"
-import InformationSection from "../ui-components/information/information-section"
+import InformationSection from "../ui-components/information/information-one"
 import PartnersSection from "../ui-components/partners/partners-section"
 import TeamSection from "../ui-components/team/TeamSection"
 import HistorySection from "../ui-components/history/history-section"
@@ -23,6 +23,7 @@ import ProductList from "../ui-components/products/product-list"
 import ProductDetail from "../ui-components/products/product-detail"
 import { HeroRender } from "../ui-components/hero/hero-render"
 import { CardRender } from "../ui-components/cards/card-render"
+import { InformationRender } from "../ui-components/information/information-render"
 
 
 type PageProps = {
@@ -56,7 +57,7 @@ const BlockRender: React.FC<BlockRenderProps> = ({ blocks }) => {
                         )
                     case "information":
                         return (
-                            <InformationSection key={idx} data={block} />
+                            <InformationRender key={idx} data={[block]} />
                         )
                     case "partners": 
                         return (
