@@ -8,7 +8,7 @@ type Props = {
   data: HistoryBlockType;
 };
 
-const HistorySection = ({ data }: Props) => {
+const HistoryOne = ({ data }: Props) => {
   if (!data) return null;
 
   return (
@@ -83,4 +83,4 @@ const HistorySection = ({ data }: Props) => {
   );
 };
 
-export default HistorySection;
+export default HistoryOne;

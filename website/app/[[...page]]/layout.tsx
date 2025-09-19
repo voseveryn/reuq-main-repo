@@ -2,13 +2,10 @@ import { notFound } from "next/navigation";
 import { ContemberClient } from "../contember";
 import { queryBuilder } from "../../../client/src";
 import {
-  byLocale,
   byLocaleUrl,
-  byProductUrl,
 } from "../fragments/utils/filters";
 import {
   PageFragment,
-  PageFragmentType,
 } from "../fragments/pages/PageFragment";
 import { NavigationFragment } from "../fragments/layout/NavigationFragment";
 import { byUniqueOne } from "../fragments/utils/filters";
@@ -16,17 +13,9 @@ import { FooterFragment } from "../fragments/layout/FooterFragment";
 import { Navbar } from "../ui-components/layout/navigation";
 import { BlockListFragmentType } from "../fragments/content/BlockFragment";
 import "../globals.css";
-import HeroSection from "../ui-components/hero/hero-one";
-import CardSection from "../ui-components/cards/card-one";
-import InformationSection from "../ui-components/information/information-one";
 import PartnersSection from "../ui-components/partners/partners-section";
-import TeamSection from "../ui-components/team/team-one";
-import HistorySection from "../ui-components/history/history-section";
 import Footer from "../ui-components/layout/footer";
 import { ProductFragment } from "../fragments/content/ProductFragment";
-import Image from "next/image";
-import { renderRichText } from "../ui-components/atoms/RichTextRender";
-import ProductList from "../ui-components/products/product-one";
 import ProductDetail from "../ui-components/products/product-detail";
 import { HeroRender } from "../ui-components/hero/hero-render";
 import { CardRender } from "../ui-components/cards/card-render";
@@ -37,6 +26,7 @@ import Newsletter from "../ui-components/newsletter/newsletter";
 import { ContactFragment } from "../fragments/content/ContactFragment";
 import Contact from "../ui-components/contact/contact";
 import { TeamRender } from "../ui-components/team/team-render";
+import { HistoryRender } from "../ui-components/history/history-render";
 
 type PageProps = {
   params: { page?: Array<string> };
@@ -66,7 +56,7 @@ const BlockRender: React.FC<BlockRenderProps> = ({ blocks }) => {
           case "team":
             return <TeamRender key={block.id} data={[block]} />
           case "history":
-            return <HistorySection key={block.id} data={block} />;
+            return <HistoryRender key={block.id} data={[block]} />
           case "products":
             return <ProductRender key={block.id} data={[block]} />;
           case "newsletter":
