@@ -5,6 +5,7 @@ import { NavigationLocale } from "./Navigation"
 import { PageLocale } from "./Page"
 import { ImageLocale } from "./Image"
 import { ContactLocale } from "./Contact"
+import { AppLocale } from "./app"
 
 @c.Unique('code')
 export class Locale {
@@ -19,4 +20,5 @@ export class Locale {
     pages = c.oneHasMany(PageLocale, 'locale')
     image =c.oneHasMany(ImageLocale, 'locale')
     contacts = c.oneHasMany(ContactLocale, 'locale')
+    apps = c.oneHasMany(AppLocale, 'locale')
 }

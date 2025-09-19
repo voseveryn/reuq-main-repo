@@ -3,6 +3,7 @@ import { publicRole } from './acl'
 import { Link } from './Link'
 import { PageLocale } from './Page'
 import { ProductLocale } from './Product'
+import { AppLocale } from './app'
 
 
 @c.Unique('url')
@@ -17,4 +18,5 @@ export class Url {
 	links = c.oneHasMany(Link, 'internalTarget')
 	pageUrl = c.oneHasOneInverse(PageLocale, 'url')
 	product = c.oneHasOneInverse(ProductLocale, 'url')
+	appUrl = c.oneHasOneInverse(AppLocale, 'url')
 }

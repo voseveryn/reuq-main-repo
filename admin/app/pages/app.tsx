@@ -1,57 +1,60 @@
-import { SideDimensions } from "../../../lib/dimensions";
-import {
-  FormLayout,
-  ImageField,
-  InputField,
-  MultiSelectField,
-  RadioEnumField,
-  SelectEnumField,
-  TextareaField,
-} from "../../../lib/form";
-import {
-  Component,
-  Field,
-  HasOne,
-  If
-} from "@contember/interface";
-import { RichText } from "../atoms/rich-text";
+
+import { Binding, PersistButton } from '../../lib/binding'
+import { BackButton } from '../../lib/buttons'
+import { SideDimensions } from '../../lib/dimensions'
+import { Slots } from '../../lib/layout'
+import { LocalizedSlugField } from '../components/atoms/SlugField'
+import { RichText } from '../components/atoms/rich-text'
 import {
   DefaultRepeater,
   RepeaterItemActions,
   RepeaterRemoveItemButton,
-} from "../../../lib/repeater";
+} from "../../lib/repeater";
 import { BlockRepeater } from "~/lib/plugins";
 import { Block } from "@contember/react-block-repeater";
-import { LocalizedSlugField } from "../atoms/SlugField";
 import {
-  AppleIcon,
   BookImageIcon,
   FileType2Icon,
   HistoryIcon,
   ListTodoIcon,
   NewspaperIcon,
 } from "lucide-react";
+import {
+  ImageField,
+  InputField,
+  RadioEnumField,
+} from "../../lib/form";
+import {
+  EntitySubTree,
+  HasOne,
+  If,
+} from "@contember/interface";
 
-
-
-export const ProductForm = Component(() => (
-  <FormLayout>
-    <ImageField baseField="image" urlField="url" label="Obrázek" />
-    <SideDimensions
-      dimension="locale"
-      as="currentLocale"
-      field="locales(locale.code=$currentLocale)"
-    >
-      <InputField field="title" label="Název" />
-      <LocalizedSlugField
-        field={"url.url"}
-        derivedFrom={["title"]}
-        prefix={`/products/`}
-      />
-      <InputField field="shortLabel" label="Krátký popis" />
-      <InputField field="infoLabel" label="Informační popis" />
-      <TextareaField field="description" label="Popis" />
-      <BlockRepeater field="blocks">
+export default () => {
+    return (
+        <>
+            <Binding>
+                <EntitySubTree entity="App(unique = 'One')" setOnCreate="(unique = 'One')">
+                    <div className="flex flex-col gap-12">
+                        <Slots.Title>App</Slots.Title>
+                        <Slots.Back>
+                            <BackButton />
+                        </Slots.Back>
+                        <Slots.Actions>
+                            <PersistButton />
+                        </Slots.Actions>
+                        <ImageField baseField="image" urlField="url" label="Logo" />
+                        <SideDimensions dimension="locale" as="currentLocale" field="locales(locale.code=$currentLocale)">
+                            <InputField field="name" label="Název" />
+                            <InputField field="title" label="Nadpis" />
+                            <InputField field="subtitle" label="Podnadpis" />
+                            <LocalizedSlugField
+                            field={"url.url"}
+                            derivedFrom={["name"]}
+                            prefix='/app/'
+                            />
+                            <RichText field="description" label="Text" />
+                            <BlockRepeater field="blocks">
         <Block
           name="text"
           label={
@@ -232,69 +235,6 @@ export const ProductForm = Component(() => (
           </If>
         </Block>
         <Block
-          name="products"
-          label={
-            <>
-              <AppleIcon /> Produkty
-            </>
-          }
-        >
-          <div className="bg-rose-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
-            <RadioEnumField
-              field="blockVariation"
-              label="Typ Blocku"
-              defaultValue="one"
-              options={{
-                one: <>Produkty s textem</>,
-                two: <>Pouze Produkty</>,
-              }}
-              orientation="horizontal"
-            />
-          </div>
-          <div className="bg-slate-100 shadow-sm py-1.5 px-4 border border-rose-200 mb-4 rounded-sm">
-            <RadioEnumField
-              field="colorVariantion"
-              label="Barvy"
-              defaultValue="classic"
-              options={{
-                classic: <>Klasické barvy</>,
-                reverse: <>Obráceně</>,
-                grey: <>Lehce šedivé pozadí</>,
-              }}
-              orientation="vertical"
-            />
-          </div>
-
-          <If condition="[blockVariation = one]">
-            <InputField field="title" label="Nadpis" />
-            <RichText field="text" label="Text v sekci" />
-            <HasOne field="supportedProducts">
-              <MultiSelectField field="product" label="Produkty">
-                <SideDimensions
-                  dimension="locale"
-                  as="currentLocale"
-                  field="locales(locale.code=$currentLocale)"
-                >
-                  <Field field="title" />
-                </SideDimensions>
-              </MultiSelectField>
-            </HasOne>
-          </If>
-          <If condition="[blockVariation = two]">
-            <HasOne field="supportedProducts">
-              <MultiSelectField field="product" label="Produkty">
-                <SideDimensions
-                  dimension="locale"
-                  as="currentLocale"
-                  field="locales(locale.code=$currentLocale)"
-                >
-                  <Field field="title" />
-                </SideDimensions>
-              </MultiSelectField>
-            </HasOne>
-          </If>
-        </Block>
-        <Block
           name="newsletter"
           label={
             <>
@@ -427,6 +367,10 @@ export const ProductForm = Component(() => (
           </If>
         </Block>
       </BlockRepeater>
-    </SideDimensions>
-  </FormLayout>
-));
+                        </SideDimensions>
+                    </div>
+                </EntitySubTree>
+            </Binding>
+        </>
+    )
+}

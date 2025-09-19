@@ -9,6 +9,7 @@ import { CardList } from "./Card";
 import { TextList } from "./TextList";
 import { Product, ProductBlock, ProductLocale } from "./Product";
 import { Video } from "./Video";
+import { AppLocale } from "./app";
 
 @c.Allow(publicRole, {
   read: true,
@@ -65,4 +66,5 @@ export class BlockList {
   createdAt = c.dateTimeColumn().notNull().default("now");
   items = c.oneHasMany(Block, "list").orderBy(["order"]);
   pageBlocks = c.oneHasOneInverse(PageLocale, "blocks");
+  appBlocks = c.oneHasOneInverse(AppLocale, 'blocks')
 }

@@ -1,0 +1,253 @@
+{
+	"formatVersion": 6,
+	"modifications": [
+		{
+			"modification": "createEntity",
+			"entity": {
+				"eventLog": {
+					"enabled": true
+				},
+				"name": "App",
+				"primary": "id",
+				"primaryColumn": "id",
+				"tableName": "app",
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"columnType": "uuid",
+						"nullable": false,
+						"type": "Uuid"
+					}
+				},
+				"unique": [],
+				"indexes": []
+			}
+		},
+		{
+			"modification": "createEntity",
+			"entity": {
+				"eventLog": {
+					"enabled": true
+				},
+				"name": "AppLocale",
+				"primary": "id",
+				"primaryColumn": "id",
+				"tableName": "app_locale",
+				"fields": {
+					"id": {
+						"name": "id",
+						"columnName": "id",
+						"columnType": "uuid",
+						"nullable": false,
+						"type": "Uuid"
+					}
+				},
+				"unique": [],
+				"indexes": []
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "App",
+			"field": {
+				"name": "createdAt",
+				"columnName": "created_at",
+				"columnType": "timestamptz",
+				"nullable": false,
+				"type": "DateTime",
+				"default": "now"
+			},
+			"fillValue": "now",
+			"valueMigrationStrategy": "using"
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "App",
+			"field": {
+				"name": "unique",
+				"columnName": "unique",
+				"columnType": "one",
+				"nullable": false,
+				"type": "Enum"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "AppLocale",
+			"field": {
+				"name": "createdAt",
+				"columnName": "created_at",
+				"columnType": "timestamptz",
+				"nullable": false,
+				"type": "DateTime",
+				"default": "now"
+			},
+			"fillValue": "now",
+			"valueMigrationStrategy": "using"
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "AppLocale",
+			"field": {
+				"name": "title",
+				"columnName": "title",
+				"columnType": "text",
+				"nullable": true,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "AppLocale",
+			"field": {
+				"name": "subtitle",
+				"columnName": "subtitle",
+				"columnType": "text",
+				"nullable": true,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "AppLocale",
+			"field": {
+				"name": "description",
+				"columnName": "description",
+				"columnType": "text",
+				"nullable": true,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createColumn",
+			"entityName": "AppLocale",
+			"field": {
+				"name": "name",
+				"columnName": "name",
+				"columnType": "text",
+				"nullable": false,
+				"type": "String"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "App",
+			"owningSide": {
+				"type": "OneHasOne",
+				"name": "image",
+				"target": "Image",
+				"joiningColumn": {
+					"columnName": "image_id",
+					"onDelete": "restrict"
+				},
+				"nullable": true
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "AppLocale",
+			"owningSide": {
+				"type": "ManyHasOne",
+				"name": "root",
+				"target": "App",
+				"joiningColumn": {
+					"columnName": "root_id",
+					"onDelete": "cascade"
+				},
+				"nullable": false,
+				"inversedBy": "locales"
+			},
+			"inverseSide": {
+				"type": "OneHasMany",
+				"name": "locales",
+				"target": "AppLocale",
+				"ownedBy": "root"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "AppLocale",
+			"owningSide": {
+				"type": "ManyHasOne",
+				"name": "locale",
+				"target": "Locale",
+				"joiningColumn": {
+					"columnName": "locale_id",
+					"onDelete": "cascade"
+				},
+				"nullable": false,
+				"inversedBy": "apps"
+			},
+			"inverseSide": {
+				"type": "OneHasMany",
+				"name": "apps",
+				"target": "AppLocale",
+				"ownedBy": "locale"
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "AppLocale",
+			"owningSide": {
+				"type": "OneHasOne",
+				"name": "blocks",
+				"target": "BlockList",
+				"joiningColumn": {
+					"columnName": "blocks_id",
+					"onDelete": "restrict"
+				},
+				"nullable": true,
+				"inversedBy": "appBlocks"
+			},
+			"inverseSide": {
+				"type": "OneHasOne",
+				"name": "appBlocks",
+				"target": "AppLocale",
+				"ownedBy": "blocks",
+				"nullable": true
+			}
+		},
+		{
+			"modification": "createRelation",
+			"entityName": "AppLocale",
+			"owningSide": {
+				"type": "OneHasOne",
+				"name": "url",
+				"target": "Url",
+				"joiningColumn": {
+					"columnName": "url_id",
+					"onDelete": "restrict"
+				},
+				"nullable": true,
+				"inversedBy": "appUrl"
+			},
+			"inverseSide": {
+				"type": "OneHasOne",
+				"name": "appUrl",
+				"target": "AppLocale",
+				"ownedBy": "url",
+				"nullable": true
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "App",
+			"unique": {
+				"fields": [
+					"unique"
+				]
+			}
+		},
+		{
+			"modification": "createUniqueConstraint",
+			"entityName": "AppLocale",
+			"unique": {
+				"fields": [
+					"root",
+					"locale"
+				]
+			}
+		}
+	]
+}
