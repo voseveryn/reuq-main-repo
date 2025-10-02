@@ -27,9 +27,9 @@ import {
   EditorBlockContent,
   EditorBlockToolbar,
   EditorInlineToolbar,
-} from "@app/lib/editor";
-import { Toggle } from "@app/lib/ui/toggle";
-import { uic } from "@app/lib/utils";
+} from "../../editor";
+import { Toggle } from "../../ui/toggle";
+import { uic } from "../../utils";
 import {
   AlignCenterIcon,
   AlignJustifyIcon,
@@ -55,13 +55,13 @@ import {
   TableIcon,
   UnderlineIcon,
 } from "lucide-react";
-import { ImageField, InputField } from "@app/lib/form";
+import { ImageField, InputField } from "../../form";
 import {
   DefaultRepeater,
   RepeaterItemActions,
   RepeaterRemoveItemButton,
-} from "@app/lib/repeater";
-import { RichText } from "@app/components/rich-text";
+} from "../../repeater";
+
 
 export interface BlockEditorFieldProps {
   field: BlockEditorFieldPropsBase["field"];
@@ -248,9 +248,7 @@ export const BlockEditorField = Component(
             </EditorGenericTrigger>
           </div>
         </EditorInlineToolbar>
-        <EditorBlock name="quote" label="Quote">
-          <RichText field="text" label="Quote" />
-        </EditorBlock>
+        
         <EditorBlock name="instagramEmbed" label="Instagram">
           <InputField field="text" label="Embed url" />
         </EditorBlock>

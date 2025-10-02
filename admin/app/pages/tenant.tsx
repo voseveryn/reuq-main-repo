@@ -1,8 +1,7 @@
 import { useProjectSlug } from '@contember/react-client'
 import { ChangeMyPasswordForm, CreateApiKeyForm, InviteForm } from '@contember/react-identity'
-import { KeyRoundIcon, LockKeyholeIcon, UsersIcon } from 'lucide-react'
-import { ReactNode, useRef } from 'react'
-import { Slots } from '~/lib/layout'
+import { useRef } from 'react'
+import { Slots, Title } from '~/lib/layout'
 import {
 	ApiKeyList,
 	ChangeMyPasswordFormFields,
@@ -16,22 +15,13 @@ import { ToastContent, useShowToast } from '~/lib/toast'
 import { Card, CardContent, CardHeader, CardTitle } from '~/lib/ui/card'
 import { Input } from '~/lib/ui/input'
 
-const Title = ({ icon, children }: { icon?: ReactNode; children: ReactNode }) => {
-	return (
-		<div className="flex items-center">
-			{icon && <div className="mr-2">{icon}</div>}
-			<h1>{children}</h1>
-		</div>
-	)
-}
-
 export const Security = () => {
 	const showToast = useShowToast()
 
 	return (
 		<>
 			<Slots.Title>
-				<Title icon={<LockKeyholeIcon />}>Security</Title>
+				<Title>Security</Title>
 			</Slots.Title>
 
 			<div className="flex flex-col gap-4">
@@ -40,8 +30,7 @@ export const Security = () => {
 						<CardTitle className="text-2xl">Change Password</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<ChangeMyPasswordForm onSuccess={() => showToast(
-							<ToastContent>Password changed</ToastContent>, { type: 'success' })}>
+						<ChangeMyPasswordForm onSuccess={() => showToast(<ToastContent>Password changed</ToastContent>, { type: 'success' })}>
 							<form className="grid gap-4">
 								<ChangeMyPasswordFormFields />
 							</form>
@@ -64,26 +53,25 @@ export const Security = () => {
 export const Members = () => {
 	const projectSlug = useProjectSlug()!
 	const showToast = useShowToast()
-	const memberListController = useRef<MemberListController>()
+	const memberListController = useRef<MemberListController>({ refresh: () => Promise.resolve() })
 
 	return (
 		<>
 			<Slots.Title>
-				<Title icon={<UsersIcon />}>Members</Title>
+				<Title>Uživatelé</Title>
 			</Slots.Title>
 
 			<div className="flex flex-col gap-4">
 				<Card className="w-[40rem] max-w-full">
 					<CardHeader>
-						<CardTitle className="text-2xl">Invite</CardTitle>
+						<CardTitle className="text-2xl">Pozvat</CardTitle>
 					</CardHeader>
 					<CardContent>
 						<InviteForm
 							projectSlug={projectSlug}
 							initialMemberships={[{ role: 'admin', variables: [] }]}
 							onSuccess={args => {
-								showToast(
-									<ToastContent>Invitation sent to {args.result.person?.email}</ToastContent>, { type: 'success' })
+								showToast(<ToastContent>Pozvánka odeslána na {args.result.person?.email}</ToastContent>, { type: 'success' })
 								memberListController.current?.refresh()
 							}}
 						>
@@ -95,13 +83,12 @@ export const Members = () => {
 				</Card>
 				<Card className="w-[40rem] max-w-full">
 					<CardHeader>
-						<CardTitle className="text-2xl">Members</CardTitle>
+						<CardTitle className="text-2xl">Uživatelé</CardTitle>
 					</CardHeader>
 					<CardContent>
 						<PersonList controller={memberListController} />
 					</CardContent>
 				</Card>
-
 			</div>
 		</>
 	)
@@ -110,12 +97,12 @@ export const Members = () => {
 export const ApiKeys = () => {
 	const projectSlug = useProjectSlug()!
 	const showToast = useShowToast()
-	const memberListController = useRef<MemberListController>()
+	const memberListController = useRef<MemberListController>({ refresh: () => Promise.resolve() })
 
 	return (
 		<>
 			<Slots.Title>
-				<Title icon={<KeyRoundIcon />}>API keys</Title>
+				<Title>API keys</Title>
 			</Slots.Title>
 
 			<div className="flex flex-col gap-4">
@@ -129,11 +116,12 @@ export const ApiKeys = () => {
 								projectSlug={projectSlug}
 								initialMemberships={[{ role: 'admin', variables: [] }]}
 								onSuccess={args => {
-									showToast((
+									showToast(
 										<ToastContent title="API key created">
 											<Input value={args.result.apiKey.token} type="text" />
-										</ToastContent>
-									), { type: 'success' })
+										</ToastContent>,
+										{ type: 'success' },
+									)
 									memberListController.current?.refresh()
 								}}
 							>

@@ -1,5 +1,5 @@
 import { Link, LogoutTrigger, useIdentity } from '@contember/interface'
-import { AppWindowIcon, BadgeCheckIcon, BellIcon, ChevronsUpDown, LogOutIcon, NewspaperIcon } from 'lucide-react'
+import { AppWindowIcon, BadgeCheckIcon, BellIcon, ChevronsUpDown, LogOutIcon, NewspaperIcon, UsersIcon } from 'lucide-react'
 import { dict } from '~/lib/dict'
 import { Avatar, AvatarFallback } from '~/lib/ui/avatar'
 import { AnchorButton, Button } from '~/lib/ui/button'
@@ -23,6 +23,7 @@ export const Navigation = () => (
 	<MenuItem label="Aplikace" icon={<AppWindowIcon />} to="app" />
 	<MenuItem label="Kontakt" icon={<ContactIcon />} to="contact" />
 	<Divider/>
+	<MenuItem label="Users" icon={<UsersIcon />} to="tenant/members" />
 	<MenuItem label="Jazyky" icon={<LanguagesIcon />} to="locale" />
 </Menu>)
 
