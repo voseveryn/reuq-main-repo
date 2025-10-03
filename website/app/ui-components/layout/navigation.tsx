@@ -25,17 +25,21 @@ export const Navbar = ({ data, locale }: Props) => {
         startsWithAny(getUrl(item), [`/${loc}/products/`])
     );
 
-    // Apps (např. /cs/app/…), budou na konci v dropdownu Products
+    // Apps (např. /cs/app/…) — jako samostatná položka Link
     const apps = allItems.filter(item =>
         startsWithAny(getUrl(item), [`/${loc}/app/`])
     );
+    const appsRoot = apps.find(it => {
+        const u = getUrl(it);
+        return u === `/${loc}/app/` || u === `/${loc}/app`;
+    }) ?? apps[0];
 
-    // Solutions (opraveno na `/${locale}/solution/` + tolerantně i `/${locale}/solutions/`)
+    // Solutions
     const solutions = allItems.filter(item =>
         startsWithAny(getUrl(item), [`/${loc}/solution/`, `/${loc}/solutions/`])
     );
 
-    // Ostatní generické položky (vyřadíme vše, co už je v předchozích skupinách)
+    // Ostatní
     const generic = allItems.filter(item =>
         !products.includes(item) && !solutions.includes(item) && !apps.includes(item)
     );
@@ -43,6 +47,10 @@ export const Navbar = ({ data, locale }: Props) => {
     const [selectedProduct, setSelectedProduct] = useState("");
     const [selectedSolution, setSelectedSolution] = useState("");
     const [scrolled, setScrolled] = useState(false);
+
+    // UI: full-width dropdown states
+    const [openProducts, setOpenProducts] = useState(false);
+    const [openSolutions, setOpenSolutions] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -56,7 +64,7 @@ export const Navbar = ({ data, locale }: Props) => {
 
     return (
         <header
-            className={`fixed top-0 w-full z-50 transition-colors duration-500 ${
+            className={`fixed top-0 w-full z-[60] transition-colors duration-500 ${
                 scrolled
                     ? "bg-black text-white border-b border-gray-800"
                     : "bg-white/95 text-gray-800 backdrop-blur supports-[backdrop-filter]:bg-white/80 border-b border-gray-100"
@@ -77,8 +85,12 @@ export const Navbar = ({ data, locale }: Props) => {
                     </div>
 
                     <ul className="hidden md:flex items-center gap-8">
-                        {/* Dropdown: Products (+ Apps na konci) */}
-                        <li className="relative">
+                        {/* Dropdown: Products */}
+                        <li
+                            className="relative"
+                            onMouseEnter={() => { setOpenProducts(true); setOpenSolutions(false); }}
+                            onFocus={() => { setOpenProducts(true); setOpenSolutions(false); }}
+                        >
                             <div className="group relative">
                                 <select
                                     value={selectedProduct}
@@ -86,27 +98,17 @@ export const Navbar = ({ data, locale }: Props) => {
                                         setSelectedProduct(e.target.value);
                                         handleNavigation(e.target.value);
                                     }}
+                                    onFocus={() => setOpenProducts(true)}
                                     className={`appearance-none bg-transparent ${
                                         scrolled ? "text-white hover:text-emerald-300" : "text-gray-700 hover:text-emerald-600"
-                                    } transition-colors duration-300 ease-in-out font-medium pr-7 focus:outline-none`}
+                                    } transition-colors duration-300 ease-in-out font-medium pr-7 focus:outline-none cursor-pointer`}
                                 >
                                     <option value="">Products</option>
-
                                     {products.map((item) => (
                                         <option key={item.id} value={getUrl(item)}>
                                             {item.link?.title ?? "Untitled"}
                                         </option>
                                     ))}
-
-                                    {apps.length > 0 && (
-                                        <optgroup label="Apps">
-                                            {apps.map((item) => (
-                                                <option key={item.id} value={getUrl(item)}>
-                                                    {item.link?.title ?? "Untitled"}
-                                                </option>
-                                            ))}
-                                        </optgroup>
-                                    )}
                                 </select>
 
                                 <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2">
@@ -130,8 +132,14 @@ export const Navbar = ({ data, locale }: Props) => {
                             </div>
                         </li>
 
-                        {/* Dropdown: Solutions (opravený prefix) */}
-                        <li className="relative">
+                       
+
+                        {/* Dropdown: Solutions */}
+                        <li
+                            className="relative"
+                            onMouseEnter={() => { setOpenSolutions(true); setOpenProducts(false); }}
+                            onFocus={() => { setOpenSolutions(true); setOpenProducts(false); }}
+                        >
                             <div className="group relative">
                                 <select
                                     value={selectedSolution}
@@ -139,9 +147,10 @@ export const Navbar = ({ data, locale }: Props) => {
                                         setSelectedSolution(e.target.value);
                                         handleNavigation(e.target.value);
                                     }}
+                                    onFocus={() => setOpenSolutions(true)}
                                     className={`appearance-none bg-transparent ${
                                         scrolled ? "text-white hover:text-emerald-300" : "text-gray-700 hover:text-emerald-600"
-                                    } transition-colors duration-300 ease-in-out font-medium pr-7 focus:outline-none`}
+                                    } transition-colors duration-300 ease-in-out font-medium pr-7 focus:outline-none cursor-pointer`}
                                 >
                                     <option value="">Solution</option>
                                     {solutions.map((solution) => (
@@ -172,6 +181,23 @@ export const Navbar = ({ data, locale }: Props) => {
                             </div>
                         </li>
 
+                         {/* Apps jako samostatný Link (bez dropdownu) */}
+                        {appsRoot && (
+                            <li className="group">
+                                <Link
+                                    href={getUrl(appsRoot) || `/${loc}/app/`}
+                                    className={`font-medium transition-colors duration-300 ease-in-out ${
+                                        scrolled
+                                            ? "text-white hover:text-emerald-300"
+                                            : "text-gray-700 hover:text-emerald-600"
+                                    }`}
+                                    onMouseEnter={() => { setOpenProducts(false); setOpenSolutions(false); }}
+                                >
+                                    {appsRoot.link?.title ?? "Apps"}
+                                </Link>
+                            </li>
+                        )}
+
                         {/* Ostatní položky */}
                         {generic.map((item) => (
                             <li key={item.id} className="group">
@@ -182,6 +208,7 @@ export const Navbar = ({ data, locale }: Props) => {
                                             ? "text-white hover:text-emerald-300"
                                             : "text-gray-700 hover:text-emerald-600"
                                     }`}
+                                    onMouseEnter={() => { setOpenProducts(false); setOpenSolutions(false); }}
                                 >
                                     {item.link?.title ?? "Untitled"}
                                 </Link>
@@ -203,6 +230,85 @@ export const Navbar = ({ data, locale }: Props) => {
                     </div>
                 </div>
             </nav>
+
+            {/* FULL-WIDTH DROPDOWNS */}
+            {(openProducts || openSolutions) && (
+                <button
+                    aria-label="Close dropdown"
+                    onClick={() => { setOpenProducts(false); setOpenSolutions(false); }}
+                    className="fixed inset-0 z-[55] bg-black/0 cursor-default"
+                />
+            )}
+
+            {openProducts && (
+                <div
+                    className="fixed inset-x-0 top-[64px] md:top-[72px] z-[70]"
+                    onMouseLeave={() => setOpenProducts(false)}
+                >
+                    <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div className={`w-full rounded-b-xl border-t ${
+                            scrolled ? "bg-black border-gray-800" : "bg-white border-gray-200"
+                        } shadow-lg`}>
+                            <div className="py-6">
+                                <div className="max-h-[60vh] overflow-y-auto">
+                                    <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                                        {products.map((item) => (
+                                            <li key={item.id} className="w-full">
+                                                <Link
+                                                    href={getUrl(item) || "#"}
+                                                    onClick={() => setOpenProducts(false)}
+                                                    className={`block w-full rounded-md px-4 py-3 text-base md:text-sm font-medium transition ${
+                                                        scrolled
+                                                            ? "text-white/90 hover:text-white hover:bg-white/10"
+                                                            : "text-gray-800 hover:text-emerald-700 hover:bg-gray-50"
+                                                    }`}
+                                                >
+                                                    {item.link?.title ?? "Untitled"}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {openSolutions && (
+                <div
+                    className="fixed inset-x-0 top-[64px] md:top-[72px] z-[70]"
+                    onMouseLeave={() => setOpenSolutions(false)}
+                >
+                    <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div className={`w-full rounded-b-xl border-t ${
+                            scrolled ? "bg-black border-gray-800" : "bg-white border-gray-200"
+                        } shadow-lg`}>
+                            <div className="py-6">
+                                <div className="max-h-[60vh] overflow-y-auto">
+                                    <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                                        {solutions.map((solution) => (
+                                            <li key={solution.id}>
+                                                <Link
+                                                    href={getUrl(solution) || "#"}
+                                                    onClick={() => setOpenSolutions(false)}
+                                                    className={`block w-full rounded-md px-4 py-3 text-base md:text-sm font-medium transition ${
+                                                        scrolled
+                                                            ? "text-white/90 hover:text-white hover:bg-white/10"
+                                                            : "text-gray-800 hover:text-emerald-700 hover:bg-gray-50"
+                                                    }`}
+                                                >
+                                                    {solution.link?.title ?? "Untitled"}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </header>
     );
 };

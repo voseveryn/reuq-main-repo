@@ -1,6 +1,7 @@
 import { BlockListFragmentType } from "@/app/fragments/content/BlockFragment";
 import Image from "next/image";
 import React from "react";
+import { colorClass } from "../atoms/colorClass";
 
 type PartnersBlockType = BlockListFragmentType["items"][number];
 
@@ -12,7 +13,7 @@ const PartnersSection = ({ data }: Props) => {
   if (!data) return null;
 
   return (
-    <section className="flex flex-col items-center justify-center text-center px-4 py-8">
+    <section className={`${colorClass(data.colorVariantion || "classic")} flex flex-col items-center justify-center text-center px-4 py-8`}>
       {data.title && (
         <h2 className="text-2xl md:text-3xl font-semibold mb-6">{data.title}</h2>
       )}
