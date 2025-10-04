@@ -10,16 +10,15 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-classic: #FCFCFC;
   --color-title: #0F0F0F;
   --color-subtitle: #0B8A2A;
   --color-text: #0D0D0D;
-  --color-title-reverse: grey;
-  --color-subtitle-reverse: grey;
-  --color-text-reverse: grey;
-  --color-title-grey: grey;
-  --color-subtitle-grey: grey;
-  --color-text-grey: grey;
-  
+  --color-reverse: #0D0D0D;
+  --color-title-reverse: #F7F7F7;
+  --color-subtitle-reverse: #0B8A2A;
+  --color-text-reverse: #DEDEDE;
+  --color-bgGrey: #E3E3E3;
 }
 
 @media (prefers-color-scheme: dark) {

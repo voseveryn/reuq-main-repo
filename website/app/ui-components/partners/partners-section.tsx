@@ -13,9 +13,9 @@ const PartnersSection = ({ data }: Props) => {
   if (!data) return null;
 
   return (
-    <section className={`${colorClass(data.colorVariantion || "classic")} flex flex-col items-center justify-center text-center px-4 py-8`}>
+    <section className={`${colorClass({color: data.colorVariantion, type: "section" })} flex flex-col items-center justify-center text-center px-4 py-8`}>
       {data.title && (
-        <h2 className="text-2xl md:text-3xl font-semibold mb-6">{data.title}</h2>
+        <h2 className={`${colorClass({ color: data.colorVariantion || "classic", type: "title" })} mb-6`}>{data.title}</h2>
       )}
       <div className="flex flex-wrap justify-center gap-6 w-full max-w-6xl">
         {data.imageList?.items.map((partner) => (

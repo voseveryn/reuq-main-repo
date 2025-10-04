@@ -14,7 +14,7 @@ const InformationTwo = ({ data }: Props) => {
     if (!data) return null;
 
   return (
-    <section className={`${alignmentClass(data.align || "center")}${colorClass(data.colorVariantion || "classic")}w-full h-auto bg-black text-white flex flex-col md:flex-row items-center justify-center p-6 text-center md:text-left rounded-lg mx-4 md:mx-12 my-6 shadow-lg`}>
+    <section className={`${alignmentClass(data.align || "center")}}w-full h-auto bg-black text-white flex flex-col md:flex-row items-center justify-center p-6 text-center md:text-left rounded-lg mx-4 md:mx-12 my-6 shadow-lg`}>
         {data.title && (
           <h2 className="text-2xl font-bold mb-4 md:mb-0 md:mr-6">
             {data.title}

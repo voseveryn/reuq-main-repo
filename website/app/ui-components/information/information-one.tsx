@@ -14,18 +14,16 @@ const InformationOne = ({ data }: Props) => {
     if (!data) return null;
 
   return (
-    <section className={`${alignmentClass(data.align || "center")}${colorClass(data.colorVariantion || "classic")} w-full h-auto bg-black text-white flex flex-col md:flex-row items-center justify-center p-6 text-center md:text-left`}>
+    <section className={`${alignmentClass(data.align || "center")}${colorClass({color: data.colorVariantion, type: "section" })} w-full h-auto bg-black text-white flex flex-col md:flex-row items-center justify-center p-6 text-center md:text-left`}>
         {data.title && (
-          <h2 className="text-2xl font-bold mb-4 md:mb-0 md:mr-6">
+          <h2 className="mb-4 md:mb-0 md:mr-6">
             {data.title}
           </h2>
         )}
-        {/* Přidání svislé čáry mezi h2 a p */}
-        {data.title && data.text && (
-          <div className="border-l-2 border-white h-16 md:h-auto mx-6"></div>
-        )}
+
+       
         {data.text && (
-          <div className="text-base md:text-lg">
+          <div>
             {renderRichText(data.text)}
           </div>
         )}

@@ -1,43 +1,40 @@
-type color = 'classic' | 'reverse' | 'grey'
+type props = {
+  color: "classic" | "reverse" | "grey" | null;
+  type?: "section" | "title" | "subtitle" | "text" ;
+};
 
-export const colorClass = (color: color):string => {
-    switch(color)
-    {
-        case 'classic':
-            return 'bg-[#fff] text-black'
-        case 'reverse':
-            return 'bg-[#000000] text-white'
-        case 'grey':
-            return 'bg-[#D3D3D3] text-black'
-        default:
-            return '';
-    }
+type picker = {
+    type: "section" | "title" | "subtitle" | "text";
+    bgColor?: string
+    titleColor?: string
+    subtitleColor?: string
+    textColor?: string
 }
 
-export const colorClassBg = (color: color):string => {
-    switch(color)
-    {
-        case 'classic':
-            return 'bg-[#fff]'
-        case 'reverse':
-            return 'bg-[#000000]'
-        case 'grey':
-            return 'bg-[#D3D3D3]'
-        default:
-            return '';
-    }
-}
+const typePicker = (data: picker): string => {
+  switch (data.type) {
+    case "section":
+      return `bg-${data.bgColor}`; // Třídy pro sekci
+    case "title":
+      return `text-${data.titleColor}`; // Třídy pro nadpis
+    case "subtitle":
+      return `text-${data.subtitleColor}`; // Třídy pro podnadpis
+    case "text":
+      return `text-${data.textColor}`; // Třídy pro běžný text
+    default:
+      return "";
+  }
+};
 
-export const colorClassText = (color: color):string => {
-    switch(color)
-    {
-        case 'classic':
-            return 'text-black'
-        case 'reverse':
-            return 'text-white'
-        case 'grey':
-            return 'text-black'
-        default:
-            return '';
-    }
-}
+export const colorClass = (props: props): string => {
+  switch (props.color) {
+    case "classic":
+      return typePicker({ type: props.type || "title", bgColor: "classic", titleColor: "title", subtitleColor: "subtitle", textColor: "text" });
+    case "reverse":
+      return typePicker({ type: props.type || "title", bgColor: "reverse", titleColor: "title-reverse", subtitleColor: "subtitle-reverse", textColor: "text-reverse" });
+    case "grey":
+      return typePicker({ type: props.type || "title", bgColor: "bgGrey", titleColor: "title", subtitleColor: "subtitle", textColor: "text" });
+    default:
+      return "";
+  }
+};
