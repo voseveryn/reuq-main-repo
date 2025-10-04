@@ -10,17 +10,42 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-title: #0F0F0F;
+  --color-subtitle: #0B8A2A;
+  --color-text: #0D0D0D;
+  --color-title-reverse: grey;
+  --color-subtitle-reverse: grey;
+  --color-text-reverse: grey;
+  --color-title-grey: grey;
+  --color-subtitle-grey: grey;
+  --color-text-grey: grey;
+  
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+}
+
+h2{
+  font-size: 36px;
+  font-weight: 800;
+}
+h3{
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 5;
+}
+p{
+  font-size: 16px;
+  font-weight: 600;
 }

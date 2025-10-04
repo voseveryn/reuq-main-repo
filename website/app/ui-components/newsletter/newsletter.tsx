@@ -41,8 +41,8 @@ const Newsletter = () => {
 
   return (
     <section className="w-full px-4 py-12">
-      <h2>Chcete dostávat novinky o našech službách ?</h2>
-      <p>Napiště nám váš email a budeme vám zasílat novinky z našeho světa IoT.</p>
+      <h2 className='text-primary'>Chcete dostávat novinky o našech službách ?</h2>
+      <p className='text-secondary'>Napiště nám váš email a budeme vám zasílat novinky z našeho světa IoT.</p>
       <form onSubmit={onSubmit} className="mx-auto max-w-md flex gap-3">
         <input
           type="email"

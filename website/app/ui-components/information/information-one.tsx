@@ -25,9 +25,9 @@ const InformationOne = ({ data }: Props) => {
           <div className="border-l-2 border-white h-16 md:h-auto mx-6"></div>
         )}
         {data.text && (
-          <p className="text-base md:text-lg">
+          <div className="text-base md:text-lg">
             {renderRichText(data.text)}
-          </p>
+          </div>
         )}
     </section>
   )

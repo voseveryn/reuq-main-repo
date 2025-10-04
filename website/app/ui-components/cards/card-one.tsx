@@ -18,7 +18,7 @@ const CardOne = ({ data }: Props) => {
       <div className={`${alignmentClass(data.align || "center")} max-w-3xl mx-auto flex flex-col items-center text-center gap-2`}>
         {data.subtitle && <h3 className="text-lg font-bold text-emerald-700">{data.subtitle}</h3>}
         {data.title && <h2 className="text-3xl font-[600] tracking-tight">{data.title}</h2>}
-        {data.text && <p className={`text-base ${data.colorVariantion === "classic" ?  "text-gray-500" :  "text-gray-700" }`}>{data.text}</p>}
+        {data.text && <div className={`text-base ${data.colorVariantion === "classic" ?  "text-gray-500" :  "text-gray-700" }`}>{data.text}</div>}
       </div>
       <div className="mt-8 flex flex-wrap gap-4 justify-center">
         {data.cardList?.items.map((item) => (

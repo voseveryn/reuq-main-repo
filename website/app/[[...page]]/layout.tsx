@@ -15,6 +15,11 @@ import Contact from "../ui-components/contact/contact";
 import { AppFragment } from "../fragments/content/AppFragment";
 import AppDetail from "../ui-components/app/app-detail"; // <— ujisti se o správné cestě
 import { BlockRender } from "../ui-components/renders/block-render";
+import { Nunito } from "next/font/google"
+
+const nunito = Nunito({
+  subsets: ['latin']
+})
 
 type PageProps = {
   params: { page?: Array<string> };
@@ -70,7 +75,7 @@ export default async function RootLayout(props: PageProps) {
   // --- /CHOOSER ---
 
   return (
-    <html>
+    <html lang="cs" className={nunito.className}>
       <body>
         <Navbar data={navigation ?? undefined} locale={locale} />
         <main className="relative top-32">

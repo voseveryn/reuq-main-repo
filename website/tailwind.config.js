@@ -7,14 +7,6 @@ module.exports = {
     "./ui-components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {
-      colors: {
-        primary: "#1D4ED8", // Modrá
-        second: "#9333EA", // Fialová
-        third: "#F59E0B", // Oranžová
-        opposite: "#64748B", // Šedá
-      },
-    },
   },
   plugins: [],
 }

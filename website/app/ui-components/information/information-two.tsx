@@ -21,9 +21,9 @@ const InformationTwo = ({ data }: Props) => {
           </h2>
         )}
         {data.text && (
-          <p className="text-base md:text-lg">
+          <div className="text-base md:text-lg">
             {renderRichText(data.text)}
-          </p>
+          </div>
         )}
     </section>
   )

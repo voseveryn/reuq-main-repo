@@ -7,7 +7,7 @@ export const renderRichText = (richTextJson: string) => {
       if (child.isBold) {
         return <strong key={idx}>{child.text}</strong>;
       }
-      return child.text;
+      return <p key={idx}>{child.text}</p>;
     });
   } catch {
     return richTextJson;

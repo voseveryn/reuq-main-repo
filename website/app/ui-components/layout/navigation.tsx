@@ -74,6 +74,7 @@ export const Navbar = ({ data, locale }: Props) => {
                 <div className="flex items-center justify-between py-4">
                     <div className="flex items-center gap-3">
                         {logo?.url && (
+                            <Link href={`/${locale}`}>
                             <Image
                                 src={logo.url || ""}
                                 alt={"Logo"}
@@ -81,6 +82,7 @@ export const Navbar = ({ data, locale }: Props) => {
                                 height={logo.height ?? 40}
                                 className="h-8 w-auto"
                             />
+                            </Link>
                         )}
                     </div>
 

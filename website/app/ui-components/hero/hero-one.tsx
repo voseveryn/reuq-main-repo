@@ -19,9 +19,9 @@ const HeroOne = ({ data }: Props) => {
     >
       {/* Left side (Text) */}
       <div className={`relative z-20 w-full flex flex-col justify-center items-center md:items-start ${data.align || "center"}  px-6 order-1`}>
-        <h3 className="text-lg text-emerald-700 font-bold mb-2">{data.subtitle}</h3>
-        <h2 className="text-4xl text-second font-bold mb-4">{data.title}</h2>
-        <div className="hidden md:block text-base">{renderRichText(data.text || "")}</div>
+        <h3 className="text-lg text-subtitle font-bold mb-2">{data.subtitle}</h3>
+        <h2 className="text-4xl text-title font-bold mb-4">{data.title}</h2>
+        <div className="hidden md:block text-text">{renderRichText(data.text || "")}</div>
         <button className="inline-flex items-center justify-center rounded-full border px-4 py-2 text-sm font-medium transition-colors duration-300 focus:outline-none focus:ring-2 border-gray-600 text-white bg-gray-800  hover:border-emerald-400 hover:bg-emerald-400">
           Více
         </button>

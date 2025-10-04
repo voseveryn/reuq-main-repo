@@ -16,9 +16,9 @@ const CardTwo = ({ data }: Props) => {
   return (
     <section className={`${colorClass(data.colorVariantion || "classic")} w-full px-4 py-8`}>
       <div className={`${alignmentClass(data.align || "center")} max-w-3xl mx-auto flex flex-col items-center text-center gap-2`}>
-        {data.subtitle && <h3 className="text-lg font-bold text-emerald-700">{data.subtitle}</h3>}
-        {data.title && <h2 className="text-3xl font-[600] tracking-tight">{data.title}</h2>}
-        {data.text && <p className={`text-base ${data.colorVariantion === "classic" ?  "text-gray-500" :  "text-gray-700" }`}>{data.text}</p>}
+        {data.subtitle && <h3 className="text-xl font-bold text-emerald-700">{data.subtitle}</h3>}
+        {data.title && <h2 className="text-3xl font-bold tracking-tight">{data.title}</h2>}
+        {data.text && <div className={`text-base ${data.colorVariantion === "classic" ?  "text-gray-500" :  "text-gray-700" }`}>{data.text}</div>}
       </div>
       <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {data.cardList?.items.map((item) => (
