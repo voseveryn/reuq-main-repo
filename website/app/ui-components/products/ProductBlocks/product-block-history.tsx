@@ -15,16 +15,12 @@ const ProductBlockHistory = ({ data }: Props) => {
 
   return (
     <section
-      className={`${colorClass(
-        data.colorVariantion || "classic"
-      )} w-full py-12 px-4 md:px-8`}
+      className={`${colorClass({color: data.colorVariantion, type: "section"})} w-full py-12 px-4 md:px-8`}
     >
       {data.blockVariation === "one" &&
      
         <h2
-          className={`${alignmentClass(
-            data.align || "left"
-          )} max-w-6xl mx-auto mb-8`}
+          className={`${colorClass({color: data.colorVariantion, type: "title"})} max-w-6xl mx-auto mb-8`}
         >
           {data.title}
         </h2>

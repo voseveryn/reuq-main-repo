@@ -10,14 +10,15 @@ type Props = {
 
 import React from 'react'
 import { renderRichText } from "../../atoms/RichTextRender"
+import { colorClass } from "../../atoms/colorClass"
 
 const ProductBlockProducts = ({data}: Props) => {
   return (
     <section>
         {data.blockVariation === "one" &&
         <div>
-            {data.title && <h2>{data.title}</h2>}
-            {data.text && <p>{renderRichText(data.text)}</p>}
+            {data.title && <h2 className={`${colorClass({color: data.colorVariantion, type: "title"})}`}>{data.title}</h2>}
+            {data.text && <div className={`${colorClass({color: data.colorVariantion, type: "text"})}`}>{renderRichText(data.text)}</div>}
         </div>
         }
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">

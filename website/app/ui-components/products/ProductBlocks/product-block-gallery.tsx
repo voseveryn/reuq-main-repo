@@ -16,12 +16,12 @@ const ProductBlockGallery = ({data}: Props) => {
     const [activeImage, setActiveImage] = useState<string | null>(null)
 
     return (
-    <section className={`${colorClass(data.colorVariantion || "classic")} 
+    <section className={`${colorClass({color: data.colorVariantion, type: "section"})} 
           w-full py-12 px-4 md:px-8`}>
         {data.blockVariation === "one" && 
         <div className="max-w-6xl mx-auto text-center mb-8 space-y-2">
-            {data.title && <h2 className="text-3xl md:text-4xl font-bold">{data.title}</h2>}
-            {data.subtitle && <h3 className="text-xl md:text-2xl font-medium">{data.subtitle}</h3>}
+            {data.subtitle && <h3 className={`${colorClass({color: data.colorVariantion, type: "subtitle"})}`}>{data.subtitle}</h3>}
+            {data.title && <h2 className={`${colorClass({color: data.colorVariantion, type: "title"})}`}>{data.title}</h2>}
         </div>}
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-6xl mx-auto">

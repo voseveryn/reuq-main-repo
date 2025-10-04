@@ -3,6 +3,7 @@ import React from "react";
 import { renderRichText } from "../atoms/RichTextRender";
 import Image from "next/image";
 import Link from "next/link";
+import { colorClass } from "../atoms/colorClass";
 
 type ProductBlockType = BlockListFragmentType["items"][number];
 
@@ -14,18 +15,18 @@ const ProductTwo = ({ data }: Props) => {
   if (!data) return null;
 
   return (
-    <section className="w-full px-4 py-12 md:py-16">
+    <section className={`${colorClass({ color: data.colorVariantion, type: "section" })} w-full px-4 py-12 md:py-16`}>
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           <div className="flex flex-col justify-center">
             {data.title && (
-              <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-gray-900 mb-4">
+              <h2 className={`${colorClass({ color: data.colorVariantion, type: "title" })}`}>
                 {data.title}
               </h2>
             )}
 
             {data.text && (
-              <div className="text-gray-600 mb-10 md:mb-14 leading-relaxed">
+              <div className={`${colorClass({ color: data.colorVariantion, type: "text" })}`}>
                 {renderRichText(data.text)}
               </div>
             )}

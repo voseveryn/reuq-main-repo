@@ -18,11 +18,11 @@ const ProductBlockListWithIcons = ({ data }: Props) => {
 
   if (data.blockVariation === "one") {
     return (
-      <section className="py-12 px-4 md:px-8 max-w-7xl mx-auto">
+      <section className={`${colorClass({color: data.colorVariantion, type: "section"})} py-12 px-4 md:px-8 max-w-7xl mx-auto`}>
         <div className="text-center mb-10">
-          {data.subtitle && <h3 className="text-lg font-medium text-gray-500">{data.subtitle}</h3>}
-          {data.title && <h2 className="text-3xl md:text-4xl font-bold text-gray-900">{data.title}</h2>}
-          {data.text && <p className="mt-4 text-gray-600">{renderRichText(data.text)}</p>}
+          {data.subtitle && <h3 className={`${colorClass({color: data.colorVariantion, type: "subtitle"})}`}>{data.subtitle}</h3>}
+          {data.title && <h2 className={`${colorClass({color: data.colorVariantion, type: "title"})}`}>{data.title}</h2>}
+          {data.text && <div className={`${colorClass({color: data.colorVariantion, type: "text"})}`}>{renderRichText(data.text)}</div>}
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {data.cardList?.items.map((x, i) => (

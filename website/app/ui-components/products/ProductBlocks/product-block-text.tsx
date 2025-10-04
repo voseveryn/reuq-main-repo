@@ -16,7 +16,7 @@ const ProductBlockText = ({data}: Props) => {
 
   return (
     <section 
-      className={`${colorClass(data.colorVariantion || "classic")} 
+      className={`${colorClass({color: data.colorVariantion, type: "section"})} 
       w-full py-12 px-4 md:px-8`}
     > 
         <div 
@@ -25,9 +25,9 @@ const ProductBlockText = ({data}: Props) => {
           max-w-6xl mx-auto`}
         >
             <div className="flex-1 space-y-4">
-              {data.title && <h2 className="text-3xl md:text-4xl font-bold">{data.title}</h2>}
-              {data.subtitle && <h3 className="text-xl md:text-2xl font-medium">{data.subtitle}</h3>}
-              {data.text && <p className="text-base md:text-lg leading-relaxed">{renderRichText(data.text)}</p>}
+              {data.subtitle && <h3 className={`${colorClass({color: data.colorVariantion, type: "subtitle"})}`}>{data.subtitle}</h3>}
+              {data.title && <h2 className={`${colorClass({color: data.colorVariantion, type: "title"})}`}>{data.title}</h2>}
+              {data.text && <div className={`${colorClass({color: data.colorVariantion, type: "text"})}`}>{renderRichText(data.text)}</div>}
             </div>
             
             {data.blockVariation === "one" && 
